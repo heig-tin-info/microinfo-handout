@@ -1,0 +1,352 @@
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+% COURS MUI
+% Bertrand Hochet  Pierre Favrat  Claude Evequoz
+% created February 2014
+% version 
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+\documentclass[10pt,a4paper]{book}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,english,french]{babel}
+
+%\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+% 
+% 
+%
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+% divers packages utiles
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{amssymb}
+\usepackage{chngpage}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{amssymb}
+%\usepackage{algorithm,algorithmic}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage{supertabular}
+\usepackage{multirow} 
+\usepackage{hhline}
+\usepackage{hyperref}
+%\usepackage{tikz}
+\hypersetup{pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue, pdftitle=Systmes lectronique II, pdfauthor=linuxmint , pdfsubject=Chapitre 01 - Introduction, pdfkeywords=}
+\usepackage{fancyhdr}
+
+% taille imprimable
+\usepackage{fullpage} % Agrandit les dimensions du texte (hauteur, largeur,
+                     % etc.) par rapport  celles par dfaut. Attention
+                     % ce package ne se trouve pas dans toutes les
+                     % distributions LaTeX
+
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+\usepackage[a4paper, top=1cm, bottom=2.5cm, left=2cm, headheight=6mm, headsep=5mm, marginparwidth=0.5cm, marginparsep=4mm, heightrounded, includehead]{geometry} 
+
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 
+%
+\newcommand\textstyleInternetlink[1]{\textcolor{blue}{#1}}
+
+\newcommand\textsubscript[1]{\ensuremath{{}_{\text{#1}}}}
+\makeatletter
+\newcommand\arraybslash{\let\\\@arraycr}
+\makeatother
+% Footnote rule
+\setlength{\skip\footins}{0.119cm}
+\renewcommand\footnoterule{\vspace*{-0.018cm}\setlength\leftskip{0pt}\setlength\rightskip{0pt plus 1fil}\noindent\textcolor{black}{\rule{0.25\columnwidth}{0.018cm}}\vspace*{0.101cm}}
+% Pages styles
+\makeatletter
+\newcommand\ps@Standard{
+  \renewcommand\@oddhead{}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{}
+  \renewcommand\@evenfoot{}
+  \renewcommand\thepage{\arabic{page}}
+}
+\makeatother
+\pagestyle{Standard}
+\setlength\tabcolsep{1mm}
+\renewcommand\arraystretch{1.3}
+\newcounter{Figure}
+\renewcommand\theFigure{\arabic{Figure}}
+\newcounter{quation}
+\renewcommand\thequation{\arabic{quation}}
+\newcounter{Table}
+\renewcommand\theTable{\arabic{Table}}
+
+\newcommand\normalsubformula[1]{\text{\mathversion{normal}$#1$}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newenvironment{lyxcode}
+{\par\begin{list}{}{
+\setlength{\rightmargin}{\leftmargin}
+\setlength{\listparindent}{0pt}% needed for AMS classes
+\raggedright
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\normalfont\ttfamily}%
+ \item[]}
+{\end{list}}
+
+
+
+
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+% donnes pour le titre
+\title{MUI - Microinformatique }
+\author{Cours créé par Claude Evequoz, Pierre Favrat et Bertrand Hochet\\ \\  HEIG-VD}
+
+\newcommand{\version}{0.0}
+\newcommand{\dateversion}{01.02.2014}
+
+\date{Révision \version\ - Mise   jour  du \dateversion}
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+% CORPS DU DOCUMENT
+% -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+\begin{document}
+
+%definition zone listing
+%\definecolor{gris}{rgb}{0.95,0.95,0.95}
+%\lstset{numbers=none, tabsize=4, backgroundcolor=\color{gris},
+%frame=single, breaklines=true, showlines=true,
+%keywordstyle=\color{black},
+%stringstyle=\ttfamily,
+%framexleftmargin=6mm, xleftmargin=6mm}
+%
+%\newcommand{\be}{\begin{enumerate}}
+%\newcommand{\lstnormal}{\lstset{numbers=none, tabsize=4, backgroundcolor=\color{gris},frame=single, breaklines=true, showlines=true,keywordstyle=\color{black},stringstyle=\ttfamily,framexleftmargin=6mm, xleftmargin=6mm}}
+%
+%\newcommand{\lstfondblanc}{\lstset{numbers=none, tabsize=4, backgroundcolor=\color{white},frame=none, breaklines=true, showlines=true, keywordstyle=\color{black},stringstyle=\ttfamily,framexleftmargin=6mm, xleftmargin=6mm} }
+%
+
+
+
+
+\setcounter{secnumdepth}{3} % profondeur de numerotation max 0.0.0.0
+\setcounter{tocdepth}{3} % profondeur titres table des matiÃ¨res
+
+\pagestyle{fancy}
+\fancyhead{}
+
+
+\renewcommand{\chaptermark}[1]%
+{\markboth{\MakeUppercase{\thechapter.\ #1}}{}}
+
+\fancyhf{} 
+\fancyhead[LE,LO]{}
+\fancyhead[LE,RO]{Cours MUI - r\version\ - \dateversion}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[RE,LO]{HEIG-VD / Claude Evequoz, Pierre Favrat et Bertrand Hochet}
+\fancyfoot[LE,RO]{Page \thepage}
+
+% redfini le style pour plain (1re page des chapitres)
+
+\fancypagestyle{plain}{%
+  \fancyfoot[RE,LO]{HEIG-VD / MUI/ Claude Evequoz, Pierre Favrat et Bertrand Hochet}
+  \fancyfoot[LE,RO]{Page \thepage}
+  \fancyhead[LE,RO]{}
+ \renewcommand{\headrulewidth}{1pt}
+  \renewcommand{\footrulewidth}{1pt}
+}
+
+
+
+
+% redfini le style pour empty (pour la page de titre)
+\fancypagestyle{empty}{%
+  \fancyfoot[RE,LO]{}
+  \fancyfoot[LE,RO]{}
+%  \fancyhead[LE,RO]{}
+  \fancyhead[LE,RO]{\includegraphics[scale=0.5,angle=0]{logo_HEIG_VD.png}}
+  %\fancyhead[RE,LO]{\includegraphics[scale=0.4,angle=0]{logo_iAi.png}}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+
+
+\begin{titlepage}
+\begin{tabular}{l}
+ \\
+ \\
+ \\
+ \\
+ \\
+ \\
+ \\
+
+\end{tabular}
+\begin{center}
+\Large\textbf{\textsc{Cours -  Microinformatique} }\\
+
+\Large\textbf{ (MUI)}
+\end{center}
+\begin{tabular}{c}
+ \\
+ \\
+\end{tabular}
+\begin{center}
+\textbf{Cours créé par Claude Evequoz, Pierre Favrat et Bertrand Hochet}
+\end{center}
+\begin{center}
+\textbf{HEIG-VD}
+\textbf{février 2014} \\
+ rev. \version
+\end{center}
+\begin{tabular}{c}
+ \\ 
+\end{tabular}
+
+ \end{titlepage}
+
+\fancypagestyle{empty}{%
+  \fancyfoot[RE,LO]{}
+  \fancyfoot[LE,RO]{}
+  \fancyhead[LE,RO]{}
+  \fancyhead[RE,LO]{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\setlength{\textheight}{24cm}
+
+\changepage{1.5cm}%amount added to textheight
+           {-0.2cm}%amount added to textwidth
+           {0cm}%amount added to evensidemargin
+           {0cm}%amount added to oddsidemargin
+           {0cm}%amout added to columnsep
+           {-2cm}%amount added to topmargin
+           {0cm}%amount added to headheight
+           {0cm}%amount added to headsep
+           {0cm}%amount added to footskip
+% -----------------------------------------------------------------------
+% numÃ©rotation, taille de la zone utilisable, entÃªte et bas de page
+\pagenumbering{arabic} \setcounter{page}{1}
+% -----------------------------------------------------------------------
+
+%\maketitle
+\newpage
+\pagenumbering{roman} \setcounter{page}{1}
+
+
+\begin{center}
+Microinformatique - HEIG-VD
+
+\end{center}
+
+\begin{tabular}{p{4cm}p{12cm}}
+&\\
+\underline{Informations générales}& \\
+&\\
+Professeur HES & Claude Evequoz\\
+Email & claude.evequoz@heig-vd.ch\\
+Téléphone & 024 557 27 68 \\
+Bureau & Y-Parc, CH-1400 Yverdon-les-Bains
+\\
+\-
+\\
+Professeur HES & Pierre Favrat\\
+Email & pierre.favrat@heig-vd.ch\\
+Téléphone & 024 557 27 77 \\
+Bureau & Y-Parc, CH-1400 Yverdon-les-Bains
+Bureau C0.03
+\\
+\-
+\\
+Professeur HES & Bertrand Hochet\\
+Email & bertrand.hochet@heig-vd.ch\\
+Téléphone & 024 557 27 68 \\
+Bureau & Y-Parc, CH-1400 Yverdon-les-Bains
+Bureau C0.03
+\\
+\end{tabular} \\
+
+% -----------------------------------------------------------------------
+% HISTORIQUE
+% -----------------------------------------------------------------------
+\newpage
+
+
+\textbf{HISTORIQUE - MODIFICATIONS MAJEURES}\\
+
+\begin{tabular}{|p{2.5cm}|p{2.5cm}|p{8.5cm}|}
+\hline 
+VERSION & DATE & DESCRIPTION\\ \hline 
+V 0.0 & février 2014& Premier draft\\ \hline 
+V 1.0 & sometime 2014 & Version initiale (PFT)\\ 
+\hline  
+
+\end{tabular}
+
+
+
+
+
+
+% -----------------------------------------------------------------------
+% TABLE DES MATIÃˆRES
+% -----------------------------------------------------------------------
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+
+%\listoffigures
+\listoftables
+
+\newpage
+
+\renewcommand{\chaptermark}[1]%
+{\markboth{\MakeUppercase{\thechapter.\ #1}}{}}
+
+\fancyhf{} 
+\fancyhead[LE,LO]{}
+\fancyhead[LE,RO]{Cours MUI - r\version\ - \dateversion}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[RE,LO]{HEIG-VD  / Claude Evequoz Pierre Favrat Bertrand Hochet}
+\fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
+
+% redfini le style pour plain (1re page des chapitres)
+
+\fancypagestyle{plain}{%
+  \fancyfoot[RE,LO]{HEIG-VD / MUI/ Claude Evequoz Pierre Favrat Bertrand Hochet}
+  \fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
+  \fancyhead[LE,RO]{}
+ \renewcommand{\headrulewidth}{1pt}
+  \renewcommand{\footrulewidth}{1pt}
+}
+
+
+\pagenumbering{arabic} \setcounter{page}{1}
+\input{./Chap01/Chapter1.tex} 
+%
+%\pagenumbering{arabic} \setcounter{page}{1}
+\input{./Chap02/Chapter02.tex} 
+
+%\pagenumbering{arabic} \setcounter{page}{1}
+\input{./Chap03/Chapter03.tex}    %%  
+
+%\input{./Chap04/Chapter04.tex}    % 
+ 
+%\input{./Chap05/Chapter05.tex}    % 
+
+\appendix
+
+\input{./Appendix01/Appendix01.tex}   %
+
+
+\bigskip
+\end{document}
