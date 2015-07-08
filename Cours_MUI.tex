@@ -1,6 +1,6 @@
 % -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 % COURS MUI
-% Bertrand Hochet  Pierre Favrat  Claude Evequoz
+% Bertrand Hochet  Pierre Favrat  Cédric Bornand
 % created February 2014
 % version 
 % -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -40,7 +40,7 @@
 \usepackage{hhline}
 \usepackage{hyperref}
 %\usepackage{tikz}
-\hypersetup{pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue, pdftitle=Systmes lectronique II, pdfauthor=linuxmint , pdfsubject=Chapitre 01 - Introduction, pdfkeywords=}
+\hypersetup{pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue, pdftitle=microinformatique, pdfauthor=linuxmint , pdfsubject=Chapitre 01 - Introduction, pdfkeywords=}
 \usepackage{fancyhdr}
 
 % taille imprimable
@@ -105,7 +105,7 @@
 % -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 % donnes pour le titre
 \title{MUI - Microinformatique }
-\author{Cours créé par Claude Evequoz, Pierre Favrat et Bertrand Hochet\\ \\  HEIG-VD}
+\author{Cours créé par Cédric Bornand, Pierre Favrat et Bertrand Hochet\\ \\  HEIG-VD}
 
 \newcommand{\version}{0.0}
 \newcommand{\dateversion}{01.02.2014}
@@ -131,15 +131,11 @@
 %\newcommand{\lstfondblanc}{\lstset{numbers=none, tabsize=4, backgroundcolor=\color{white},frame=none, breaklines=true, showlines=true, keywordstyle=\color{black},stringstyle=\ttfamily,framexleftmargin=6mm, xleftmargin=6mm} }
 %
 
-
-
-
 \setcounter{secnumdepth}{3} % profondeur de numerotation max 0.0.0.0
 \setcounter{tocdepth}{3} % profondeur titres table des matiÃ¨res
 
 \pagestyle{fancy}
 \fancyhead{}
-
 
 \renewcommand{\chaptermark}[1]%
 {\markboth{\MakeUppercase{\thechapter.\ #1}}{}}
@@ -149,21 +145,18 @@
 \fancyhead[LE,RO]{Cours MUI - r\version\ - \dateversion}
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{1pt}
-\fancyfoot[RE,LO]{HEIG-VD / Claude Evequoz, Pierre Favrat et Bertrand Hochet}
+\fancyfoot[RE,LO]{HEIG-VD / Cédric Bornand, Pierre Favrat et Bertrand Hochet}
 \fancyfoot[LE,RO]{Page \thepage}
 
 % redfini le style pour plain (1re page des chapitres)
 
 \fancypagestyle{plain}{%
-  \fancyfoot[RE,LO]{HEIG-VD / MUI/ Claude Evequoz, Pierre Favrat et Bertrand Hochet}
+  \fancyfoot[RE,LO]{HEIG-VD / MUI/ Cédric Bornand, Pierre Favrat et Bertrand Hochet}
   \fancyfoot[LE,RO]{Page \thepage}
   \fancyhead[LE,RO]{}
  \renewcommand{\headrulewidth}{1pt}
   \renewcommand{\footrulewidth}{1pt}
 }
-
-
-
 
 % redfini le style pour empty (pour la page de titre)
 \fancypagestyle{empty}{%
@@ -175,8 +168,6 @@
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
-
-
 
 \begin{titlepage}
 \begin{tabular}{l}
@@ -199,7 +190,7 @@
  \\
 \end{tabular}
 \begin{center}
-\textbf{Cours créé par Claude Evequoz, Pierre Favrat et Bertrand Hochet}
+\textbf{Cours créé par Cédric Bornand, Pierre Favrat et Bertrand Hochet}
 \end{center}
 \begin{center}
 \textbf{HEIG-VD}
@@ -247,12 +238,12 @@ Microinformatique - HEIG-VD
 
 \end{center}
 
-\begin{tabular}{p{4cm}p{12cm}}
+\begin{tabular}{p{4cm}p{10cm}}
 &\\
 \underline{Informations générales}& \\
 &\\
-Professeur & Claude Evequoz\\
-Email & claude.evequoz@heig-vd.ch\\
+Professeur & Cédric Bornand\\
+Email & cedric.bornand@heig-vd.ch\\
 Téléphone & 024 557 27 68 \\
 Bureau & Y-Parc, CH-1400 Yverdon-les-Bains
 \\
@@ -274,6 +265,7 @@ Bureau C0.03
 \\
 \end{tabular} \\
 
+
 % -----------------------------------------------------------------------
 % HISTORIQUE
 % -----------------------------------------------------------------------
@@ -294,10 +286,8 @@ V 1.0 & sometime 2014 & Version initiale (PFT)\\
 
 
 
-
-
 % -----------------------------------------------------------------------
-% TABLE DES MATIÃˆRES
+% TABLE DES MATIERES
 % -----------------------------------------------------------------------
 \setcounter{tocdepth}{1}
 \tableofcontents
@@ -316,13 +306,13 @@ V 1.0 & sometime 2014 & Version initiale (PFT)\\
 \fancyhead[LE,RO]{Cours MUI - r\version\ - \dateversion}
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{1pt}
-\fancyfoot[RE,LO]{HEIG-VD  / Claude Evequoz Pierre Favrat Bertrand Hochet}
+\fancyfoot[RE,LO]{HEIG-VD  / Cédric Bornand Pierre Favrat Bertrand Hochet}
 \fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
 
 % redfini le style pour plain (1re page des chapitres)
 
 \fancypagestyle{plain}{%
-  \fancyfoot[RE,LO]{HEIG-VD / MUI/ Claude Evequoz Pierre Favrat Bertrand Hochet}
+  \fancyfoot[RE,LO]{HEIG-VD / MUI/ Cédric Bornand Pierre Favrat Bertrand Hochet}
   \fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
   \fancyhead[LE,RO]{}
  \renewcommand{\headrulewidth}{1pt}
