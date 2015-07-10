@@ -164,7 +164,6 @@
   \fancyfoot[LE,RO]{}
 %  \fancyhead[LE,RO]{}
   \fancyhead[LE,RO]{\includegraphics[scale=0.5,angle=0]{logo_HEIG_VD.png}}
-  %\fancyhead[RE,LO]{\includegraphics[scale=0.4,angle=0]{logo_iAi.png}}
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
@@ -224,7 +223,7 @@
            {0cm}%amount added to headsep
            {0cm}%amount added to footskip
 % -----------------------------------------------------------------------
-% numÃ©rotation, taille de la zone utilisable, entÃªte et bas de page
+% numérotation, taille de la zone utilisable, entête et bas de page
 \pagenumbering{arabic} \setcounter{page}{1}
 % -----------------------------------------------------------------------
 
@@ -321,21 +320,31 @@ V 1.0 & sometime 2014 & Version initiale (PFT)\\
 
 
 \pagenumbering{arabic} \setcounter{page}{1}
-\input{./Chap01/Chapter1.tex} 
-%
-%\pagenumbering{arabic} \setcounter{page}{1}
-\input{./Chap02/Chapter02.tex} 
+\input{./Chapter_intro.tex} 
 
-%\pagenumbering{arabic} \setcounter{page}{1}
-\input{./Chap03/Chapter03.tex}    %%  
+\input{./Chapter_gpio.tex} 
 
-%\input{./Chap04/Chapter04.tex}    % 
+\input{./Chapter_arith.tex}     
+
+\input{./Chapter_interrupt.tex}
  
-%\input{./Chap05/Chapter05.tex}    % 
+\input{./Chapter_timer.tex}
+
+\input{./Chapter_clock.tex}
+
+\input{./Chapter_cpu.tex}
+
+\input{./Chapter_assembleur.tex}
+
+\input{./Chapter_prog.tex}
+
+\input{./Chapter_serial.tex}
+
+\input{./Chapter_adda.tex}
 
 \appendix
 
-\input{./Appendix01/Appendix01.tex}   %
+\input{./Appendix01.tex}   %TBD
 
 
 \bigskip
