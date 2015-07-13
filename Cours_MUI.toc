@@ -33,6 +33,7 @@
 \contentsline {chapter}{\numberline {8}\textsc {Assembleur}}{17}{chapter.8}
 \contentsline {section}{\numberline {8.1}Chaine de compilation}{17}{section.8.1}
 \contentsline {subsection}{\numberline {8.1.1}Kaboum}{17}{subsection.8.1.1}
+\contentsline {section}{\numberline {8.2}Debug}{17}{section.8.2}
 \contentsline {chapter}{\numberline {9}\textsc {Programmation en C}}{19}{chapter.9}
 \contentsline {section}{\numberline {9.1}Mots cl\'es}{19}{section.9.1}
 \contentsline {subsection}{\numberline {9.1.1}Youpla}{19}{subsection.9.1.1}
