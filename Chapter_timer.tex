@@ -1,13 +1,200 @@
 \chapter{\textsc{Timers}}
 
 Avec le port d'entré/sortie, le timer est le périphérique le plus indispensable du microcontrôleur. En effet, un CPU est très inefficace dès qu'il s'agit de compter le temps, puisqu'il ne peut rien faire d'autre, sous peine de "perdre du temps".
-La fonction première du timer est de compter des évènements
 
+Un timer est donc indispensable dès qu'il s'agit de développer des applications dans lesquelles des contraintes temporelles doivent être respectées, comme :
+\begin{itemize}
+\item génération de délais ou de temps d'attente
+\item génération de signaux à caractéristiques temporelles définies
+\item prises de rendez-vous
+\end{itemize}
+
+Le coeur du timer est un \textit{compteur synchrone}. En général, des fonctionnalités y sont ajoutées, qui permettent d'enrichir les possibilités du timer.
 
 \section{Principe}
+Le plus souvent, le timer est construit autour d'un \textit{incrémenteur}. C'est un circuit séquentiel synchrone, construit avec un registre de N bits, et un incrémenteur combinatoire (fig. \ref{fig:Timer}). La structure détaillée de ce type de circuit séquentiel est étudiée au cours "Systèmes Logiques".
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Schéma de base d'un timer}
+  \label{fig:Timer}
+\end{figure}
+
+L'incrémentation se fait au rythme d'un signal souvent appelé CLK (fig. \ref{fig:Timer}), qui est soit:
+\begin{itemize}
+\item périodique, auquel cas il mesure le temps, et on parle de \textit{timer};
+\item apériodique quelconque, auquel cas il compte simplement les flancs de ce signal tant qu'il est actif et on parle plutôt de \textit{compteur}.
+\end{itemize}
+
+\\
+Souvent, un prédiviseur de fréquence permet de réduire la fréquence du signal CLK pour ralentir le rythme du comptage.
+
+La figure \ref{fig:ChronoSync} montre l'évolution de la valeur du registre en fonction du temps, pour un \textit{timer} de 4 bits. La pente de la courbe dépend du rythme auquel le registre est incrémenté, donc de la fréquence du signal CLK.
+Lorsque le registre atteint sa valeur maximale, égale à $2^N-1$, il repasse à 0. Durant ce passage à 0, un signal (qui est la retenue sortante du circuit incrémenteur) passe à '1' et émet éventuellement une requête d'interruption.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_chrono_1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Chrono timer]{Comportement temporel du timer (N=4)}
+  \label{fig:ChronoSync}
+\end{figure}
+
+Dans le cas d'un compteur, le signal CLK est apériodique. La figure \ref{fig:ChronoAsync} montre l'évolution de la valeur du registre en fonction du temps, pour un \textit{compteur} de 4 bits. De même, la retenue sortante du circuit incrémenteurémet éventuellement une requête d'interruption lors du passage par 0 de la valeur du registre.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_chrono_2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Chrono compteur]{Comportement temporel d'un compteur (N=4)}
+  \label{fig:ChronoAsync}
+\end{figure}
+
+Comme nous le verrons dans la suite, certains timers utilisent un décrémenteur au lieu d'un incrémenteur, voire les deux.
+Finalement, on peut rencontrer différents types de timers dans un même microcontrôleur, chacun étant adapté à un besoin spécifique.
+
+\section{Cas du MSP430}
+Les microcontrôleurs de la famille MSP430 embarquent jusqu'à 4 types de timers différents:
+\begin{itemize}
+\item Real Time Clock, ou \textit{Horloge Temps Réel} (RTC) pour la création d'horloges
+\item WatchDog Timer ou \textit{Chien de Garde} (WDT) pour la prévention de plantées d'origines diverses
+\item Timers à usage général
+\end{itemize}
+
+\subsection{Real Time Clock}
+Après initialisation, le RTC maintient à jour les informations horaires les plus courantes :
+\begin{itemize}
+\item année
+\item numéro du mois dans l'année
+\item jour du mois
+\item jour de la semaine
+\item heure
+\item minute
+\item seconde
+\end{itemize}
+
+Ce type de timer nécessite une horloge dont la fréquence est 1Hz, dérivée d'une horloge standard à 32768Hz. Cette dernière fréquence fut introduite aux débuts de la montre à quartz car il est aisé de réaliser des quartz à cette fréquence. On obtient l'horloge à 1Hz par une simple division de 32768 par $2^{15}$.
+
+\subsection{WatchDog Timer}
+La "plantée" d'un programme est la plupart du temps due à un défaut dans le programme ou à un concours de circonstances qui fait que le programme est bloqué dans un boucle sans fin. Le cas le plus courant est l'attente d'un évènement qui n'arrive pas et qui n'arrivera jamais.
+Le microcontrôleur ne réagit plus. Le seul moyen est de le \textit{resetter}.
+
+\section{Timer à usage général : le timer A}
+Dans le MSP430, le timer à usage général est un périphérique complexe auquel le CPU peut soutraiter des fonctionnalités sophistiquées. En plus des fonctionnalités usuelles, on trouve:
+\begin{itemize}
+\item capture de l'état du registre de comptage lors d'un évènement
+\item requêtes d'interruption dès que le registre de comptage a atteint une constante donnée (comparaison)
+\item génération de signaux PWM sur une patte externe, sans aucune aide du CPU autre que l'initialisation
+\end{itemize}
+Toutes ces fonctionnalités sont contrôlées par le logiciel, en positionnant des champs logiques dans des registres de contrôle. champ logique est un groupe de variables logiques dans un registre.
+
+Dans une version de MSP430 donnée, plusieurs Timers A peuvent coexister.
+
+La figure \ref{fig:TimerAsimplifie} est un schéma très simplifié du timer A, illustrant ses 3 principaux sous-blocs.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer.pdf}
+  \rule{35em}{0.5pt}
+  \caption[TimerA simplifie]{Schéma simplifié du timer A}
+  \label{fig:TimerAsimplifie}
+\end{figure}
+
+A la partie supérieure, on retrouve le bloc de comptage et son registre appelé TAxR (x est le numéro du timer; x=0 ou 1 s'il y a deux timers de type A dans le microcontrôleur). Au milieu, le bloc dit de "capture/comparaison" permet de capturer l'état du registre TAxR lors d'un évènement ou de comparer la valeur de TAxR avec une constante. En bas, le bloc noté "Output module" est chargé de générer un signal PWM à partir du contenu du registre TAxR et de la constante chargée dans le bloc de "capture/comparaison".
+
+Pour enrichir encore les possibilités offertes par le timer A, celui-ci dispose de plusieurs blocs de "capture/comparaison" et modules de sortie (output module). Selon le type de timer A, il peut y avoir 3, 5 ou 7 de ces blocs. Nous y reviendrons ultérieurement.
+
+\subsection{Modes de comptage}
+Le registre de comptage TAxR a 3 modes de comptage possibles:
+\begin{itemize}
+\item 
+\end{itemize}
+
+La figure \ref{fig:TimerAstruct} illustre plus en détail la structure du timer A, en mettant en évidence les registres et les signaux d'interruption.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Structure TimerA]{Structure du timer A}
+  \label{fig:TimerAstruct}
+\end{figure}
+
+Le timer est organisé en tranches, correspondant chacune à un bloc fonctionnel. Chaque rectangle représente un « registre de donnée », c'est à dire un registre qui contient une information représentant une grandeur.
+Les circuits de comparaison/capture peuvent aussi générer automatiquement des signaux particuliers sur une patte du microcontrôleur. Ces fonctionnalités ne sont pas représentées sur la figure \ref{fig:TimerAstruct}.
+A gauche de chaque « registre de donnée » est noté le nom de son registre de contrôle. Tous ces registres sont sur 16 bits.
+
+\subsection{Bloc de comptage}
+TAxR : Timer A Register (n° x) ou registre de comptage du timer n° x. Sa valeur évolue entre 0 et 0xFFFF ou le contenu de TAxCCR0.
+
+TAxCTL : Timer A Control (n° x) ou registre de contrôle du comptage du timer n° x. Il permet de spécifier comment TAxR compte.
+Il est composé de 5 champs, pour contrôler :
+\begin{itemize}
+\item horloge de référence (champ TASSEL)
+\item diviseur de l'horloge de référence (champ ID)
+\item contrôle de mode (champ MC), qui définit si le registre de comptage TAxR compte jusqu'à 0xFFFF ou le contenu de TAxCCR0, ou s'il décompte après avoir atteint le contenu de TAxCCR0
+\item reset du registre de comptage TAxR
+\item contrôle des interruptions (TAIE) issues du registre de comptage. A l'évidence, ces interruptions ne peuvent être générées qu'au moment particulier où le registre de comptage TAxR est à 0, puisqu'on ne connait pas la valeur maximale que peut prendre le registre de comptage TAxR.
+\end{itemize}
+
+Un dernier champ (TAIFG) contient le flag d'état de l'interruption issue du registre de comptage TAxR.
+
+\subsection{Bloc de capture/comparaison n°0}
+TAxCCR0 : registre de comparaison/capture n° 0 pour le Timer A (n° x). Ce bloc fonctionnel est en étroite interaction avec le registre de comptage TAxR, puisqu'il peut (selon la valeur du champ MC) définir la borne supérieure du comptage. Comme TAxR, TAxCCR0 est un « registre de donnée »; leurs valeurs peuvent être comparées (mode comparaison) ou le contenu de TAxR peut être copié dans TAxCCR0 (mode capture).
+Lors de ces deux événements (égalité des deux registres ou transfert de TAxR dans TAxCCR0), une requête d'interruption est émise; c'est le signal appelé TAxCCR0\_CCIFG, que nous nommerons CCIFG0.
+Ce circuit de capture/compare, centré autour du registre TAxCCR0, est contrôlé par le registre de contrôle TAxCCTL0.
+
+TAxCCTL0 : registre de contrôle du circuit de capture/compare n° 0 pour le Timer A (n° x). Il permet de spécifier comment TAxCCR0 se comporte. Il est composé de 6 champs, pour contrôler :
+\begin{itemize}
+\item sélection de la fonction Capture ou Comparaison (CAP)
+\item mode de capture (sur flanc montant, descendant, etc...) (CM)
+\item sélection du signal de capture (CCIS)
+\item synchronisation ou non du signal de capture avec l'horloge de comptage (SCS)
+\item mode de sortie (OUTMOD)
+\item autorisation des interruptions émises par le bloc de capture comparaison n° 0 (CCIE)
+\end{itemize}
+
+D'autres champs contiennent différents signaux tels que le flag de l'interruption issue du bloc (CCIFG0).
+
+\subsection{Bloc de capture/comparaison n°1,2,3...}
+Ces circuits sont des copies conformes du circuit de capture/comparaison n° 0. La seule différence est que leur coeur (TAxCCRy) n'a pas d'influence sur la borne supérieure de TAxR. Ils intéragissent toutefois avec TAxR en mode capture.
+Pour le circuit n° y, le registre de donnée est nommé TAxCCRy, le registre de contrôle est TAxCCTLy.
+Bien entendu, dans le registre de contrôle TAxCCTLy, les champs portent les même noms (CAP, CM, CCIS, SCS, etc...).
+
+\subsection{Différence entre Capture et Comparaison}
+La figure \ref{fig:Cap_vs_Comp} illustre le comportement du registre TAxR dans le mode « continuous ».
+Une fois le processus de comptage lancé, TAxR évolue en dent de scie, comme illustré. Le circuit de capture/comparaison utilise ce signal pour son opération.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Cap_vs_Comp]{Comparaison : TAxR est l'entrée / Capture : Pulse est l'entrée}
+  \label{fig:Cap_vs_Comp}
+\end{figure}
+
+En mode « comparaison », le contenu du registre TAxCCRy est une entrée. Dès que TAxR atteint TAxCCRy, le signal noté « Pulse » est généré, qui peut déclencher l?exécution d'une routine de service d'interruption.
+
+En mode « capture », le contenu du registre TAxCCRy est une sortie. Un signal « Pulse » doit être fourni, qui déclenche la copie de TAxR dans TAxCCRy au moment où la pulse apparaît. En fait, c'est le flanc actif de la pulse qui déclenche le processus de capture, qui peut donc se produire sur le flanc montant, descendant ou les deux, du signal « pulse ». Typiquement, le signal « pulse » est une entrée du microcontrôleur. Au moment où la capture est exécutée, une requête d'interruption peut être émise.
 
 
-\subsection{Pif}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
