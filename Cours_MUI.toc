@@ -27,30 +27,33 @@
 \contentsline {subsection}{\numberline {5.2.1}Real Time Clock}{13}{subsection.5.2.1}
 \contentsline {subsection}{\numberline {5.2.2}WatchDog Timer}{13}{subsection.5.2.2}
 \contentsline {section}{\numberline {5.3}Timer \`a usage g\'en\'eral : le timer A}{13}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Bloc de comptage}{13}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Bloc de capture/comparaison n\IeC {\textdegree }0}{14}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}Bloc de capture/comparaison n\IeC {\textdegree }1,2,3...}{14}{subsection.5.3.3}
-\contentsline {subsection}{\numberline {5.3.4}Diff\'erence entre Capture et Comparaison}{14}{subsection.5.3.4}
-\contentsline {chapter}{\numberline {6}\textsc {Syst\`eme d'horloges}}{17}{chapter.6}
-\contentsline {section}{\numberline {6.1}Diviseur de fr\'equences}{17}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Zip}{17}{subsection.6.1.1}
-\contentsline {chapter}{\numberline {7}\textsc {CPU}}{19}{chapter.7}
-\contentsline {section}{\numberline {7.1}Principe}{19}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Tada}{19}{subsection.7.1.1}
-\contentsline {chapter}{\numberline {8}\textsc {Assembleur}}{21}{chapter.8}
-\contentsline {section}{\numberline {8.1}Chaine de compilation}{21}{section.8.1}
-\contentsline {subsection}{\numberline {8.1.1}Kaboum}{21}{subsection.8.1.1}
-\contentsline {section}{\numberline {8.2}Debug}{21}{section.8.2}
-\contentsline {chapter}{\numberline {9}\textsc {Programmation en C}}{23}{chapter.9}
-\contentsline {section}{\numberline {9.1}Mots cl\'es}{23}{section.9.1}
-\contentsline {subsection}{\numberline {9.1.1}Youpla}{23}{subsection.9.1.1}
-\contentsline {chapter}{\numberline {10}\textsc {Interfaces s\'eries}}{25}{chapter.10}
-\contentsline {section}{\numberline {10.1}Notion de pile protocolaire}{25}{section.10.1}
-\contentsline {subsection}{\numberline {10.1.1}Mod\`ele OSI}{25}{subsection.10.1.1}
-\contentsline {chapter}{\numberline {11}\textsc {AD et DA}}{27}{chapter.11}
-\contentsline {section}{\numberline {11.1}AD}{27}{section.11.1}
-\contentsline {subsection}{\numberline {11.1.1}ploutch}{27}{subsection.11.1.1}
-\contentsline {chapter}{\numberline {A}\textsc {Jeux d'instruction du MSP430}}{29}{appendix.A}
-\contentsline {section}{\numberline {A.1}Une structure orthogonale}{29}{section.A.1}
-\contentsline {subsection}{\numberline {A.1.1}Vroum}{29}{subsection.A.1.1}
-\contentsline {paragraph}{zzz}{29}{section*.5}
+\contentsline {subsection}{\numberline {5.3.1}Modes de comptage}{14}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Structure d\'etaill\'ee du timer A}{15}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Contr\^ole du bloc de comptage}{16}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}Contr\^ole du bloc de capture/comparaison n\IeC {\textdegree }0}{16}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}Contr\^ole du bloc de capture/comparaison n\IeC {\textdegree }1,2,3...}{17}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}Diff\'erence entre Capture et Comparaison}{17}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}Interruptions du timer A}{18}{subsection.5.3.7}
+\contentsline {chapter}{\numberline {6}\textsc {Syst\`eme d'horloges}}{19}{chapter.6}
+\contentsline {section}{\numberline {6.1}Diviseur de fr\'equences}{19}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Zip}{19}{subsection.6.1.1}
+\contentsline {chapter}{\numberline {7}\textsc {CPU}}{21}{chapter.7}
+\contentsline {section}{\numberline {7.1}Principe}{21}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Tada}{21}{subsection.7.1.1}
+\contentsline {chapter}{\numberline {8}\textsc {Assembleur}}{23}{chapter.8}
+\contentsline {section}{\numberline {8.1}Chaine de compilation}{23}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}Kaboum}{23}{subsection.8.1.1}
+\contentsline {section}{\numberline {8.2}Debug}{23}{section.8.2}
+\contentsline {chapter}{\numberline {9}\textsc {Programmation en C}}{25}{chapter.9}
+\contentsline {section}{\numberline {9.1}Mots cl\'es}{25}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}Youpla}{25}{subsection.9.1.1}
+\contentsline {chapter}{\numberline {10}\textsc {Interfaces s\'eries}}{27}{chapter.10}
+\contentsline {section}{\numberline {10.1}Notion de pile protocolaire}{27}{section.10.1}
+\contentsline {subsection}{\numberline {10.1.1}Mod\`ele OSI}{27}{subsection.10.1.1}
+\contentsline {chapter}{\numberline {11}\textsc {AD et DA}}{29}{chapter.11}
+\contentsline {section}{\numberline {11.1}AD}{29}{section.11.1}
+\contentsline {subsection}{\numberline {11.1.1}ploutch}{29}{subsection.11.1.1}
+\contentsline {chapter}{\numberline {A}\textsc {Jeux d'instruction du MSP430}}{31}{appendix.A}
+\contentsline {section}{\numberline {A.1}Une structure orthogonale}{31}{section.A.1}
+\contentsline {subsection}{\numberline {A.1.1}Vroum}{31}{subsection.A.1.1}
+\contentsline {paragraph}{zzz}{31}{section*.5}

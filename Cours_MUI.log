@@ -1,25 +1,13 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  10 JUL 2015 15:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.11)  11 FEB 2016 12:34
 entering extended mode
- restricted \write18 enabled.
- %&-line parsing enabled.
-**Cours_MUI.tex
-(./Cours_MUI.tex
-LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
-rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
-c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
-h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
-h, french, friulan, galician, german, ngerman, swissgerman, monogreek, greek, h
-ungarian, icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, ma
-rathi, oriya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, 
-kurmanji, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk,
- polish, portuguese, romanian, romansh, russian, sanskrit, serbian, serbianc, s
-lovak, slovenian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, 
-welsh, loaded.
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/book.cls
-Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/bk10.clo
-File: bk10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+**./Cours_MUI.tex
+(Cours_MUI.tex
+LaTeX2e <2015/10/01> patch level 2
+Babel <3.9n> and hyphenation patterns for 69 languages loaded.
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\book.cls"
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\bk10.clo"
+File: bk10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@chapter=\count80
@@ -34,29 +22,43 @@ File: bk10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2008/03/30 v1.1d Input encoding file
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.s
+ty"
+Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/latin1.def
-File: latin1.def 2008/03/30 v1.1d Input encoding file
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\latin1.def
+"
+File: latin1.def 2015/03/17 v1.2c Input encoding file
 ))
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/fontenc.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\fontenc.st
+y"
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/t1enc.def
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1enc.def"
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
-LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 ))
-(/usr/local/texlive/2012/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2008/07/08 v3.8m The Babel package
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.s
+ty"
+Package: babel 2016/01/08 3.9n The Babel package
 
-(/usr/local/texlive/2012/texmf-dist/tex/generic/babel/english.ldf
-Language: english 2005/03/30 v3.3o English support from the babel system
+*************************************
+* Local config file bblopts.cfg used
+*
 
-(/usr/local/texlive/2012/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2008/07/08 v3.8m Babel common definitions
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\bblopt
+s.cfg"
+File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
+)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-english\e
+nglish.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
+
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.d
+ef"
+File: babel.def 2016/01/08 3.9n Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 )
@@ -64,163 +66,196 @@ File: babel.def 2008/07/08 v3.8m Babel common definitions
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 )
-(/usr/local/texlive/2012/texmf-dist/tex/generic/babel/english.ldf
-Language: english 2005/03/30 v3.3o English support from the babel system
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-english\e
+nglish.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
 )
-(/usr/local/texlive/2012/texmf-dist/tex/generic/babel/frenchb.ldf
-Language: frenchb 2010/08/21 v2.5a French support from the babel system
-Package babel Info: Making : an active character on input line 234.
-Package babel Info: Making ; an active character on input line 235.
-Package babel Info: Making ! an active character on input line 236.
-Package babel Info: Making ? an active character on input line 237.
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-french\fr
+enchb.ldf"
+Language: frenchb 2016/01/01 v3.1k French support from the babel system
+\l@acadian = a dialect from \language\l@french 
+\l@canadien = a dialect from \language\l@french 
+\FBcolonskip=\skip43
+\FBthinskip=\skip44
+\FB@interchartokenstateORI=\count89
+Package babel Info: Making : an active character on input line 372.
+Package babel Info: Making ; an active character on input line 373.
+Package babel Info: Making ! an active character on input line 374.
+Package babel Info: Making ? an active character on input line 375.
+\FBguillskip=\skip45
+\FBguill@level=\count90
+\FB@everypar=\toks16
 \FB@Mht=\dimen104
-\std@mcc=\count89
-\dec@mcc=\count90
+\std@mcc=\count91
+\dec@mcc=\count92
+\listindentFB=\skip46
+\labelwidthFB=\skip47
+\leftmarginFB=\skip48
 \parindentFFN=\dimen105
-
-*************************************
-* Local config file frenchb.cfg used
-*
-(/usr/local/texlive/2012/texmf-dist/tex/generic/babel/frenchb.cfg)))
-(/usr/local/texlive/2012/texmf-dist/tex/latex/carlisle/scalefnt.sty)
-(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
-\KV@toks@=\toks16
+))
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\carlisle\scalef
+nt.sty")
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval
+.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphi
+cx.sty"
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphi
+cs.sty"
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/trig.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.s
+ty"
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/graphics.cfg
-File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\graphi
+cs.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 94.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/pdftex-def/pdftex.def
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pdftex-def\pdft
+ex.def"
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\infw
+arerr.sty"
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ltxc
+mds.sty"
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count91
+\Gread@gobject=\count93
 ))
 \Gin@req@height=\dimen106
 \Gin@req@width=\dimen107
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ifthen.sty
+"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/amssymb.sty
-Package: amssymb 2009/06/22 v3.00
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssym
+b.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/amsfonts.sty
-Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
-\@emptytoks=\toks17
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfon
+ts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks18
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
-(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(/usr/local/texlive/2012/texmf-dist/tex/latex/changepage/chngpage.sty
-Package: chngpage 2009/10/20 v1.2b change page layout
-\c@cp@cnt=\count92
-\c@cp@tempcnt=\count93
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ltxmisc\chngpag
+e.sty"
+Package: chngpage 2003/08/10 v1.2 change page layout
+\c@cp@cnt=\count94
+\c@cp@tempcnt=\count95
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/lastpage/lastpage.sty
-Package: lastpage 2011/09/01 v1.2k Refers to last page's name (HMM; JPG)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lastpage\lastpa
+ge.sty"
+Package: lastpage 2015/03/29 v1.2m Refers to last page's name (HMM; JPG)
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count94
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listin
+gs.sty"
+\lst@mode=\count96
 \lst@gtempboxa=\box26
-\lst@token=\toks18
-\lst@length=\count95
+\lst@token=\toks19
+\lst@length=\count97
 \lst@currlwidth=\dimen108
-\lst@column=\count96
-\lst@pos=\count97
+\lst@column=\count98
+\lst@pos=\count99
 \lst@lostspace=\dimen109
 \lst@width=\dimen110
-\lst@newlines=\count98
-\lst@lineno=\count99
+\lst@newlines=\count100
+\lst@lineno=\count101
 \lst@maxwidth=\dimen111
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
-\c@lstnumber=\count100
-\lst@skipnumbers=\count101
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmis
+c.sty"
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count102
+\lst@skipnumbers=\count103
 \lst@framebox=\box27
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2007/02/22 1.4 listings configuration
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listin
+gs.cfg"
+File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
-Package: listings 2007/02/22 1.4 (Carsten Heinz)
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2000/07/18 v2.13 AMS math features
-\@mathmargin=\skip43
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath
+.sty"
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip49
 
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amstext.sty
+
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext
+.sty"
 Package: amstext 2000/06/29 v2.01
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsgen.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.
+sty"
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks19
+\@emptytoks=\toks20
 \ex@=\dimen112
 ))
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsbsy.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.
+sty"
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen113
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsmath/amsopn.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.
+sty"
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count102
-LaTeX Info: Redefining \frac on input line 211.
-\uproot@=\count103
-\leftroot@=\count104
-LaTeX Info: Redefining \overline on input line 307.
-\classnum@=\count105
-\DOTSCASE@=\count106
-LaTeX Info: Redefining \ldots on input line 379.
-LaTeX Info: Redefining \dots on input line 382.
-LaTeX Info: Redefining \cdots on input line 467.
+\inf@bad=\count104
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count105
+\leftroot@=\count106
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count107
+\DOTSCASE@=\count108
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
 \Mathstrutbox@=\box28
 \strutbox@=\box29
 \big@size=\dimen114
-LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
-\macc@depth=\count107
-\c@MaxMatrixCols=\count108
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count109
+\c@MaxMatrixCols=\count110
 \dotsspace@=\muskip10
-\c@parentequation=\count109
-\dspbrk@lvl=\count110
-\tag@help=\toks20
-\row@=\count111
-\column@=\count112
-\maxfields@=\count113
-\andhelp@=\toks21
+\c@parentequation=\count111
+\dspbrk@lvl=\count112
+\tag@help=\toks21
+\row@=\count113
+\column@=\count114
+\maxfields@=\count115
+\andhelp@=\toks22
 \eqnshift@=\dimen115
 \alignsep@=\dimen116
 \tagshift@=\dimen117
 \tagwidth@=\dimen118
 \totwidth@=\dimen119
 \lineht@=\dimen120
-\@envbody=\toks22
-\multlinegap=\skip44
-\multlinetaggap=\skip45
-\mathdisplay@stack=\toks23
-LaTeX Info: Redefining \[ on input line 2666.
-LaTeX Info: Redefining \] on input line 2667.
+\@envbody=\toks23
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/textcomp.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\textcomp.s
+ty"
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -233,100 +268,108 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             only a restricted character set as indicated.
 (textcomp)             Family '?' is the default used for unknown fonts.
 (textcomp)             See the documentation for details.
-Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/ts1enc.def
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1enc.def
+"
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 )
-LaTeX Info: Redefining \oldstylenums on input line 266.
-Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 281.
-Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 282.
-Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 283.
-Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 284.
-Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 285.
-Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 286.
-Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 287.
-Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 288.
-Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 289.
-Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 290.
-Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 291.
-Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 292.
-Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 293.
-Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 294.
-Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 295.
-Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 296.
-Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 297.
-Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 298.
-Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 299.
-Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 300.
-Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 301.
-Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 302.
-Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 303.
-Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 304.
+LaTeX Info: Redefining \oldstylenums on input line 334.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
 
-Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 305.
-Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 306.
-Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 307.
-Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 308.
-Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 309.
-Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 310.
-Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 311.
-Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 312.
-Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 313.
-Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 314.
-Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 315.
-Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 316.
-Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 317.
-Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 318.
-Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 319.
-Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 320.
-Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 321.
-Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 322.
-Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 323.
-Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 324.
-Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 325.
-Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 326.
-Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 327.
-Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 328.
-Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 329.
-Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 330.
-Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 331.
-Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 332.
-Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 333.
-Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 334.
-Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 335.
-Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 336.
-Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 337.
-Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 338.
-Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 339.
-Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 340.
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
+Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/graphics/color.sty
-Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.
+sty"
+Package: color 2014/10/28 v1.1a Standard LaTeX Color (DPC)
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/color.cfg
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\color.
+cfg"
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
-Package color Info: Driver file: pdftex.def on input line 130.
+Package color Info: Driver file: pdftex.def on input line 142.
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/colortbl/colortbl.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\colortbl\colort
+bl.sty"
 Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/tools/array.sty
-Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\array.sty
+"
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \col@sep=\dimen121
 \extrarowheight=\dimen122
-\NC@list=\toks24
-\extratabsurround=\skip46
-\backup@length=\skip47
+\NC@list=\toks25
+\extratabsurround=\skip52
+\backup@length=\skip53
 )
-\everycr=\toks25
-\minrowclearance=\skip48
+\everycr=\toks26
+\minrowclearance=\skip54
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/xcolor/xcolor.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\xcolor\xcolor.s
+ty"
 Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/color.cfg
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\color.
+cfg"
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
@@ -341,37 +384,41 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/algorithms/algorithmic.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithms\algo
+rithmic.sty"
 Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
-\c@ALC@unique=\count114
-\c@ALC@line=\count115
-\c@ALC@rem=\count116
-\c@ALC@depth=\count117
-\ALC@tlm=\skip49
-\algorithmicindent=\skip50
+\c@ALC@unique=\count116
+\c@ALC@line=\count117
+\c@ALC@rem=\count118
+\c@ALC@depth=\count119
+\ALC@tlm=\skip55
+\algorithmicindent=\skip56
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/algorithms/algorithm.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithms\algo
+rithm.sty"
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/float/float.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\float\float.sty
+"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count118
-\float@exts=\toks26
+\c@float@type=\count120
+\float@exts=\toks27
 \float@box=\box30
-\@float@everytoks=\toks27
+\@float@everytoks=\toks28
 \@floatcapt=\box31
 )
-\@float@every@algorithm=\toks28
-\c@algorithm=\count119
+\@float@every@algorithm=\toks29
+\c@algorithm=\count121
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/supertabular/supertabular.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\supertabular\su
+pertabular.sty"
 Package: supertabular 2004/02/20 v4.1e the supertabular environment
-\c@tracingst=\count120
+\c@tracingst=\count122
 \ST@wd=\dimen123
-\ST@rightskip=\skip51
-\ST@leftskip=\skip52
-\ST@parfillskip=\skip53
+\ST@rightskip=\skip57
+\ST@leftskip=\skip58
+\ST@parfillskip=\skip59
 \ST@pageleft=\dimen124
 \ST@headht=\dimen125
 \ST@tailht=\dimen126
@@ -384,22 +431,27 @@ Package: supertabular 2004/02/20 v4.1e the supertabular environment
 \ST@dimen=\dimen133
 \ST@pbox=\box32
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/multirow/multirow.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\multirow\multir
+ow.sty"
 \bigstrutjot=\dimen134
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/tools/hhline.sty
-Package: hhline 1994/05/23 v2.03 Table rule package (DPC)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\hhline.st
+y"
+Package: hhline 2014/10/28 v2.03 Table rule package (DPC)
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2012/05/13 v6.82q Hypertext links for LaTeX
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperr
+ef.sty"
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 
-(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
-Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobs
+ub-hyperref.sty"
+Package: hobsub-hyperref 2012/04/25 v1.12 Bundle oberdiek, subset hyperref (HO)
 
 
-(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
-Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
-Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobs
+ub-generic.sty"
+Package: hobsub-generic 2012/04/25 v1.12 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/04/25 v1.12 Construct package bundles (HO)
 Package hobsub Info: Skipping package `infwarerr' (already loaded).
 Package hobsub Info: Skipping package `ltxcmds' (already loaded).
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
@@ -430,7 +482,7 @@ Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
 )
 Package hobsub Info: Skipping package `hobsub' (already loaded).
 Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
-Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
+Package: hopatch 2011/06/24 v1.1 Wrapper for package hooks (HO)
 Package: xcolor-patch 2011/01/30 xcolor patch
 Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
 Package atveryend Info: \enddocument detected (standard20110627).
@@ -438,109 +490,126 @@ Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
 Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
 )
-(/usr/local/texlive/2012/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\ifxetex\ifxet
+ex.sty"
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhoo
+k.sty"
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvopti
+ons.sty"
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
 \@linkdim=\dimen135
-\Hy@linkcounter=\count121
-\Hy@pagecounter=\count122
+\Hy@linkcounter=\count123
+\Hy@pagecounter=\count124
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2012/05/13 v6.82q Hyperref: PDFDocEncoding definition (HO)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc
+.def"
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count123
+\Hy@SavedSpaceFactor=\count125
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperr
+ef.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Hyper figures OFF on input line 4062.
-Package hyperref Info: Link nesting OFF on input line 4067.
-Package hyperref Info: Hyper index ON on input line 4070.
-Package hyperref Info: Plain pages OFF on input line 4077.
-Package hyperref Info: Backreferencing OFF on input line 4082.
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4300.
-\c@Hy@tempcnt=\count124
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count126
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/url/url.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip11
-Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4653.
-\Fld@menulength=\count125
-\Field@Width=\dimen136
-\Fld@charsize=\dimen137
-Package hyperref Info: Hyper figures OFF on input line 5773.
-Package hyperref Info: Link nesting OFF on input line 5778.
-Package hyperref Info: Hyper index ON on input line 5781.
-Package hyperref Info: backreferencing OFF on input line 5788.
-Package hyperref Info: Link coloring OFF on input line 5793.
-Package hyperref Info: Link coloring with OCG OFF on input line 5798.
-Package hyperref Info: PDF/A mode OFF on input line 5803.
-LaTeX Info: Redefining \ref on input line 5843.
-LaTeX Info: Redefining \pageref on input line 5847.
-\Hy@abspage=\count126
-\c@Item=\count127
-\c@Hfootnote=\count128
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen136
+\Fld@menulength=\count127
+\Field@Width=\dimen137
+\Fld@charsize=\dimen138
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring OFF on input line 6315.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count128
+\c@Item=\count129
+\c@Hfootnote=\count130
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2012/05/13 v6.82q Hyperref driver for pdfTeX
-\Fld@listcount=\count129
-\c@bookmark@seq@number=\count130
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hpdfte
+x.def"
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count131
+\c@bookmark@seq@number=\count132
+
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunf
+ilecheck.sty"
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip54
+\Hy@SectionHShift=\skip60
 )
 
 Package hyperref Warning: Option `pdftex' has already been used,
 (hyperref)                setting the option has no effect on input line 43.
 
 Package hyperref Info: Option `colorlinks' set `true' on input line 43.
-(/usr/local/texlive/2012/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-\fancy@headwidth=\skip55
-\f@ncyO@elh=\skip56
-\f@ncyO@erh=\skip57
-\f@ncyO@olh=\skip58
-\f@ncyO@orh=\skip59
-\f@ncyO@elf=\skip60
-\f@ncyO@erf=\skip61
-\f@ncyO@olf=\skip62
-\f@ncyO@orf=\skip63
-)
-(/usr/local/texlive/2012/texmf-dist/tex/latex/preprint/fullpage.sty
-Package: fullpage 1999/02/23 1.1 (PWD)
-\FP@margin=\skip64
-)
-(/usr/local/texlive/2012/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2010/09/12 v5.6 Page Geometry
-\Gm@cnth=\count131
-\Gm@cntv=\count132
-\c@Gm@tempcnt=\count133
-\Gm@bindingoffset=\dimen138
-\Gm@wd@mp=\dimen139
-\Gm@odd@mp=\dimen140
-\Gm@even@mp=\dimen141
-\Gm@layoutwidth=\dimen142
-\Gm@layoutheight=\dimen143
-\Gm@layouthoffset=\dimen144
-\Gm@layoutvoffset=\dimen145
-\Gm@dimlist=\toks29
-)
-\c@Figure=\count134
-\c@quation=\count135
-\c@Table=\count136
 
-(./Cours_MUI.aux)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\fancyhdr\fancyh
+dr.sty"
+\fancy@headwidth=\skip61
+\f@ncyO@elh=\skip62
+\f@ncyO@erh=\skip63
+\f@ncyO@olh=\skip64
+\f@ncyO@orh=\skip65
+\f@ncyO@elf=\skip66
+\f@ncyO@erf=\skip67
+\f@ncyO@olf=\skip68
+\f@ncyO@orf=\skip69
+)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\preprint\fullpa
+ge.sty"
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip70
+)
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geomet
+ry.sty"
+Package: geometry 2010/09/12 v5.6 Page Geometry
+\Gm@cnth=\count133
+\Gm@cntv=\count134
+\c@Gm@tempcnt=\count135
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
+\Gm@dimlist=\toks30
+
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geomet
+ry.cfg"))
+\c@Figure=\count136
+\c@quation=\count137
+\c@Table=\count138
+ (Cours_MUI.aux)
 \openout1 = `Cours_MUI.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
@@ -558,8 +627,9 @@ LaTeX Font Info:    ... okay on input line 118.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 118.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 118.
 
- (/usr/local/texlive/2012/texmf-dist/tex/latex/base/ts1cmr.fd
-File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 118.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 118.
@@ -567,61 +637,47 @@ LaTeX Font Info:    ... okay on input line 118.
 LaTeX Info: Redefining \degres on input line 118.
 LaTeX Info: Redefining \dots on input line 118.
 LaTeX Info: Redefining \up on input line 118.
-(/usr/local/texlive/2012/texmf-dist/tex/latex/tools/hhline.sty
-Package: hhline 1994/05/23 v2.03 Table rule package (DPC)
+
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\hhline.st
+y"
+Package: hhline 2014/10/28 v2.03 Table rule package (DPC)
 )
-(/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf
+.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count137
-\scratchdimen=\dimen146
+\scratchcounter=\count139
+\scratchdimen=\dimen147
 \scratchbox=\box33
-\nofMPsegments=\count138
-\nofMParguments=\count139
-\everyMPshowfont=\toks30
-\MPscratchCnt=\count140
-\MPscratchDim=\dimen147
-\MPnumerator=\count141
-\makeMPintoPDFobject=\count142
-\everyMPtoPDFconversion=\toks31
-) (/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
-
-(/usr/local/texlive/2012/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+\nofMPsegments=\count140
+\nofMParguments=\count141
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count142
+\MPscratchDim=\dimen148
+\MPnumerator=\count143
+\makeMPintoPDFobject=\count144
+\everyMPtoPDFconversion=\toks32
 )
-Package grfext Info: Graphics extension search list:
-(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 452.
-
-(/usr/local/texlive/2012/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
 Package lastpage Info: Please have a look at the pageslts package at
-(lastpage)             http://www.ctan.org/tex-archive/ 
-(lastpage)             macros/latex/contrib/pageslts/ 
-(lastpage)             or
-(lastpage)             http://www.ctan.org/tex-archive/ 
-(lastpage)             install/macros/latex/contrib/pageslts.tds.zip
+(lastpage)             https://www.ctan.org/pkg/pageslts
 (lastpage)             ! on input line 118.
-\c@lstlisting=\count143
+\c@lstlisting=\count145
 \AtBeginShipoutBox=\box34
 Package hyperref Info: Link coloring ON on input line 118.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\namere
+f.sty"
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
-(/usr/local/texlive/2012/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gett
+itlestring.sty"
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count144
+\c@section@level=\count146
 )
 LaTeX Info: Redefining \ref on input line 118.
 LaTeX Info: Redefining \pageref on input line 118.
 LaTeX Info: Redefining \nameref on input line 118.
-
-(./Cours_MUI.out) (./Cours_MUI.out)
+ (Cours_MUI.out) (Cours_MUI.out)
 \@outlinefile=\write3
 \openout3 = `Cours_MUI.out'.
 
@@ -661,15 +717,17 @@ LaTeX Info: Redefining \nameref on input line 118.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Try loading font information for U+msa on input line 172.
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.f
+d"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 172.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-)
-<logo_HEIG_VD.png, id=120, 284.262pt x 142.47514pt>
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.f
+d"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) <logo_HEIG_VD.png, id=131, 284.262pt x 142.47514pt>
 File: logo_HEIG_VD.png Graphic file (type png)
  <use logo_HEIG_VD.png>
 Package pdftex.def Info: logo_HEIG_VD.png used on input line 203.
@@ -684,8 +742,8 @@ Package Fancyhdr Warning: \headheight is too small (17.07164pt):
 [1
 
 
-{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./logo_
-HEIG_VD.png>]
+{C:/Users/Bertrand/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./logo_H
+EIG_VD.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 240--266
 
  []
@@ -695,7 +753,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 274--275
 
  []
 
-[2] (./Cours_MUI.toc)
+[2] (Cours_MUI.toc)
 \tf@toc=\write4
 \openout4 = `Cours_MUI.toc'.
 
@@ -703,13 +761,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 274--275
 
 ] [4
 
-] (./Cours_MUI.lot)
+] (Cours_MUI.lot)
 \tf@lot=\write5
 \openout5 = `Cours_MUI.lot'.
 
- [5] (./Chapter_intro.tex
+ [5] (Chapter_intro.tex
 Chapitre 1.
-<./Figures/Branches.pdf, id=187, 186.6975pt x 450.68375pt>
+<./Figures/Branches.pdf, id=200, 186.6975pt x 450.68375pt>
 File: ./Figures/Branches.pdf Graphic file (type pdf)
 
 <use ./Figures/Branches.pdf>
@@ -725,115 +783,269 @@ l.40 \section
  <./Figures/Branches.pdf>]
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 78.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1pcr.fd
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\t1pcr.fd
+"
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 LaTeX Font Info:    Try loading font information for T1+ppl on input line 80.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1ppl.fd
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\t1ppl.fd
+"
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 LaTeX Font Info:    Try loading font information for T1+phv on input line 84.
 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1phv.fd
+("C:\Users\Bertrand\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\t1phv.fd
+"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
-) [2])
-(./Chapter_gpio.tex [3
+) [2]) (Chapter_gpio.tex [3
 
 ] [4
 
 ]
 Chapitre 2.
-) (./Chapter_arith.tex [5] [6
+) (Chapter_arith.tex [5] [6
 
 ]
 Chapitre 3.
-) (./Chapter_interrupt.tex [7] [8
+) (Chapter_interrupt.tex [7] [8
 
 ]
 Chapitre 4.
-) (./Chapter_timer.tex [9] [10
+) (Chapter_timer.tex [9] [10
 
 ]
 Chapitre 5.
-) (./Chapter_clock.tex [11] [12
+<./Figures/Chap5_Timer/Timer.pdf, id=287, 473.97417pt x 218.69505pt>
+File: ./Figures/Chap5_Timer/Timer.pdf Graphic file (type pdf)
 
-]
+<use ./Figures/Chap5_Timer/Timer.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer.pdf used on input line 19.
+
+(pdftex.def)             Requested size: 473.973pt x 218.6945pt.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.32 S
+      ouvent, un prédiviseur de fréquence permet de réduire la fréquence du ...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[11 <./Figures/Chap5_Timer/Timer.pdf>]
+<./Figures/Chap5_Timer/Timer_chrono1.pdf, id=312, 389.78926pt x 218.34271pt>
+File: ./Figures/Chap5_Timer/Timer_chrono1.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_chrono1.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_chrono1.pdf used on input 
+line 39.
+(pdftex.def)             Requested size: 389.7883pt x 218.34218pt.
+
+<./Figures/Chap5_Timer/Timer_chrono2.pdf, id=314, 390.94255pt x 217.19041pt>
+File: ./Figures/Chap5_Timer/Timer_chrono2.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_chrono2.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_chrono2.pdf used on input 
+line 49.
+(pdftex.def)             Requested size: 390.94159pt x 217.18988pt.
+ [12 <./Figures/Chap5_Timer/Timer_chrono1.pdf> <./Figures/Chap5_Timer/Timer_chr
+ono2.pdf
+
+pdfTeX warning: pdflatex (file ./Figures/Chap5_Timer/Timer_chrono2.pdf): PDF in
+clusion: multiple pdfs with page group included in a single page
+>]
+<./Figures/Chap5_Timer/Timer_blocs_1.pdf, id=335, 476.19205pt x 263.32478pt>
+File: ./Figures/Chap5_Timer/Timer_blocs_1.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_blocs_1.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_blocs_1.pdf used on input 
+line 99.
+(pdftex.def)             Requested size: 476.19087pt x 263.32413pt.
+ [13 <./Figures/Chap5_Timer/Timer_blocs_1.pdf>]
+<./Figures/Chap5_Timer/Timer_Mode_1.pdf, id=363, 586.56738pt x 277.5158pt>
+File: ./Figures/Chap5_Timer/Timer_Mode_1.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_Mode_1.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_Mode_1.pdf used on input l
+ine 120.
+(pdftex.def)             Requested size: 586.56593pt x 277.5151pt.
+
+<./Figures/Chap5_Timer/Timer_Mode_2.pdf, id=364, 596.02779pt x 255.96628pt>
+File: ./Figures/Chap5_Timer/Timer_Mode_2.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_Mode_2.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_Mode_2.pdf used on input l
+ine 128.
+(pdftex.def)             Requested size: 596.02634pt x 255.96565pt.
+
+<./Figures/Chap5_Timer/Timer_Mode_3a.pdf, id=365, 463.57793pt x 121.4136pt>
+File: ./Figures/Chap5_Timer/Timer_Mode_3a.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_Mode_3a.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_Mode_3a.pdf used on input 
+line 136.
+(pdftex.def)             Requested size: 463.57678pt x 121.4133pt.
+
+<./Figures/Chap5_Timer/Timer_Mode_3b.pdf, id=367, 502.82254pt x 142.78745pt>
+File: ./Figures/Chap5_Timer/Timer_Mode_3b.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_Mode_3b.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_Mode_3b.pdf used on input 
+line 145.
+(pdftex.def)             Requested size: 502.8213pt x 142.7871pt.
+ [14 <./Figures/Chap5_Timer/Timer_Mode_1.pdf> <./Figures/Chap5_Timer/Timer_Mode
+_2.pdf
+
+pdfTeX warning: pdflatex (file ./Figures/Chap5_Timer/Timer_Mode_2.pdf): PDF inc
+lusion: multiple pdfs with page group included in a single page
+>] <./Figures/Chap5_Timer/Timer_blocs_2.pdf, id=400, 493.5796pt x 265.24094pt>
+File: ./Figures/Chap5_Timer/Timer_blocs_2.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_blocs_2.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_blocs_2.pdf used on input 
+line 159.
+(pdftex.def)             Requested size: 493.57838pt x 265.24026pt.
+ [15 <./Figures/Chap5_Timer/Timer_Mode_3a.pdf> <./Figures/Chap5_Timer/Timer_Mod
+e_3b.pdf
+
+pdfTeX warning: pdflatex (file ./Figures/Chap5_Timer/Timer_Mode_3b.pdf): PDF in
+clusion: multiple pdfs with page group included in a single page
+> <./Figures/Chap5_Timer/Timer_blocs_2.pdf
+
+pdfTeX warning: pdflatex (file ./Figures/Chap5_Timer/Timer_blocs_2.pdf): PDF in
+clusion: multiple pdfs with page group included in a single page
+>] <./Figures/Chap5_Timer/Timer_Detail_1.pdf, id=431, 668.172pt x 335.07184pt>
+File: ./Figures/Chap5_Timer/Timer_Detail_1.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_Detail_1.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_Detail_1.pdf used on input
+ line 188.
+(pdftex.def)             Requested size: 668.17036pt x 335.07101pt.
+
+<./Figures/Chap5_Timer/TAxCTL.pdf, id=433, 384.01668pt x 127.45718pt>
+File: ./Figures/Chap5_Timer/TAxCTL.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/TAxCTL.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/TAxCTL.pdf used on input line 19
+8.
+(pdftex.def)             Requested size: 384.01573pt x 127.45685pt.
+ [16 <./Figures/Chap5_Timer/Timer_Detail_1.pdf> <./Figures/Chap5_Timer/TAxCTL.p
+df
+
+pdfTeX warning: pdflatex (file ./Figures/Chap5_Timer/TAxCTL.pdf): PDF inclusion
+: multiple pdfs with page group included in a single page
+>]
+<./Figures/Chap5_Timer/Timer_Detail_2.pdf, id=467, 688.00838pt x 402.08217pt>
+File: ./Figures/Chap5_Timer/Timer_Detail_2.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_Detail_2.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_Detail_2.pdf used on input
+ line 227.
+(pdftex.def)             Requested size: 688.00668pt x 402.08118pt.
+
+<./Figures/Chap5_Timer/TAxCCTLy.pdf, id=469, 385.6588pt x 130.41423pt>
+File: ./Figures/Chap5_Timer/TAxCCTLy.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/TAxCCTLy.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/TAxCCTLy.pdf used on input line 
+237.
+(pdftex.def)             Requested size: 385.65785pt x 130.4139pt.
+
+<./Figures/Chap5_Timer/Timer_CC.pdf, id=471, 364.03404pt x 213.34706pt>
+File: ./Figures/Chap5_Timer/Timer_CC.pdf Graphic file (type pdf)
+
+<use ./Figures/Chap5_Timer/Timer_CC.pdf>
+Package pdftex.def Info: ./Figures/Chap5_Timer/Timer_CC.pdf used on input line 
+253.
+(pdftex.def)             Requested size: 364.03314pt x 213.34653pt.
+ [17 <./Figures/Chap5_Timer/Timer_Detail_2.pdf>]) (Chapter_clock.tex [18 <./Fig
+ures/Chap5_Timer/TAxCCTLy.pdf> <./Figures/Chap5_Timer/Timer_CC.pdf
+
+pdfTeX warning: pdflatex (file ./Figures/Chap5_Timer/Timer_CC.pdf): PDF inclusi
+on: multiple pdfs with page group included in a single page
+>]
 Chapitre 6.
-) (./Chapter_cpu.tex [13] [14
+) (Chapter_cpu.tex [19
+
+] [20
 
 ]
 Chapitre 7.
-) (./Chapter_assembleur.tex [15] [16
+) (Chapter_assembleur.tex [21] [22
 
 ]
 Chapitre 8.
-) (./Chapter_prog.tex [17] [18
+) (Chapter_prog.tex [23] [24
 
 ]
 Chapitre 9.
-) (./Chapter_serial.tex [19] [20
+) (Chapter_serial.tex [25] [26
 
 ]
 Chapitre 10.
-) (./Chapter_adda.tex [21] [22
+) (Chapter_adda.tex [27] [28
 
 ]
 Chapitre 11.
-) (./Appendix01.tex [23] [24
+) (Appendix01.tex [29] [30
 
 ]
 Annexe A.
 ) 
 AED: lastpage setting LastPage
-[25]
+[31]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 351.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 351.
- (./Cours_MUI.aux)
+ (Cours_MUI.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 351.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 351.
-
-
-Package rerunfilecheck Warning: File `Cours_MUI.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Cours_MUI.out':
-(rerunfilecheck)             Before: 6C879BFB2064135417007A0A5BA5B39A;2035
-(rerunfilecheck)             After:  C86792EEAA781A58A4AB9E8793E22CF2;1862.
+Package rerunfilecheck Info: File `Cours_MUI.out' has not changed.
+(rerunfilecheck)             Checksum: 6CC1AC88A5AD1E1ADE1EF72A84911F17;2085.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 351.
  ) 
 Here is how much of TeX's memory you used:
- 10332 strings out of 493488
- 145829 string characters out of 3141326
- 273317 words of memory out of 3000000
- 13326 multiletter control sequences out of 15000+200000
- 21601 words of font info for 43 fonts, out of 3000000 for 9000
- 957 hyphenation exceptions out of 8191
- 34i,18n,43p,362b,446s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
-{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texl
-ive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texliv
-e/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
-/2012/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2
-012/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/201
-2/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2012/
-texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/local/texlive/2012/te
-xmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2012/texm
-f-dist/fonts/type1/public/cm-super/sfcc1000.pfb></usr/local/texlive/2012/texmf-
-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2012/texmf-di
-st/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2012/texmf-dist
-/fonts/type1/public/cm-super/sfxc1000.pfb></usr/local/texlive/2012/texmf-dist/f
-onts/type1/public/cm-super/sfxc1440.pfb></usr/local/texlive/2012/texmf-dist/fon
-ts/type1/public/cm-super/sfxc2488.pfb></usr/local/texlive/2012/texmf-dist/fonts
-/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/u
-rw/helvetic/uhvr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/pala
-tino/uplr8a.pfb>
-Output written on Cours_MUI.pdf (31 pages, 314999 bytes).
+ 10837 strings out of 493634
+ 157774 string characters out of 3134015
+ 269560 words of memory out of 3000000
+ 13862 multiletter control sequences out of 15000+200000
+ 22277 words of font info for 45 fonts, out of 3000000 for 9000
+ 1025 hyphenation exceptions out of 8191
+ 34i,18n,43p,669b,462s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\Bertrand\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
+00\tcbx1200.pk> <C:\Users\Bertrand\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkn
+appen\ec\dpi600\tcrm1000.pk> <C:\Users\Bertrand\AppData\Local\MiKTeX\2.9\fonts\
+pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Bertrand\AppData\Local\MiKT
+eX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1000.pk>{C:/Users/Bertrand/AppDat
+a/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc} <C:\Users\Bertrand
+\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\eccc1000.pk> <C:\U
+sers\Bertrand\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecxc2
+488.pk> <C:\Users\Bertrand\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
+\dpi600\ecbx2074.pk> <C:\Users\Bertrand\AppData\Local\MiKTeX\2.9\fonts\pk\ljfou
+r\jknappen\ec\dpi600\ecxc1000.pk> <C:\Users\Bertrand\AppData\Local\MiKTeX\2.9\f
+onts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk> <C:\Users\Bertrand\AppData\Local
+\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk> <C:\Users\Bertrand\
+AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk> <C:\Us
+ers\Bertrand\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx14
+40.pk> <C:\Users\Bertrand\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\
+dpi600\ecxc1440.pk><C:/Users/Bertrand/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Bertrand/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Bertrand/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Bert
+rand/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb>
+<C:/Users/Bertrand/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmsy10.pfb><C:/Users/Bertrand/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/urw/courier/ucrr8a.pfb><C:/Users/Bertrand/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Bertrand/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb>
+Output written on Cours_MUI.pdf (37 pages, 1399381 bytes).
 PDF statistics:
- 438 PDF objects out of 1000 (max. 8388607)
- 380 compressed objects within 4 object streams
- 85 named destinations out of 1000 (max. 500000)
- 243 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1131 PDF objects out of 1200 (max. 8388607)
+ 116 named destinations out of 1000 (max. 500000)
+ 337 words of extra memory for PDF output out of 10000 (max. 10000000)
 
