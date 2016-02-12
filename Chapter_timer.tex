@@ -28,7 +28,6 @@ L'incrémentation se fait au rythme d'un signal souvent appelé CLK (fig. \ref{fig
 \item apériodique quelconque, auquel cas il compte simplement les flancs de ce signal tant qu'il est actif et on parle plutôt de \textit{compteur}.
 \end{itemize}
 
-\\
 Souvent, un prédiviseur de fréquence permet de réduire la fréquence du signal CLK pour ralentir le rythme du comptage.
 
 La figure \ref{fig:ChronoSync} montre l'évolution de la valeur du registre en fonction du temps, pour un \textit{timer} de 4 bits. La pente de la courbe dépend du rythme auquel le registre est incrémenté, donc de la fréquence du signal CLK.
@@ -102,7 +101,11 @@ La figure \ref{fig:TimerAsimplifie} est un schéma très simplifié du timer A, ill
   \label{fig:TimerAsimplifie}
 \end{figure}
 
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
 A la partie supérieure, on retrouve le bloc de comptage et son registre appelé TAxR (x est le numéro du timer; x=0 ou 1 s'il y a deux timers de type A dans le microcontrôleur). TAIFG est le signal d'overflow du compteur. En dessous, le bloc dit de "capture/comparaison" permet de capturer l'état du registre TAxR lors d'un évènement ou de comparer la valeur de TAxR avec une constante. Le bloc de "capture/comparaison" contient un sous-bloc, noté "Output module", qui est chargé de générer un signal PWM à partir du contenu du registre TAxR et de la constante chargée dans le bloc de "capture/comparaison". 
+=======
+A la partie supérieure, on retrouve le bloc de comptage et son registre appelé TAxR (x est le numéro du timer; x=0 ou 1 s'il y a deux timers de type A dans le microcontrôleur). TAIFG est le signal d'overflow du compteur. En dessous, le bloc dit de "capture/comparaison" permet de capturer l'état du registre TAxR lors d'un évènement ou de comparer la valeur de TAxR avec une constante contenue dans un registre appelé TAxCCRy. Le bloc de "capture/comparaison" contient un sous-bloc, noté "Output module", qui est chargé de générer un signal PWM à partir du contenu du registre TAxR et de la constante contenue dans le registre TAxCCRy. 
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
 
 Pour enrichir encore les possibilités offertes par le timer A, celui-ci dispose de plusieurs blocs de "capture/comparaison". Selon le type de microcontrôleur, le timer A dispose de 3, 5 ou 7 de ces blocs. Nous y reviendrons ultérieurement.
 
@@ -126,6 +129,7 @@ Les figures \ref{fig:TimerAmode1}, \ref{fig:TimerAmode2} et \ref{fig:TimerAmode3
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_Mode_2.pdf}
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
   \rule{35em}{0.5pt}
   \caption[TimerA Mode 2]{Comptage en mode 2 (MCx = 10)}
   \label{fig:TimerAmode2}
@@ -135,11 +139,26 @@ Les figures \ref{fig:TimerAmode1}, \ref{fig:TimerAmode2} et \ref{fig:TimerAmode3
   \centering
   \includegraphics[angle=0, width=12cm]{./Figures/Chap5_Timer/Timer_Mode_3a.pdf}
   \rule{35em}{0.5pt}
+=======
+  \rule{35em}{0.5pt}
+  \caption[TimerA Mode 2]{Comptage en mode 2 (MCx = 10)}
+  \label{fig:TimerAmode2}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=12cm]{./Figures/Chap5_Timer/Timer_Mode_3a.pdf}
+  \rule{35em}{0.5pt}
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
   \caption[TimerA Mode 3]{Comptage en mode 3 (MCx = 11)}
   \label{fig:TimerAmode3a}
 \end{figure}
 
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
 Dans le cas du mode 3, la figure  \ref{fig:TimerAmode3b} précise le comportement des signaux TAIFG et du signal de sortie CCIFG du sous bloc contenant le registre TAxCCR0.
+=======
+Dans le cas du mode 3, la figure  \ref{fig:TimerAmode3b} précise le comportement des signaux TAIFG et du signal de sortie CCIFG du bloc de capture/comparaison n°0 (celui qui contient le registre TAxCCR0).
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=12cm]{./Figures/Chap5_Timer/Timer_Mode_3b.pdf}
@@ -148,11 +167,19 @@ Dans le cas du mode 3, la figure  \ref{fig:TimerAmode3b} précise le comportement
   \label{fig:TimerAmode3b}
 \end{figure}
 
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
 Selon le mode de comptage sélectionné, le timer A va être capable de générer un grand nombre de signaux différents.
 
 
 \subsection{Structure détaillée du timer A}
 La figure \ref{fig:TimerAstruct} illustre plus en détail la structure du timer A, en mettant en évidence les registres et les signaux d'interruption. Comme dit précédemment, il peut y avoir 3, 5 ou 7 blocs de "capture/comparaison". Sur la figure, n vaut donc 2, 4 ou 6.
+=======
+Grâce à cette variété des modes de comptage, le timer A va être capable de générer un grand nombre de signaux différents.
+
+
+\subsection{Structure détaillée du timer A}
+La figure \ref{fig:TimerAstruct} illustre plus en détail la structure du timer A, en mettant en évidence uniquement les registres et les signaux de sortie du timer. Comme dit précédemment, il peut y avoir 3, 5 ou 7 blocs de "capture/comparaison". Sur la figure, n vaut donc 2, 4 ou 6.
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
 
 \begin{figure}[htb]
   \centering
@@ -164,7 +191,11 @@ La figure \ref{fig:TimerAstruct} illustre plus en détail la structure du timer A
 
 Le timer est ainsi organisé en tranches, chacune capable de générer ses signaux propres. Dans la figure \ref{fig:TimerAstruct}, chaque rectangle représente un «registre de donnée», c'est à dire un registre qui contient une information représentant une grandeur.
 Grâce à leur module de sortie, les circuits de capture/comparaison peuvent aussi générer automatiquement des signaux particuliers sur une patte du microcontrôleur. Ces fonctionnalités n'apparaissent pas sur la figure \ref{fig:TimerAstruct}.
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
 A gauche de chaque «registre de donnée» est noté le nom de son registre de contrôle. Tous ces registres sont sur 16 bits.
+=======
+A gauche de chaque «registre de donnée» est noté le nom de son registre de contrôle. Par exemple, à gauche du registre TAxR on retrouve le nom de son registre de contrôle : TAxCTL (TAx ConTroL). Tous ces registres sont sur 16 bits.
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
 
 \subsection{Contrôle du bloc de comptage}
 TAxR : Timer A Register (n° x) ou registre de comptage du timer n° x. Sa valeur évolue entre 0 et 0xFFFF ou le contenu de TAxCCR0.
@@ -190,6 +221,7 @@ La figure \ref{fig:TimerTAR} illustre en détail le bloc de comptage. On y voit l
   \caption[TimerTAR]{Schéma de détail du bloc de comptage}
   \label{fig:TimerTAR}
 \end{figure}
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
 
 Le détail du registre de contrôle TAxCTL est donné à la figure \ref{fig:TAxCTL}.
 
@@ -204,6 +236,64 @@ Le détail du registre de contrôle TAxCTL est donné à la figure \ref{fig:TAxCTL}.
 \subsection{Contrôle du bloc de capture/comparaison n°0}
 Ce bloc fonctionnel est en étroite interaction avec le registre de comptage TAxR, puisqu'il peut (selon la valeur du champ MC) définir la borne supérieure du comptage.
 
+=======
+
+Le détail du registre de contrôle TAxCTL est donné à la figure \ref{fig:TAxCTL} et dans le tableau \ref{table:TAxCTL}.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=13cm]{./Figures/Chap5_Timer/TAxCTL.pdf}
+  \rule{35em}{0.5pt}
+  \caption[TAxCTL]{Registre TAxCTL}
+  \label{fig:TAxCTL}
+\end{figure}
+
+\begin{table}[htb]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+TASSEL & & & Sélection de l'horloge d'incrémentation  \\
+& & 00 & TAxCLK  \\
+& & 01 & ACLK  \\
+& & 10 & SMCLK  \\
+& & 11 & INCLK  \\
+\hline
+ID & & & Prédivision de l'horloge d'incrémentation  \\
+& & 00 & /1  \\
+& & 01 & /2  \\
+& & 10 & /4  \\
+& & 11 & /8  \\
+\hline
+MC & & & Mode de comptage  \\
+& & 00 & Stop. Le timer est arrêté  \\
+& & 01 & Mode Up. Le timer compte jusqu'à TAxCCR0  \\
+& & 10 & Mode continu. Le timer compte jusqu'à 0xFFFF  \\
+& & 11 & Mode Up/Down. Le timer compte jusqu'à TAxCCR0 puis décompte jusqu'à 0  \\
+\hline
+TACLR & & & Met TAxR à 0. TACLR revient automatiquement à 0 \\
+\hline
+TAIE & & & Autorisation des requêtes d'interruptions de TAIFG \\
+& & 0 & Interruptions non autorisées \\
+& & 1 & Interruptions autorisées \\
+\hline
+TAIFG & & & Indicateur d'interruption \\
+& & 0 & Aucune interruption n'est en attente \\
+& & 1 & Une interruption est en attente de traitement \\
+\hline
+\end{tabular}
+\caption{Description des champs du registre TAxCTL}
+\label{table:TAxCTL}
+\end{table}
+
+Exemple de configuration :
+
+
+\subsection{Contrôle du bloc de capture/comparaison n°0}
+Ce bloc fonctionnel est en étroite interaction avec le registre de comptage TAxR, puisqu'il peut (selon la valeur du champ MC) définir la borne supérieure du comptage.
+
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
 TAxCCR0 : registre de capture/comparaison n° 0 pour le Timer A (n° x). Comme TAxR, TAxCCR0 est un « registre de donnée »; leurs valeurs peuvent être comparées (mode comparaison) ou le contenu de TAxR peut être copié dans TAxCCR0 (mode capture).
 Lors de ces deux événements (égalité des deux registres ou transfert de TAxR dans TAxCCR0), une requête d'interruption est émise; c'est le signal appelé TAxCCR0\_CCIFG, que nous nommerons CCIFG0.
 Ce circuit de capture/compare, centré autour du registre TAxCCR0, est contrôlé par le registre de contrôle TAxCCTL0.
@@ -221,6 +311,7 @@ TAxCCTL0 : registre de contrôle du circuit de capture/compare n° 0 pour le Timer
 D'autres champs contiennent différents signaux tels que le flag de l'interruption issue du bloc (CCIFG0).
 \\
 La figure \ref{fig:TimerCCR} illustre en détail un bloc de capture/comparaison (n° y). On y voit les différents sous blocs et leurs champs de contrôle, tous éléments du registre de contrôle TAxCCTLy.
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
 
 \begin{figure}[htb]
   \centering
@@ -239,6 +330,73 @@ Le détail du registre de contrôle TAxCCTLy, pour le bloc de capture/comparaison 
   \caption[TAxCCTLy]{Registre TAxCCTLy}
   \label{fig:TAxCCTLy}
 \end{figure}
+=======
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=16cm]{./Figures/Chap5_Timer/Timer_Detail_2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[TimerCCR]{Schéma de détail du bloc de capture/comparaison}
+  \label{fig:TimerCCR}
+\end{figure}
+
+Le détail du registre de contrôle TAxCCTLy, pour le bloc de capture/comparaison n°y, est donné à la figure \ref{fig:TAxCCTLy} et dans le tableau \ref{table:TAxCCTL}. 
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=13cm]{./Figures/Chap5_Timer/TAxCCTLy.pdf}
+  \rule{35em}{0.5pt}
+  \caption[TAxCCTLy]{Registre TAxCCTLy}
+  \label{fig:TAxCCTLy}
+\end{figure}
+
+\begin{table}[htb]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+CM & & & Mode de capture  \\
+& & 00 & Pas de capture  \\
+& & 01 & Capture sur le flanc montant du signal de capture  \\
+& & 10 & Capture sur le flanc descendant  \\
+& & 11 & Capture sur les deux flancs  \\
+\hline
+CCIS & & & Sélection du signal de capture  \\
+& & 00 & CCIxA  \\
+& & 01 & CCIxB  \\
+& & 10 & GND  \\
+& & 11 & VCC  \\
+\hline
+SCS & & & Synchronisation du signal de capture  \\
+& & 0 & Pas de synchronisation \\
+& & 1 & Synchronisation du signal de capture avec le prochain flanc de CLK \\
+\hline
+SCCI & & & Image du signal de capture après synchronisation \\
+\hline
+CAP & & & Sélection entre capture et comparaison \\
+& & 0 & Mode comparaison \\
+& & 1 & Mode capture \\
+\hline
+OUTMOD & & & Génération du signal de sortie OUT (module de sortie) \\
+& & 000 &  \\
+& & 001 &  \\
+& & 010 &  \\
+& & 011 &  \\
+& & 100 &  \\
+& & 101 &  \\
+& & 110 &  \\
+& & 111 &  \\
+\hline
+CCIE & & & Autorisation des requêtes d'interruptions de CCIFG \\
+& & 0 & Interruptions non autorisées \\
+& & 1 & Interruptions autorisées \\
+\hline
+\end{tabular}
+\caption{Description des champs du registre TAxCCTL}
+\label{table:TAxCCTL}
+\end{table}
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
 
 \subsection{Contrôle du bloc de capture/comparaison n°1,2,3...}
 Ces circuits sont des copies conformes du circuit de capture/comparaison n° 0. La seule différence est que leur coeur (TAxCCRy) n'a pas d'influence sur la borne supérieure de TAxR. Ils intéragissent toutefois avec TAxR en mode capture.
@@ -257,6 +415,7 @@ La figure \ref{fig:CapvsComp} illustre le comportement du registre TAxR dans le 
 \end{figure}
 
 Une fois le processus de comptage lancé, TAxR évolue en dent de scie, comme illustré. Le circuit de capture/comparaison utilise ce signal pour son opération.
+<<<<<<< 79a3b7a815afc1619d95b061fa9a3dd447c0e385
 
 En mode « comparaison », le contenu du registre TAxCCRy est une entrée. Dès que TAxR atteint TAxCCRy, le signal noté « Pulse » est généré, qui peut déclencher l'exécution d'une routine de service d'interruption.
 
@@ -269,6 +428,39 @@ Revenant à la figure \ref{fig:TimerAstruct}, on voit que le signal CCIFG0 issu d
 Si une interruption provient d'un des signaux TAIFG, CCIFG1 ou CCIFG2, il est donc nécessaire de tester lequel de ces signaux est effectivement responsable de la requête. L'information y relative est disponible dans registre particulier TAIV, appelé abusivement "vecteur d'interruption". Il est ainsi possible de déterminer rapidement la source de l'interruption, en testant la valeur de TAIV au moyen d'une instruction \textit{SWITCH...CASE}.
 
 Le contenu du 
+=======
+
+En mode « comparaison », le contenu du registre TAxCCRy est une entrée. Dès que TAxR atteint TAxCCRy, le signal noté « Pulse » est généré, qui peut déclencher l'exécution d'une routine de service d'interruption.
+
+En mode « capture », le contenu du registre TAxCCRy est une sortie. Un signal « Pulse » doit être fourni, qui déclenche la copie de TAxR dans TAxCCRy au moment où la pulse apparaît. En fait, c'est le flanc actif de la pulse qui déclenche le processus de capture, qui peut donc se produire sur le flanc montant, descendant ou les deux, du signal « pulse ». Typiquement, le signal « pulse » est une entrée du microcontrôleur. Au moment où la capture est exécutée, une requête d'interruption peut être émise.
+
+\subsection{Interruptions du timer A}
+Un timer A contenant n bloc de capture/comparaison peut générer $n+1$ requêtes d'interruptions. Toutefois, seuls deux vecteurs d'interruption sont définis. 
+Revenant à la figure \ref{fig:TimerAstruct}, on voit que le signal CCIFG0 issu du bloc de capture/comparaison n°0 est associé à lui tout seul à un des vecteurs (TIMERx\_A0\_VECTOR). Tous les autres signaux d'interruption (TAxIFG, CCIFG1, CCIFG2, ...) sont associés à l'autre vecteur (TIMERx\_A1\_VECTOR).
+
+Si une interruption provient d'un des signaux TAIFG, CCIFG1 ou CCIFG2, il est donc nécessaire de tester lequel de ces signaux est effectivement responsable de la requête. L'information y relative est disponible dans registre particulier TAIV, appelé abusivement "vecteur d'interruption". Il est ainsi possible de déterminer rapidement la source de l'interruption, en testant la valeur de TAIV au moyen d'une instruction \textit{SWITCH...CASE}.
+
+La description du registre TAIV est donnée ci-dessous :
+\begin{table}[htb]
+\centering 
+\begin{tabular}{l l l}
+\hline\hline
+Champ & Valeur & Source de l'interruption \\ %[0.5ex]
+\hline                  % inserts single horizontal line
+TAIV & 0x00 & pas d'interruption en attente  \\	% inserting body of the table
+& 0x02 & CCIFG1  \\
+& 0x04 & CCIFG2  \\
+& 0x06 & CCIFG3  \\
+& 0x08 & CCIFG4  \\
+& 0x0A & CCIFG5  \\
+& 0x0C & CCIFG6  \\
+& 0x0E & TAIFG  \\ [1ex]      % [1ex] adds vertical space
+\hline
+\end{tabular}
+\caption{Description du registre TAIV}
+\label{table:TAIV}
+\end{table}
+>>>>>>> ffda2531f3ff971c5ae260f5bb167e3111739761
 
 
 
