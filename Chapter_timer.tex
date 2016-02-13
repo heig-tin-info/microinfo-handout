@@ -3,7 +3,7 @@
 Avec le port d'entré/sortie, le timer est le périphérique le plus indispensable du microcontrôleur. En effet, un CPU est très inefficace dès qu'il s'agit de compter le temps, puisqu'il ne peut rien faire d'autre, sous peine de "perdre du temps".
 
 Un timer est donc indispensable dès qu'il s'agit de développer des applications dans lesquelles des contraintes temporelles doivent être respectées, comme :
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item génération de délais ou de temps d'attente
 \item génération de signaux à caractéristiques temporelles définies
 \item prises de rendez-vous
@@ -23,9 +23,9 @@ Le plus souvent, le timer est construit autour d'un \textit{incrémenteur}. C'est
 \end{figure}
 
 L'incrémentation se fait au rythme d'un signal souvent appelé CLK (fig. \ref{fig:Timer}), qui est soit:
-\begin{itemize}
-\item périodique, auquel cas il mesure le temps, et on parle de \textit{timer};
-\item apériodique quelconque, auquel cas il compte simplement les flancs de ce signal tant qu'il est actif et on parle plutôt de \textit{compteur}.
+\begin{itemize}[label=\textbullet,font=\small]
+\item périodique, auquel cas le circuit mesure (compte) le temps, et on parle de \textit{timer};
+\item apériodique quelconque, auquel cas le circuit compte simplement les flancs de ce signal tant qu'il est actif et on parle plutôt de \textit{compteur}.
 \end{itemize}
 
 Souvent, un prédiviseur de fréquence permet de réduire la fréquence du signal CLK pour ralentir le rythme du comptage.
@@ -56,7 +56,7 @@ Finalement, on peut rencontrer différents types de timers dans un même microcont
 
 \section{Cas du MSP430}
 Les microcontrôleurs de la famille MSP430 embarquent jusqu'à 4 types de timers différents:
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item Real Time Clock, ou \textit{Horloge Temps Réel} (RTC) pour la création d'horloges
 \item WatchDog Timer ou \textit{Chien de Garde} (WDT) pour la prévention de plantées d'origines diverses
 \item Timers à usage général
@@ -64,7 +64,7 @@ Les microcontrôleurs de la famille MSP430 embarquent jusqu'à 4 types de timers d
 
 \subsection{Real Time Clock}
 Après initialisation, le RTC maintient à jour les informations horaires les plus courantes :
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item année
 \item numéro du mois dans l'année
 \item jour du mois
@@ -82,7 +82,7 @@ Le microcontrôleur ne réagit plus. Le seul moyen est de le \textit{resetter}.
 
 \section{Timer à usage général : le timer A}
 Dans le MSP430, le timer à usage général est un périphérique complexe auquel le CPU peut soutraiter des fonctionnalités sophistiquées. En plus des fonctionnalités usuelles, on trouve:
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item capture de l'état du registre de comptage lors d'un évènement
 \item requêtes d'interruption dès que le registre de comptage a atteint une constante donnée (comparaison)
 \item génération de signaux PWM sur une patte externe, sans aucune aide du CPU autre que l'initialisation
@@ -107,7 +107,7 @@ Pour enrichir encore les possibilités offertes par le timer A, celui-ci dispose 
 
 \subsection{Modes de comptage}
 Le registre de comptage TAxR a 3 modes de comptage possibles. Le mode est déterminé par la valeur du champ MCx dans le registre de contrôle TACTLx:
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item Mode 1 (MCx = 01): Comptage jusqu'à la valeur contenue dans le registre TAxCCR0, localisé dans un sous-bloc de capture/comparaison, puis retour à 0;
 \item Mode 2 (MCx = 10): Comptage jusqu'à 0xFFFF, puis retour à 0;
 \item Mode 3 (MCx = 11): Comptage jusqu'à la valeur contenue dans le registre TAxCCR0, puis décomptage jusqu'à 0.
@@ -170,7 +170,7 @@ TAxR : Timer A Register (n° x) ou registre de comptage du timer n° x. Sa valeur 
 
 TAxCTL : Timer A Control (n° x) ou registre de contrôle du comptage du timer n° x. Il permet de spécifier le comportement du bloc de comptage.
 Il est composé de 5 champs, pour:
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item sélectionner l'horloge de référence (champ TASSEL)
 \item sélectionner le facteur de prédivision de l'horloge de référence (champ ID)
 \item sélectionner le mode de comptage (champ MC)
@@ -264,7 +264,7 @@ Lors de ces deux événements (égalité des deux registres ou transfert de TAxR dan
 Ce circuit de capture/compare, centré autour du registre TAxCCR0, est contrôlé par le registre de contrôle TAxCCTL0.
 
 TAxCCTL0 : registre de contrôle du circuit de capture/compare n° 0 pour le Timer A (n° x). Il permet de spécifier comment TAxCCR0 se comporte. Il est composé de 6 champs, pour:
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item sélectionner la fonction Capture ou Comparaison (CAP)
 \item sélectionner le mode de capture (sur flanc montant, descendant, etc...) (CM)
 \item sélectionner le signal de capture (CCIS)
@@ -324,7 +324,7 @@ CAP & & & Sélection entre capture et comparaison \\
 & & 1 & Mode capture \\
 \hline
 OUTMOD & & & Génération du signal de sortie OUT (module de sortie) \\
-& & 000 &  \\ voir chapitre
+& & 000 &  voir chapitre \ref{Module de sortie} \\ 
 & & 001 &  \\
 & & 010 &  \\
 & & 011 &  \\
@@ -446,10 +446,42 @@ Le code ci-dessous configure le timer A en mode continu (jusqu'à 0xFFFF). Le sig
 \end{minipage}
 
 \subsection{Module de sortie}
+\label{Module de sortie}
 Dans chaque bloc de capture/comparaison, le module de sortie est capable de générer plusieurs types de signaux sur sa sortie OUT. Il est possible de connecter ce signal OUT vers une patte du microcontrôleur, en configurant le port correspondant au moyen du registre PxSEL.
 Il est nécessaire de consulter la fiche technique du microcontrôleur utilisé pour savoir quelles pattes peuvent être connectées à quels modules de sortie de timer.
 
+La génération du signal OUT est basée sur deux signaux EQU0 et EQUy internes aux circuits de capture/comparaison n° 0 et y:
+\begin{itemize}[label=\textbullet,font=\small]
+\item EQU0 s'active quand TAxR = TAxCCR0
+\item EQUy s'active quand TAxR = TAxCCRy
+\end{itemize}
+Elle dépend aussi du mode de comptage dans lequel se trouve le bloc de comptage.
 
+Les figures \ref{fig:Outmod_MC1}, \ref{fig:Outmod_MC2} et \ref{fig:Outmod_MC3} montrent l'évoluetion du signal de sortie OUT en fonction du mode de comptage, pour chaque valeur du champ OUTMOD (registre TAxCCTLy).
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_Out1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Outmod_MC1]{Exemple de sortie - TimerA en mode Up (MC = 01)}
+  \label{fig:Outmod_MC1}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_Out2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Outmod_MC2]{Exemple de sortie - TimerA en mode Continu (MC = 10)}
+  \label{fig:Outmod_MC2}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_Out3.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Outmod_MC3]{Exemple de sortie - TimerA en mode Up/Down (MC = 11)}
+  \label{fig:Outmod_MC3}
+\end{figure}
 
 
 
