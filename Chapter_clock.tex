@@ -1,13 +1,74 @@
 \chapter{\textsc{Système d'horloges}}
 
-Bla bla bla
+Comme tout système numérique, le microcontrôleur et ses périphériques ont besoin d'une horloge. Ce signal contrôle toutes les bascules composant les différentes machines séquentielles qui composent le système numérique. La structure détaillée de ce type de circuit séquentiel est étudiée au cours "Systèmes Logiques".
+
+Le signal d'horloge est toujours généré par un oscillateur, dont les performances définissent les qualités:
+\begin{itemize}[label=\textbullet,font=\small]
+\item fréquence;
+\item précision;
+\item stabilité.
+\end{itemize}
+
+\section{Oscillateurs}
+On distingue 4 types d'oscillateur. Ceux-ci se différencient par le mécanisme donnant naissance à l'oscillation et par les composants externes mis en oeuvre:
+\begin{itemize}[label=\textbullet,font=\small]
+\item oscillateurs RC (consulter le cours de "Electronique Analogique");
+\item oscillateurs à résonateur céramique ou à quartz;
+\item circuits oscillateurs spécifiques, éventuellement calibrés en usine et à compensation des effets de température;
+\item circuits calés sur des signaux externes tels que GPS, dont la précision est obtenue par des horloges atomiques.
+\end{itemize}
+
+Dans les microcontrôleurs, on rencontre les deux premiers types.
+
+\subsection{Oscillateurs RC}
+L'oscillateur RC le plus simple est probablement celui illustré à la figure \ref{fig:Osc_RC_1}. Il est basé sur un inverseur logique à hystérèse ou \textit{Trigger de Schmitt}, une résistance et une capacité.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=8cm]{./Figures/Chap6_Horloges/Osc_RC_1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Oscillateur RC à Trigger de Schmitt}
+  \label{fig:Osc_RC_1}
+\end{figure}
+
+La figure \ref{fig:Osc_RC_2} illustre les signaux à l'entrée et à la sortie de l'inverseur à hystérèse.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/Osc_RC_2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Signal de l'oscillateur RC}
+  \label{fig:Osc_RC_2}
+\end{figure}
+
+Du fait de la faible précision de la valeur des composants, tant la résistance, la capacité que les seuils d'hystérèse, la fréquence de l'oscillation est peu précise et peu stable en température. Par contre, tous les composants peuvent être intégrés. C'est pourquoi on rencontre ce type d'oscillateur dans la plupart des microcontrôleurs modernes, pour toutes les applications qui ne nécessitent pas une fréquence précise.
+
+\subsection{Oscillateurs à quartz}
+Si la fréquence doit être précise, l'oscillateur à quartz est le circuit le plus couramment utilisé. Son fonctionnement est basé sur l'utilisation d'un cristal piézoélectrique, dans lequel l'énergie est stockée soit sous forme mécanique soit sous forme électrique. Le circuit oscillateur entretient l'oscillation, en compensant les pertes d'énergie qui sont très faibles. Le schéma typique d'un oscillateur à quartz est donné à la figure \ref{fig:Osc_XTAL_1}.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=8cm]{./Figures/Chap6_Horloges/Osc_XTAL_1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Schéma de l'oscillateur à quartz}
+  \label{fig:Osc_XTAL_1}
+\end{figure}
+
+
 
 
 \section{Diviseur de fréquences}
 
 
-\subsection{Zip}
+\subsection{Zip} 
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/UCS_Blocs.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Schéma synoptique du circuit d'horloge du MSP430}
+  \label{fig:UCS_Blocs}
+\end{figure}
 
 
 
