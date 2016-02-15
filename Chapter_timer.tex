@@ -41,7 +41,7 @@ Lorsque le registre atteint sa valeur maximale, égale à $2^N-1$, il repasse à 0.
   \label{fig:ChronoSync}
 \end{figure}
 
-Dans le cas d'un compteur, le signal CLK est apériodique. La figure \ref{fig:ChronoAsync} montre l'évolution de la valeur du registre en fonction du temps, pour un \textit{compteur} de 4 bits. De même, la retenue sortante du circuit incrémenteurémet éventuellement une requête d'interruption lors du passage par 0 de la valeur du registre.
+Dans le cas d'un compteur, le signal CLK est apériodique. La figure \ref{fig:ChronoAsync} montre l'évolution de la valeur du registre en fonction du temps, pour un \textit{compteur} de 4 bits. De même, la retenue sortante du circuit incrémenteur émet éventuellement une requête d'interruption lors du passage par 0 de la valeur du registre.
 
 \begin{figure}[htb]
   \centering
@@ -55,11 +55,11 @@ Comme nous le verrons dans la suite, certains timers utilisent un décrémenteur a
 Finalement, on peut rencontrer différents types de timers dans un même microcontrôleur, chacun étant adapté à un besoin spécifique.
 
 \section{Cas du MSP430}
-Les microcontrôleurs de la famille MSP430 embarquent jusqu'à 4 types de timers différents:
+Les microcontrôleurs de la famille MSP430 embarquent jusqu'à 5 types de timers différents:
 \begin{itemize}[label=\textbullet,font=\small]
 \item Real Time Clock, ou \textit{Horloge Temps Réel} (RTC) pour la création d'horloges
 \item WatchDog Timer ou \textit{Chien de Garde} (WDT) pour la prévention de plantées d'origines diverses
-\item Timers à usage général
+\item 3 types de timers à usage général
 \end{itemize}
 
 \subsection{Real Time Clock}
@@ -79,6 +79,14 @@ Ce type de timer nécessite une horloge dont la fréquence est 1Hz, dérivée d'une 
 \subsection{WatchDog Timer}
 La "plantée" d'un programme est la plupart du temps due à un défaut dans le programme ou à un concours de circonstances qui fait que le programme est bloqué dans un boucle sans fin. Le cas le plus courant est l'attente d'un évènement qui n'arrive pas et qui n'arrivera jamais.
 Le microcontrôleur ne réagit plus. Le seul moyen est de le \textit{resetter}.
+Un timer \it chien de garde \rm resette donc le CPU, donc le programme, si celui-ci ne l'a pas remis à 0 avant.
+Lors du développement, on désactive généralement le chien de garde. Dans le MSP430, ceci est effectué au moyen de l'instruction :
+{\fontfamily{pcr}\selectfont
+\begin{tabbing}
+\qquad    \= WDTCTL = WDTPW +WDTHOLD;   \\
+\end{tabbing}
+}
+En opération, cette instruction est mise en commentaire. Le chien de garde est alors actif, et il est nécessaire d'ajouter des instructions dans les boucles d'attente et à des endroits bien choisis du programme pour le remettre à 0 avant qu'il ne force le programme à redémarrer.
 
 \section{Timer à usage général : le timer A}
 Dans le MSP430, le timer à usage général est un périphérique complexe auquel le CPU peut soutraiter des fonctionnalités sophistiquées. En plus des fonctionnalités usuelles, on trouve:
@@ -139,7 +147,7 @@ Les figures \ref{fig:TimerAmode1}, \ref{fig:TimerAmode2} et \ref{fig:TimerAmode3
 \end{figure}
 
 Dans le cas du mode 3, la figure  \ref{fig:TimerAmode3b} précise le comportement des signaux TAIFG et du signal de sortie CCIFG du bloc de capture/comparaison n°0 (celui qui contient le registre TAxCCR0).
-\begin{figure}[htb]
+\begin{figure} [!h]
   \centering
   \includegraphics[angle=0, width=12cm]{./Figures/Chap5_Timer/Timer_Mode_3b.pdf}
   \rule{35em}{0.5pt}
@@ -149,21 +157,6 @@ Dans le cas du mode 3, la figure  \ref{fig:TimerAmode3b} précise le comportement
 
 Grâce à cette variété des modes de comptage, le timer A va être capable de générer un grand nombre de signaux différents.
 
-
-\subsection{Structure détaillée du timer A}
-La figure \ref{fig:TimerAstruct} illustre plus en détail la structure du timer A, en mettant en évidence uniquement les registres et les signaux de sortie du timer. Comme dit précédemment, il peut y avoir 3, 5 ou 7 blocs de "capture/comparaison". Sur la figure, n vaut donc 2, 4 ou 6.
-
-\begin{figure}[htb]
-  \centering
-  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_blocs_2.pdf}
-  \rule{35em}{0.5pt}
-  \caption[Structure TimerA]{Organisation structurelle du timer A}
-  \label{fig:TimerAstruct}
-\end{figure}
-
-Le timer est ainsi organisé en tranches, chacune capable de générer ses signaux propres. Dans la figure \ref{fig:TimerAstruct}, chaque rectangle représente un «registre de donnée», c'est à dire un registre qui contient une information représentant une grandeur.
-Grâce à leur module de sortie, les circuits de capture/comparaison peuvent aussi générer automatiquement des signaux particuliers sur une patte du microcontrôleur. Ces fonctionnalités n'apparaissent pas sur la figure \ref{fig:TimerAstruct}.
-A gauche de chaque «registre de donnée» est noté le nom de son registre de contrôle. Par exemple, à gauche du registre TAxR on retrouve le nom de son registre de contrôle : TAxCTL (TAx ConTroL). Tous ces registres sont sur 16 bits.
 
 \subsection{Contrôle du bloc de comptage}
 TAxR : Timer A Register (n° x) ou registre de comptage du timer n° x. Sa valeur évolue entre 0 et 0xFFFF ou le contenu de TAxCCR0.
@@ -182,7 +175,7 @@ Un dernier champ (TAIFG) contient le flag d'état de l'interruption issue du regi
 \\
 La figure \ref{fig:TimerTAR} illustre en détail le bloc de comptage. On y voit les différents sous blocs et leurs champs de contrôle, tous éléments du registre de contrôle TAxCTL.
 
-\begin{figure}[htb]
+\begin{figure}[h]
   \centering
   \includegraphics[angle=0, width=16cm]{./Figures/Chap5_Timer/Timer_Detail_1.pdf}
   \rule{35em}{0.5pt}
@@ -192,7 +185,7 @@ La figure \ref{fig:TimerTAR} illustre en détail le bloc de comptage. On y voit l
 
 Le détail du registre de contrôle TAxCTL est donné à la figure \ref{fig:TAxCTL} et dans le tableau \ref{table:TAxCTL}.
 
-\begin{figure}[htb]
+\begin{figure}[h]
   \centering
   \includegraphics[angle=0, width=13cm]{./Figures/Chap5_Timer/TAxCTL.pdf}
   \rule{35em}{0.5pt}
@@ -200,7 +193,7 @@ Le détail du registre de contrôle TAxCTL est donné à la figure \ref{fig:TAxCTL} 
   \label{fig:TAxCTL}
 \end{figure}
 
-\begin{table}[htb]
+\begin{table}[h]
 \centering 
 \begin{tabular}{l l l l}
 \hline\hline
@@ -239,6 +232,7 @@ TAIFG & & & Indicateur d'interruption \\
 \label{table:TAxCTL}
 \end{table}
 
+\bigskip
 \begin{minipage}{14cm}{
 \subsubsection*{Exemple de configuration}
 Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclus) jusqu'à 8191 (inclus), avec l'horloge SMCLK prédivisée par 8.
@@ -255,6 +249,21 @@ Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclu
 }
 \end{minipage}
 
+\pagebreak
+\subsection{Structure détaillée du timer A}
+La figure \ref{fig:TimerAstruct} illustre plus en détail la structure du timer A, en mettant en évidence uniquement les registres et les signaux de sortie du timer. Comme dit précédemment, il peut y avoir 3, 5 ou 7 blocs de "capture/comparaison". Sur la figure, n vaut donc 2, 4 ou 6.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_blocs_2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Structure TimerA]{Organisation structurelle du timer A}
+  \label{fig:TimerAstruct}
+\end{figure}
+
+Le timer est ainsi organisé en tranches, chacune capable de générer ses signaux propres. Dans la figure \ref{fig:TimerAstruct}, chaque rectangle représente un «registre de donnée», c'est à dire un registre qui contient une information représentant une grandeur.
+Grâce à leur module de sortie, les circuits de capture/comparaison peuvent aussi générer automatiquement des signaux particuliers sur une patte du microcontrôleur. Ces fonctionnalités n'apparaissent pas sur la figure \ref{fig:TimerAstruct}.
+A gauche de chaque «registre de donnée» est noté le nom de son registre de contrôle. Par exemple, à gauche du registre TAxR on retrouve le nom de son registre de contrôle : TAxCTL (TAx ConTroL). Tous ces registres sont sur 16 bits.
 
 \subsection{Contrôle du bloc de capture/comparaison n°0}
 Ce bloc fonctionnel est en étroite interaction avec le registre de comptage TAxR, puisqu'il peut (selon la valeur du champ MC) définir la borne supérieure du comptage.
@@ -277,7 +286,7 @@ D'autres champs contiennent différents signaux tels que le flag de l'interruptio
 \\
 La figure \ref{fig:TimerCCR} illustre en détail un bloc de capture/comparaison (n° y). On y voit les différents sous blocs et leurs champs de contrôle, tous éléments du registre de contrôle TAxCCTLy.
 
-\begin{figure}[htb]
+\begin{figure}[h]
   \centering
   \includegraphics[angle=0, width=16cm]{./Figures/Chap5_Timer/Timer_Detail_2.pdf}
   \rule{35em}{0.5pt}
@@ -287,7 +296,7 @@ La figure \ref{fig:TimerCCR} illustre en détail un bloc de capture/comparaison (
 
 Le détail du registre de contrôle TAxCCTLy, pour le bloc de capture/comparaison n°y, est donné à la figure \ref{fig:TAxCCTLy} et dans le tableau \ref{table:TAxCCTL}. 
 
-\begin{figure}[htb]
+\begin{figure}[h]
   \centering
   \includegraphics[angle=0, width=13cm]{./Figures/Chap5_Timer/TAxCCTLy.pdf}
   \rule{35em}{0.5pt}
@@ -295,7 +304,7 @@ Le détail du registre de contrôle TAxCCTLy, pour le bloc de capture/comparaison 
   \label{fig:TAxCCTLy}
 \end{figure}
 
-\begin{table}[htb]
+\begin{table}[h]
 \centering 
 \begin{tabular}{l l l l}
 \hline\hline
@@ -342,6 +351,7 @@ CCIE & & & Autorisation des requêtes d'interruptions de CCIFG \\
 \label{table:TAxCCTL}
 \end{table}
 
+\bigskip
 \begin{minipage}{14cm}{
 \subsubsection*{Exemple de configuration}
 Les instructions ci-dessous reprennent la configuration vue au chapitre précédent, en autorisant de plus le bloc de capture/comparaison du timer A0 à émettre des requêtes d'interruptions par son signal CCIFG0.
@@ -365,10 +375,11 @@ Ces circuits sont des copies conformes du circuit de capture/comparaison n° 0. L
 Pour le circuit n° y, le registre de donnée est nommé TAxCCRy, le registre de contrôle est TAxCCTLy.
 Bien entendu, dans le registre de contrôle TAxCCTLy, les champs portent les même noms (CAP, CM, CCIS, SCS, etc...).
 
+\pagebreak
 \subsection{Différence entre Capture et Comparaison}
 La figure \ref{fig:CapvsComp} illustre le comportement du registre TAxR dans le mode 1 (continuous).
 
-\begin{figure}[htb]
+\begin{figure}[h]
   \centering
   \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_CC.pdf}
   \rule{35em}{0.5pt}
@@ -382,6 +393,7 @@ En mode « comparaison », le contenu du registre TAxCCRy est une entrée. Dès que 
 
 En mode « capture », le contenu du registre TAxCCRy est une sortie. Un signal « Pulse » doit être fourni, qui déclenche la copie de TAxR dans TAxCCRy au moment où la pulse apparaît. En fait, c'est le flanc actif de la pulse qui déclenche le processus de capture, qui peut donc se produire sur le flanc montant, descendant ou les deux, du signal « pulse ». Typiquement, le signal « pulse » est une entrée du microcontrôleur. Au moment où la capture est exécutée, une requête d'interruption peut être émise.
 
+\pagebreak
 \subsection{Interruptions du timer A}
 Un timer A contenant n bloc de capture/comparaison peut générer $n+1$ requêtes d'interruptions. Toutefois, seuls deux vecteurs d'interruption sont définis. 
 Revenant à la figure \ref{fig:TimerAstruct}, on voit que le signal CCIFG0 issu du bloc de capture/comparaison n°0 est associé à lui tout seul à un des vecteurs (TIMERx\_A0\_VECTOR). Tous les autres signaux d'interruption (TAxIFG, CCIFG1, CCIFG2, ...) sont associés à l'autre vecteur (TIMERx\_A1\_VECTOR).
@@ -412,7 +424,7 @@ TAIV & 0x00 & pas d'interruption en attente  \\	% inserting body of the table
 %}
 %\end{minipage}
 
-
+\pagebreak
 \begin{minipage}{14cm}{
 \subsubsection*{Exemple de programme avec interruption}
 Le code ci-dessous configure le timer A en mode continu (jusqu'à 0xFFFF). Le signal TAIFG s'active lors du passage de TAxR à 0, et émet une requête d'interruption. Dans la routine d'interruption, la patte n°1 du port P5 change d'état.
@@ -459,7 +471,7 @@ Elle dépend aussi du mode de comptage dans lequel se trouve le bloc de comptage.
 
 Les figures \ref{fig:Outmod_MC1}, \ref{fig:Outmod_MC2} et \ref{fig:Outmod_MC3} montrent l'évoluetion du signal de sortie OUT en fonction du mode de comptage, pour chaque valeur du champ OUTMOD (registre TAxCCTLy).
 
-\begin{figure}[htb]
+\begin{figure}[t]
   \centering
   \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_Out1.pdf}
   \rule{35em}{0.5pt}

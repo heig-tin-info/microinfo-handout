@@ -19,6 +19,7 @@ On distingue 4 types d'oscillateur. Ceux-ci se différencient par le mécanisme do
 \end{itemize}
 
 Dans les microcontrôleurs, on rencontre les deux premiers types.
+Très souvent, un multiplicateur de fréquence permet de générer une horloge à plus haute fréquence que ce que les oscillateurs produisent.
 
 \subsection{Oscillateurs RC}
 L'oscillateur RC le plus simple est probablement celui illustré à la figure \ref{fig:Osc_RC_1}. Il est basé sur un inverseur logique à hystérèse ou \textit{Trigger de Schmitt}, une résistance et une capacité.
@@ -44,7 +45,7 @@ La figure \ref{fig:Osc_RC_2} illustre les signaux à l'entrée et à la sortie de l
 Du fait de la faible précision de la valeur des composants, tant la résistance, la capacité que les seuils d'hystérèse, la fréquence de l'oscillation est peu précise et peu stable en température. Par contre, tous les composants peuvent être intégrés. C'est pourquoi on rencontre ce type d'oscillateur dans la plupart des microcontrôleurs modernes, pour toutes les applications qui ne nécessitent pas une fréquence précise.
 
 \subsection{Oscillateurs à quartz}
-Si la fréquence doit être précise, l'oscillateur à quartz est le circuit le plus couramment utilisé. Son fonctionnement est basé sur l'utilisation d'un cristal piézoélectrique, dans lequel l'énergie est stockée soit sous forme mécanique soit sous forme électrique. Le circuit oscillateur entretient l'oscillation, en compensant les pertes d'énergie qui sont très faibles. Le schéma typique d'un oscillateur à quartz est donné à la figure \ref{fig:Osc_XTAL_1}.
+Si la fréquence doit être précise, l'oscillateur à quartz est le circuit le plus couramment utilisé. Son fonctionnement est basé sur l'utilisation d'un cristal piézoélectrique, dans lequel l'énergie est stockée soit sous forme mécanique soit sous forme électrique. L'oscillation consiste en un échange alternatif entre l'énergie mécanique et l'énergie électrique. Le circuit oscillateur entretient l'oscillation, en compensant les pertes d'énergie qui sont très faibles. Le schéma typique d'un oscillateur à quartz est donné à la figure \ref{fig:Osc_XTAL_1}.
 
 \begin{figure}[htb]
   \centering
@@ -54,10 +55,44 @@ Si la fréquence doit être précise, l'oscillateur à quartz est le circuit le plus
   \label{fig:Osc_XTAL_1}
 \end{figure}
 
+Dans ce circuit, la résistance a une grande valeur et ne sert qu'à polariser l'inverseur logique à son point de repos donnant le gain maximal. Ainsi connecté, l'inverseur maintien le résonateur en oscillation (figure \ref{fig:Osc_RC_1}). Le signal de sortie de l'inverseur est ensuite transformé en un signal carré qui constitue l'horloge de base pour le reste du circuit.
 
+Une variante du résonateur à quartz est le résonateur céramique. Son fonctionnement est similaire à celui du quartz. Il se justifie pour son coût moindre, au prix de performances moindres.
 
+\subsection{Critères de performance des oscillateurs}
+Un oscillateur est caractérisé par:
+\begin{itemize}[label=\textbullet,font=\small]
+\item sa fréquence;
+\item la précision de la fréquence;
+\item la stabilité instantanée de la fréquence, qui est liée au facteur de qualité;
+\item la stabilité de la fréquence dans le temps.
+\end{itemize}
 
-\section{Diviseur de fréquences}
+\subsubsection*{Fréquence}
+Dans un oscillateur RC, la fréquence est peu précise car elle dépend de composants dont les valeurs sont peu précises. Dans un oscillateur à résonateur, la fréquence est essentiellement déterminée par le résonateur. Sa fréquence de résonance a une erreur relative, spécifiée en \textit{ppm}, ou \it part par million \rm. Un cristal de qualité moyenne a une erreur de fréquence de 100 ppm, soit 0,001%.
+
+\subsubsection*{Facteur de qualité}
+Le facteur de qualité du signal est défini par $Q=\frac{f_{c}}{BW}$.
+Si Q est grand, la bande passante est petite par rapport à la fréquence centrale de l'oscillation et donc la stabilité en fréquence est grande.
+
+\subsubsection*{Stabilité}
+La stabilité en fréquence d'un résonateur est aussi donnée en ppm.
+La fréquence suit les dérives des composants. On distingue trois types de dérives :
+\begin{itemize}[label=\textbullet,font=\small]
+\item le vieillissement des composants, de l'ordre de 5 à 50 ppm;
+\item l'effet des variations de température, de l'ordre de 20 à 200 ppm;
+\item l'effet des variations d'humidité, en général inférieure à 10 ppm.
+\end{itemize}
+
+Ces trois effets sont liés à la nature mécanique du résonateur. Le vieillissement peut être associé au relâchement de tensions mécaniques internes au cours du temps. La température modifie les dimensions physiques du résonateur à cause de la dilatation. L'humidité diffuse dans le matériau lui-même.
+
+\section{Multiplicateur de fréquence}
+Un multiplicateur de fréquence contient deux fonctions de base :
+\begin{itemize}[label=\textbullet,font=\small]
+\item génération "libre" d'un signal à une fréquence proche de la fréquence visée;
+\item asservissement de la fréquence obtenue à une fréquence de référence
+\end{itemize}
+
 
 
 \subsection{Zip} 
