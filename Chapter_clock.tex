@@ -28,7 +28,7 @@ L'oscillateur RC le plus simple est probablement celui illustré à la figure \ref
   \centering
   \includegraphics [angle=0, width=8cm]{./Figures/Chap6_Horloges/Osc_RC_1.pdf}
   \rule{35em}{0.5pt}
-  \caption[Schéma Timer]{Oscillateur RC à Trigger de Schmitt}
+  \caption{Oscillateur RC à Trigger de Schmitt}
   \label{fig:Osc_RC_1}
 \end{figure}
 
@@ -38,24 +38,32 @@ La figure \ref{fig:Osc_RC_2} illustre les signaux à l'entrée et à la sortie de l
   \centering
   \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/Osc_RC_2.pdf}
   \rule{35em}{0.5pt}
-  \caption[Schéma Timer]{Signal de l'oscillateur RC}
+  \caption{Signal de l'oscillateur RC}
   \label{fig:Osc_RC_2}
 \end{figure}
 
-Du fait de la faible précision de la valeur des composants, tant la résistance, la capacité que les seuils d'hystérèse, la fréquence de l'oscillation est peu précise et peu stable en température. Par contre, tous les composants peuvent être intégrés. C'est pourquoi on rencontre ce type d'oscillateur dans la plupart des microcontrôleurs modernes, pour toutes les applications qui ne nécessitent pas une fréquence précise.
+Du fait de la faible précision de la valeur des composants, tant la résistance, la capacité que les seuils d'hystérèse, la fréquence de l'oscillation est peu précise et peu stable en température.Dde plus, elle dépend de la tension d'alimentation. Par contre, tous les composants peuvent être intégrés. C'est pourquoi on rencontre ce type d'oscillateur dans la plupart des microcontrôleurs modernes, pour toutes les applications qui ne nécessitent pas une fréquence précise.
 
 \subsection{Oscillateurs à quartz}
 Si la fréquence doit être précise, l'oscillateur à quartz est le circuit le plus couramment utilisé. Son fonctionnement est basé sur l'utilisation d'un cristal piézoélectrique, dans lequel l'énergie est stockée soit sous forme mécanique soit sous forme électrique. L'oscillation consiste en un échange alternatif entre l'énergie mécanique et l'énergie électrique. Le circuit oscillateur entretient l'oscillation, en compensant les pertes d'énergie qui sont très faibles. Le schéma typique d'un oscillateur à quartz est donné à la figure \ref{fig:Osc_XTAL_1}.
 
-\begin{figure}[htb]
-  \centering
-  \includegraphics [angle=0, width=8cm]{./Figures/Chap6_Horloges/Osc_XTAL_1.pdf}
-  \rule{35em}{0.5pt}
-  \caption[Schéma Timer]{Schéma de l'oscillateur à quartz}
-  \label{fig:Osc_XTAL_1}
+\begin{figure}[!htb]
+    \centering
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=6cm]{./Figures/Chap6_Horloges/Osc_XTAL_1.pdf}
+  \caption{Schéma de l'oscillateur à quartz}
+        \label{fig:Osc_XTAL_1}
+    \end{minipage}%
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=6cm]{./Figures/Chap6_Horloges/XTAL_Pol.pdf}
+        \caption{Polarisation de l'inverseur}
+        \label{fig:XTAL_Pol}
+    \end{minipage}
 \end{figure}
 
-Dans ce circuit, la résistance a une grande valeur et ne sert qu'à polariser l'inverseur logique à son point de repos donnant le gain maximal. Ainsi connecté, l'inverseur maintien le résonateur en oscillation (figure \ref{fig:Osc_RC_1}). Le signal de sortie de l'inverseur est ensuite transformé en un signal carré qui constitue l'horloge de base pour le reste du circuit.
+Dans ce circuit, la résistance $R{p}$ a une grande valeur et ne sert qu'à polariser l'inverseur logique à son point de repos donnant le gain maximal. Ainsi connecté, l'inverseur maintien le résonateur en oscillation (figure \ref{fig:XTAL_Pol}). Le signal de sortie de l'inverseur est ensuite transformé en un signal carré qui constitue l'horloge de base pour le reste du circuit.
 
 Une variante du résonateur à quartz est le résonateur céramique. Son fonctionnement est similaire à celui du quartz. Il se justifie pour son coût moindre, au prix de performances moindres.
 
@@ -69,7 +77,7 @@ Un oscillateur est caractérisé par:
 \end{itemize}
 
 \subsubsection*{Fréquence}
-Dans un oscillateur RC, la fréquence est peu précise car elle dépend de composants dont les valeurs sont peu précises. Dans un oscillateur à résonateur, la fréquence est essentiellement déterminée par le résonateur. Sa fréquence de résonance a une erreur relative, spécifiée en \textit{ppm}, ou \it part par million \rm. Un cristal de qualité moyenne a une erreur de fréquence de 100 ppm, soit 0,001%.
+Dans un oscillateur RC, la fréquence est peu précise car elle dépend de composants dont les valeurs sont peu précises. Dans un oscillateur à résonateur, la fréquence est essentiellement déterminée par le résonateur. Sa fréquence de résonance a une erreur relative, spécifiée en \textit{ppm}, ou \it part par million \rm. Un cristal de qualité moyenne a une erreur de fréquence de 100 ppm, soit 0,001\%.
 
 \subsubsection*{Facteur de qualité}
 Le facteur de qualité du signal est défini par $Q=\frac{f_{c}}{BW}$.
@@ -93,19 +101,110 @@ Un multiplicateur de fréquence contient deux fonctions de base :
 \item asservissement de la fréquence obtenue à une fréquence de référence
 \end{itemize}
 
+\subsection{Principe de fonctionnement} 
+\subsubsection*{Boucle ouverte}
+Dans la version la plus simple du multiplicateur de fréquence, le facteur de multiplication est un nombre entier. Le signal de sortie est généré "librement" par un oscillateur contrôlé en tension (VCO, ou \it Voltage Controlled Oscillator \rm). Ce contrôle est nécessaire pour permettre l'asservissement. 
+Le signal généré ayant une fréquence multiple de la fréquence de référence, il est divisé par un facteur N pour pouvoir être comparé avec cette dernière (figure \ref{fig:FLL_BO}).
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=11cm]{./Figures/Chap6_Horloges/FLL_BO.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Multiplicateur de fréquence - Boucle ouverte}
+  \label{fig:FLL_BO}
+\end{figure}
 
-\subsection{Zip} 
+\subsubsection*{Boucle fermée}
+Le comparateur de fréquence produit une tension proportionnelle à la différence des fréquences. Si la fréquence de référence est supérieure (resp. inférieure) à la fréquence de sortie divisée par N, alors la tension appliquée au VCO doit être réduite (resp. augmentée). Pour que cette tension soit stable, un filtre passe-bas est inséré entre la sortie du comparateur de fréquence et l'entrée du VCO (figure \ref{fig:FLL_BF}).\\
+La fréquence du signal de sortie est : $F_{out}=N.F_{in}$
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=11cm]{./Figures/Chap6_Horloges/FLL_BF.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Multiplicateur de fréquence - Boucle fermée}
+  \label{fig:FLL_BF}
+\end{figure}
+
+\subsubsection*{Version embarquée}
+Pour permettre un facteur de multiplication non-entier, il suffit d'ajouter un second diviseur de fréquence avant le comparateur de fréquence (figure \ref{fig:FLL_Frac}).
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/FLL_Frac.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Multiplicateur de fréquence à facteur fractionnaire}
+  \label{fig:FLL_Frac}
+\end{figure}
+
+La boucle de régulation tend à obtenir : $F_{in}/M=F_{out}/N$\\
+La fréquence du signal de sortie est : $F_{out}=N/M.F_{in}$
+
+En pratique, le comparateur de fréquence et le filtre passe-bas sont réalisés au moyen d'un intégrateur numérique, qui consiste en un compteur/décompteur. Durant un intervalle de temps défini, celui-ci s'incrémente sur les impulsions du signal de référence et se décrémente sur les impulsions du signal de sortie. A la fin de l'intervalle de temps, on sait si le VCO doit augmenter ou réduire la fréquence du signal de sortie. Une conséquence importante est que la fréquence moyenne du signal de sortie est stable, mais la fréquence instantanée varie en dents de scie.
+
+\section{Cas du MSP430} 
+La figure \ref{fig:UCS_Blocs} est un schéma synoptique du circuit d'horloge, appelé UCS pour \it Unified Clock System \rm. Ceci est valable pour les microcontrôleurs de la famille MSP430F5xxx.\\
+Cinq sources de fréquence sont disponibles:
+\begin{itemize}[label=\textbullet,font=\small]
+\item VLOCLK: oscillateur interne basse fréquence à très basse consommation, dont la fréquence est d'environ 10 kHz
+\item REFOCLK: oscillateur interne calibré à environ 32768 Hz;
+\item XT1CLK: oscillateur à large gamme de fréquence, pouvant être connecté à un résonateur à quartz ou céramique 32768 Hz, ou une source externe de 4 MHz à 32 MHz;
+\item XT2CLK: oscillateur haute fréquence (en option), pouvant être connecté à un résonateur à quartz ou céramique ou une source externe;
+\item DCOCLK : horloge obtenue par multiplication de l'une des 4 sources précédentes.
+\end{itemize}
+
+\bigskip 
+A partir de ces 5 sources, qui peuvent être activées ou désactivées chacune individuellement, le circuit UCS produit 3 signaux d'horloge pour le CPU et les différents périphériques du microcontrôleur:
+\begin{itemize}[label=\textbullet,font=\small]
+\item ACLK (Auxiliary Clock) est plutôt réservé aux périphériques à basse consommation ou se contentant d'une horloge à basse fréquence, comme les timers. Toutefois, ACLK peut être connecté à n'importe laquelle des 5 sources de fréquence.
+\item SMCLK (Subsystem Master Clock) est disponible pour les périphériques;
+\item MCLK (Master Clock) est l'horloge du CPU;
+\end{itemize}
 
 \begin{figure}[htb]
   \centering
   \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/UCS_Blocs.pdf}
   \rule{35em}{0.5pt}
-  \caption[Schéma Timer]{Schéma synoptique du circuit d'horloge du MSP430}
+  \caption{Schéma synoptique du circuit d'horloge du MSP430}
   \label{fig:UCS_Blocs}
 \end{figure}
 
+\subsection{Frequency Locked Loop}
+Le multiplicateur de fréquence est nommé \it Frequency Locked Loop\rm. Son schéma est donné à la figure \ref{fig:UCS_FLL}. On retrouve les éléments vus au chapitre \ref{Multiplicateur de fréquence}:
+\begin{itemize}[label=\textbullet,font=\small]
+\item 10-bit Frequency integrator : le comparateur de fréquence
+\item DCO : le VCO
+\item Prescaler et Divider/(N+1) : le diviseur de $F_{out}$
+\item Divider (/1/2/4/8/12/16) : le diviseur de $F_{ref}$
+\end{itemize}
+L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. Il permet aussi de sélectionner la gamme de fréquences que peut générer le VCO. Celui-ci peut générer une fréquence comprise dans un intervalle de quelques dizaines de MHz, mais ne peut pas générer toutes ces fréquences simultanément. La gamme de fréquence est donc déterminée par le \it DC Generator\rm. Les différentes gammes dépendent du modèle de microcontrôleur. A titre d'exemple, la figure \ref{fig:FLL_Gammes} donne les gammes de fréquence que le MSP430F5529 peut générer. Si le paramètre DCORSEL (DCO Range Select) est mal configuré, la fréquence visée sera trop excentrée dans la gamme sélectionnée, voire hors de la gamme, et la boucle de régulation de la FLL ne pourra faire son travail correctement.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/UCS_FLL.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Schéma du multiplicateur de fréquence}
+  \label{fig:UCS_FLL}
+\end{figure}
 
+\begin{figure}[!htb]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/FLL_Gammes.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Gammes de fréquence du MSP430F5529}
+  \label{fig:FLL_Gammes}
+\end{figure}
 
+\subsubsection*{Exemple}
+Si l'on souhaite générer une fréquence de 3 MHz, on peut choisir DCORSEL = 2,3 ou 4. La valeur 2 est la meilleure car la gamme correspondante est bien centrée autour de 3 MHz.
 
+\subsection{Contrôle du circuit UCS}
+Le schéma détaillé du circuit UCS est donné à la figure \ref{fig:UCS_Schema}. En plus des 5 sources de fréquence principales décrites précédemment, une $6^{ème}$ source est visible: il s'agit de la sortie du \it prescaler\rm, elle est notée DCOCLKDIV. De plus, 2 autres signaux d'horloge sont visibles, en plus de ACLK, MCLK et SMCLK. Ce sont ACLK/n, qui est dérivée de ACLK par une division de fréquence, et MODCLK, qui sert uniquement pour le convertisseur AD.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/UCS_Schema.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Schéma complet du circuit UCS}
+  \label{fig:UCS_Schema}
+\end{figure}

@@ -40,25 +40,28 @@
 \contentsline {subsection}{\numberline {6.1.1}Oscillateurs RC}{25}{subsection.6.1.1}
 \contentsline {subsection}{\numberline {6.1.2}Oscillateurs \`a quartz}{26}{subsection.6.1.2}
 \contentsline {subsection}{\numberline {6.1.3}Crit\`eres de performance des oscillateurs}{26}{subsection.6.1.3}
-\contentsline {section}{\numberline {6.2}Diviseur de fr\'equences}{27}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Zip}{27}{subsection.6.2.1}
-\contentsline {chapter}{\numberline {7}\textsc {CPU}}{29}{chapter.7}
-\contentsline {section}{\numberline {7.1}Principe}{29}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Tada}{29}{subsection.7.1.1}
-\contentsline {chapter}{\numberline {8}\textsc {Assembleur}}{31}{chapter.8}
-\contentsline {section}{\numberline {8.1}Chaine de compilation}{31}{section.8.1}
-\contentsline {subsection}{\numberline {8.1.1}Kaboum}{31}{subsection.8.1.1}
-\contentsline {section}{\numberline {8.2}Debug}{31}{section.8.2}
-\contentsline {chapter}{\numberline {9}\textsc {Programmation en C}}{33}{chapter.9}
-\contentsline {section}{\numberline {9.1}Mots cl\'es}{33}{section.9.1}
-\contentsline {subsection}{\numberline {9.1.1}Youpla}{33}{subsection.9.1.1}
-\contentsline {chapter}{\numberline {10}\textsc {Interfaces s\'eries}}{35}{chapter.10}
-\contentsline {section}{\numberline {10.1}Notion de pile protocolaire}{35}{section.10.1}
-\contentsline {subsection}{\numberline {10.1.1}Mod\`ele OSI}{35}{subsection.10.1.1}
-\contentsline {chapter}{\numberline {11}\textsc {AD et DA}}{37}{chapter.11}
-\contentsline {section}{\numberline {11.1}AD}{37}{section.11.1}
-\contentsline {subsection}{\numberline {11.1.1}ploutch}{37}{subsection.11.1.1}
-\contentsline {chapter}{\numberline {A}\textsc {Jeux d'instruction du MSP430}}{39}{appendix.A}
-\contentsline {section}{\numberline {A.1}Une structure orthogonale}{39}{section.A.1}
-\contentsline {subsection}{\numberline {A.1.1}Vroum}{39}{subsection.A.1.1}
-\contentsline {paragraph}{zzz}{39}{section*.11}
+\contentsline {section}{\numberline {6.2}Multiplicateur de fr\'equence}{27}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Principe de fonctionnement}{27}{subsection.6.2.1}
+\contentsline {section}{\numberline {6.3}Cas du MSP430}{28}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Frequency Locked Loop}{29}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}Contr\^ole du circuit UCS}{31}{subsection.6.3.2}
+\contentsline {chapter}{\numberline {7}\textsc {CPU}}{33}{chapter.7}
+\contentsline {section}{\numberline {7.1}Principe}{33}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Tada}{33}{subsection.7.1.1}
+\contentsline {chapter}{\numberline {8}\textsc {Assembleur}}{35}{chapter.8}
+\contentsline {section}{\numberline {8.1}Chaine de compilation}{35}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}Kaboum}{35}{subsection.8.1.1}
+\contentsline {section}{\numberline {8.2}Debug}{35}{section.8.2}
+\contentsline {chapter}{\numberline {9}\textsc {Programmation en C}}{37}{chapter.9}
+\contentsline {section}{\numberline {9.1}Mots cl\'es}{37}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}Youpla}{37}{subsection.9.1.1}
+\contentsline {chapter}{\numberline {10}\textsc {Interfaces s\'eries}}{39}{chapter.10}
+\contentsline {section}{\numberline {10.1}Notion de pile protocolaire}{39}{section.10.1}
+\contentsline {subsection}{\numberline {10.1.1}Mod\`ele OSI}{39}{subsection.10.1.1}
+\contentsline {chapter}{\numberline {11}\textsc {AD et DA}}{41}{chapter.11}
+\contentsline {section}{\numberline {11.1}AD}{41}{section.11.1}
+\contentsline {subsection}{\numberline {11.1.1}ploutch}{41}{subsection.11.1.1}
+\contentsline {chapter}{\numberline {A}\textsc {Jeux d'instruction du MSP430}}{43}{appendix.A}
+\contentsline {section}{\numberline {A.1}Une structure orthogonale}{43}{section.A.1}
+\contentsline {subsection}{\numberline {A.1.1}Vroum}{43}{subsection.A.1.1}
+\contentsline {paragraph}{zzz}{43}{section*.15}
