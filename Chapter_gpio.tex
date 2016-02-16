@@ -85,9 +85,9 @@ REG = REG \& BITO  //REG = 00000001 FAUX ça ne marche pas non plus
 Mais si on avait inversé BIT0 alors ça aurait marché:
 
 {\fontfamily{qcr}\selectfont
-REG = REG \& \~ BITO  //REG = 00000010 JUSTE 
+REG = REG \& \textasciitilde{}BITO  //REG = 00000010 JUSTE 
 
-REG 	\~ \& BIT0	  //en C simplifié
+REG 	\textasciitilde{}\& BIT0	  //en C simplifié
 }\\
 
 On constate donc qu'il faut utiliser la fonction duale mais avec une inversion préalable. Ceci convient pour l'écriture dans un registre mais quand est-il de la lecture? Comment pourrait-on lire un GPIO parmi tous les bits d'un port?
@@ -96,17 +96,42 @@ La réponse est similaire au test d'un bit dans un mot en langage C. Prenons comm
 
 {\fontfamily{qcr}\selectfont
 //fonction désirée:
-TEST\_ BIT0 = REG ? BIT0 avec par exemple REG = 00000011 et BIT0 = 00000001\\
+TEST\_BIT0 = REG ? BIT0 avec par exemple REG = 00000011 et BIT0 = 00000001\\
 //essai avec OU:
-TEST\_ BIT0 = REG | BIT0  //TEST\_ BIT0 = 00000011 FAUX
+TEST\_BIT0 = REG | BIT0  //TEST\_BIT0 = 00000011 FAUX
 //et si REG = 00000010
-TEST\_ BIT0 = REG | BIT0  //TEST\_ BIT0 = 00000011 FAUX\\
+TEST\_BIT0 = REG | BIT0  //TEST\_BIT0 = 00000011 FAUX\\
 //Il est clair que ça ne marche pas avec OU essayons avec ET:
-TEST\_ BIT0 = REG \& BIT0  //TEST\_ BIT0 = 00000001 JUSTE
+TEST\_BIT0 = REG \& BIT0  //TEST\_BIT0 = 00000001 JUSTE
 //et si REG = 00000010
-TEST\_ BIT0 = REG \& BIT0  //TEST\_ BIT0 = 00000000 JUSTE
+TEST\_BIT0 = REG \& BIT0  //TEST\_BIT0 = 00000000 JUSTE
 }\\
 
 Donc le test ou lecture d'une valeur s'effectue avec l'opérateur logique ET.
 
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  extendedchars=true,
+  basicstyle=\fontfamily{pcr}\selectfont
+}
 
+\lstset{style=customc}
+\begin{lstlisting}
+REG = REG & ~BITO   //REG = 00000010 JUSTE 
+REG ~& BIT0         //en C simplifié
+
+for i:=maxint to 0 do
+begin
+{ do nothing }
+end;
+\end{lstlisting}
