@@ -1,15 +1,112 @@
 \chapter{\textsc{GPIO (General Purpose Input Output)}}
 
-Bla bla bla
+Le GPIO (General Purpose Input/Output) est une broche d'entrée ou sortie à usage générique. Les GPIOs sont groupées en ports de 8bits ou 16bits. Au sein d'un port ont peut accéder à chaque broche indépendamment en utilisant un masque (voir §2.2).
+
+Les GPIO sont configurés à l'aide de registres qui ont la dimension d'un port (8 ou 16 bits). Un port est donc juste un groupe de GPIO qui permet une écriture simplifiée du code.
 
 
 \section{Matériel}
 
+Les GPIO sont présents sur tout les microcontrôleurs en nombre plus ou moins grande dépendamment du nombre de broche disponible sur le boîtier. On choisit souvent un microcontrôleur en fonction du nombre de GPIO disponibles.
+
+Le fonctionnement matériel du GPIO est décrit à la fig. \ref{fig:gpio}. 
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=90, trim = 25mm 0mm 15mm 0mm, clip, width=14cm]{./Figures/gpio/port.pdf}
+  \rule{35em}{0.5pt}
+  \caption[port GPIO]{Description matériel d'un GPIO}
+  \label{fig:gpio}
+\end{figure}
+
+Il contient trois parties principales:
+\begin{itemize}
+\item Le circuit de sortie
+\item Le circuit d'entrée
+\item Un ou plusieurs commutateurs pour connecter la broche
+\end{itemize}
+
+Au delà du circuit de base décrit auparavant, il existe d'autres fonctions optionnelles dans les GPIO comme une synchronisation ou un circuit pour traiter des interruptions (voir ch. 4)
 
 \subsection{Input}
 
+Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur logique présente à l'entrée ainsi qu'un bloc pour sélectionner une résistance de pull-up ou pull-down. Ce bloc est très important car il est nécessaire pour éviter qu'une entrée se retrouve flottante. Si une entrée est laissée non-connectée (flottante) alors elle peut prendre n'importe quel valeur et même changer de valeur aléatoirement au cours du temps. Pour éviter se phénomène on doit utilise une résistance placée selon le schéma suivant fig. \ref{fig:pullres}.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=90, width=10cm]{./Figures/gpio/pullres.pdf}
+  \rule{35em}{0.5pt}
+  \caption[res pull]{Résistances de pull-up et pull-down}
+  \label{fig:pullres}
+\end{figure}
 
+\subsection{Output}
 
+Dans la partie "sortie" du GPIO on trouve un tampon qui mémorise la valeur logique qu'on veut sortir sur la broche ainsi qu'un amplificateur pour permettre a u circuit de commuter la charge de sortie. Cette charge est souvent de type capacitif avec une valeur comprise entre 2pF et 10pF.
+
+\section{logiciel}
+
+Pour programmer les GPIO on utilise des registres organisés par ports. Par exemple dans la nomenclature Texas Instrument [], le port1 contient huit GPIO et on les nommes P1.0 à P1.7. On peut aussi utiliser le groupement par seize où la notation devient PA, PB, etc. PA est équivalent aux ports P0 et P1 regroupés alors que PB est équivalent aux ports P2 et P3. 
+
+\subsection{Programmation par masque}
+
+Comme les GPIO sont groupés en paquets de 8 ou 16 du point de vue matériel, il faut un moyen pour programmer chaque GPIO individuellement. Cela signifie que si on modifie un GPIO, il ne faut surtout pas affecter les autres du même groupe. Un moyen d'arriver à ceci est d'utiliser un masque créé à l'aide de fonctions logiques.
+
+Soit un registre (REG) de 8 bits servant à configurer 8 broches d'un microcontrôleur (fig \ref{fig:pxout}). 
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=10cm]{./Figures/gpio/PxOUT.pdf}
+  \rule{35em}{0.5pt}
+  \caption[buff out]{Tampon de sortie}
+  \label{fig:pxout}
+\end{figure}
+
+Pour mettre à 1 le bit 0 sans changer les bits 1 à 7 on peut utiliser la fonction OU:\\
+
+{\fontfamily{qcr}\selectfont
+REG = REG OU BIT0 avec BIT0 = 00000001
+
+REG = REG | BIT0  //en C avec BIT0 = 1
+
+REG |= BIT0		  //en C simplifié
+}\\
+
+On appelle cette technique le masquage. Pour mettre un bit à 0, il faut utiliser une autre fonction logique car le OU logique ne fait rien avec un zéro. Il est intéressant de résoudre ce problème par soi-même pour trouver la solution. On cherche donc à mettre un bit à 0 sans changer l'état logique des autres bits du port. Pour trouver la solution on peut partir d'un exemple et procéder par élimination:\\
+
+{\fontfamily{qcr}\selectfont
+REG = 00000011  //on désire mettre le premier bit à zéro sans influencer les autres
+\\test avec OU
+REG = REG | BIT0  //ne fait rien donc ce n'est pas la solution
+\\test avec ET
+REG = REG \& BITO  //REG = 00000001 FAUX ça ne marche pas non plus
+}\\
+
+Mais si on avait inversé BIT0 alors ça aurait marché:
+
+{\fontfamily{qcr}\selectfont
+REG = REG \& \~ BITO  //REG = 00000010 JUSTE 
+
+REG 	\~ \& BIT0	  //en C simplifié
+}\\
+
+On constate donc qu'il faut utiliser la fonction duale mais avec une inversion préalable. Ceci convient pour l'écriture dans un registre mais quand est-il de la lecture? Comment pourrait-on lire un GPIO parmi tous les bits d'un port?
+
+La réponse est similaire au test d'un bit dans un mot en langage C. Prenons comme exemple la lecture, ou test, du BIT0 dans REG et procédons pas élimination:
+
+{\fontfamily{qcr}\selectfont
+//fonction désirée:
+TEST\_ BIT0 = REG ? BIT0 avec par exemple REG = 00000011 et BIT0 = 00000001\\
+//essai avec OU:
+TEST\_ BIT0 = REG | BIT0  //TEST\_ BIT0 = 00000011 FAUX
+//et si REG = 00000010
+TEST\_ BIT0 = REG | BIT0  //TEST\_ BIT0 = 00000011 FAUX\\
+//Il est clair que ça ne marche pas avec OU essayons avec ET:
+TEST\_ BIT0 = REG \& BIT0  //TEST\_ BIT0 = 00000001 JUSTE
+//et si REG = 00000010
+TEST\_ BIT0 = REG \& BIT0  //TEST\_ BIT0 = 00000000 JUSTE
+}\\
+
+Donc le test ou lecture d'une valeur s'effectue avec l'opérateur logique ET.
 
 
