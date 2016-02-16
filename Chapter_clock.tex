@@ -137,8 +137,9 @@ Pour permettre un facteur de multiplication non-entier, il suffit d'ajouter un s
   \label{fig:FLL_Frac}
 \end{figure}
 
-La boucle de régulation tend à obtenir : $F_{in}/M=F_{out}/N$\\
-La fréquence du signal de sortie est : $F_{out}=N/M.F_{in}$
+La boucle de régulation tend à obtenir :\begin{LARGE} $\frac{F_{in}}{M}=\frac{F_{out}}{N}$ \end{LARGE}\\
+\bigskip
+La fréquence du signal de sortie est :\begin{LARGE} $F_{out}=\frac{N}{M}.F_{in}$\end{LARGE}
 
 En pratique, le comparateur de fréquence et le filtre passe-bas sont réalisés au moyen d'un intégrateur numérique, qui consiste en un compteur/décompteur. Durant un intervalle de temps défini, celui-ci s'incrémente sur les impulsions du signal de référence et se décrémente sur les impulsions du signal de sortie. A la fin de l'intervalle de temps, on sait si le VCO doit augmenter ou réduire la fréquence du signal de sortie. Une conséquence importante est que la fréquence moyenne du signal de sortie est stable, mais la fréquence instantanée varie en dents de scie.
 
@@ -177,7 +178,15 @@ Le multiplicateur de fréquence est nommé \it Frequency Locked Loop\rm. Son schém
 \item Prescaler et Divider/(N+1) : le diviseur de $F_{out}$
 \item Divider (/1/2/4/8/12/16) : le diviseur de $F_{ref}$
 \end{itemize}
-L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. Il permet aussi de sélectionner la gamme de fréquences que peut générer le VCO. Celui-ci peut générer une fréquence comprise dans un intervalle de quelques dizaines de MHz, mais ne peut pas générer toutes ces fréquences simultanément. La gamme de fréquence est donc déterminée par le \it DC Generator\rm. Les différentes gammes dépendent du modèle de microcontrôleur. A titre d'exemple, la figure \ref{fig:FLL_Gammes} donne les gammes de fréquence que le MSP430F5529 peut générer. Si le paramètre DCORSEL (DCO Range Select) est mal configuré, la fréquence visée sera trop excentrée dans la gamme sélectionnée, voire hors de la gamme, et la boucle de régulation de la FLL ne pourra faire son travail correctement.
+
+La fréquence du signal de sortie DCOCLK est donnée par :
+\begin{tabbing}
+\begin{LARGE}
+\qquad $F_{DCOCLK}=F_{FLLREFCLK}.\frac{(FLLN+1).(FLLD)}{FLLREFDIV}$
+\end{LARGE}
+\end{tabbing}
+\bigskip
+L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. Il permet aussi de sélectionner la gamme de fréquences que peut générer le VCO. Celui-ci peut générer une fréquence comprise dans un intervalle de quelques dizaines de MHz, mais ne peut pas générer toutes ces fréquences simultanément. La gamme de fréquence est donc déterminée par le \it DC Generator\rm. Les différentes gammes dépendent du modèle de microcontrôleur.
 
 \begin{figure}[htb]
   \centering
@@ -187,6 +196,8 @@ L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. I
   \label{fig:UCS_FLL}
 \end{figure}
 
+A titre d'exemple, la figure \ref{fig:FLL_Gammes} donne les gammes de fréquence que le MSP430F5529 peut générer. Si le paramètre DCORSEL (DCO Range Select) est mal configuré, la fréquence visée sera trop excentrée dans la gamme sélectionnée, voire hors de la gamme, et la boucle de régulation de la FLL ne pourra faire son travail correctement.
+
 \begin{figure}[!htb]
   \centering
   \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/FLL_Gammes.pdf}
@@ -195,16 +206,47 @@ L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. I
   \label{fig:FLL_Gammes}
 \end{figure}
 
-\subsubsection*{Exemple}
-Si l'on souhaite générer une fréquence de 3 MHz, on peut choisir DCORSEL = 2,3 ou 4. La valeur 2 est la meilleure car la gamme correspondante est bien centrée autour de 3 MHz.
 
-\subsection{Contrôle du circuit UCS}
-Le schéma détaillé du circuit UCS est donné à la figure \ref{fig:UCS_Schema}. En plus des 5 sources de fréquence principales décrites précédemment, une $6^{ème}$ source est visible: il s'agit de la sortie du \it prescaler\rm, elle est notée DCOCLKDIV. De plus, 2 autres signaux d'horloge sont visibles, en plus de ACLK, MCLK et SMCLK. Ce sont ACLK/n, qui est dérivée de ACLK par une division de fréquence, et MODCLK, qui sert uniquement pour le convertisseur AD.
+
+\subsubsection*{Exemple}
+On souhaite générer une fréquence de 3,2768 MHz à partir d'une horloge de 32768 Hz. on peut choisir DCORSEL = 2,3 ou 4. La valeur 2 est la meilleure car la gamme correspondante est la mieux centrée autour de 3,2768 MHz.
+Le facteur de multiplication vaut 100. Il peut être obtenu avec :
+\begin{itemize}[label=\textbullet,font=\small]
+\item $FLLREFDIV = 1$;
+\item $FLLD = 2$;
+\item $FLLN = 49$.
+\end{itemize}
+
+
+\subsection{Configuration du circuit UCS}
+Le schéma détaillé du circuit UCS est donné à la figure \ref{fig:UCS_Schema}. En plus des 5 sources de fréquence principales décrites précédemment, une $6^{eme}$ source est visible: il s'agit de la sortie du \it prescaler\rm, elle est notée DCOCLKDIV. De plus, 2 autres signaux d'horloge sont visibles, en plus de ACLK, MCLK et SMCLK. Ce sont ACLK/n, qui est dérivée de ACLK par une division de fréquence, et MODCLK, qui sert uniquement pour le convertisseur AD. Finalement, les horloges ACLK, MCLK et SMCLK peuvent subir une prédivision de fréquence par 1, 2, 4, 8, 12, 16, 32.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics [angle=0, width=14cm]{./Figures/Chap6_Horloges/UCS_Schema.pdf}
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCS_Schema.pdf}
   \rule{35em}{0.5pt}
   \caption{Schéma complet du circuit UCS}
   \label{fig:UCS_Schema}
 \end{figure}
+
+La configuration du circuit UCS demande donc de spécifier :
+\begin{itemize}[label=\textbullet,font=\small]
+\item la connection des 3 horloges (ACL, MCLK, SMCLK) avec les 6 sources de fréquence, y compris DCOCLKDIV. Ceci se fait par des champs appelés SELx dans les divers registres de configuration.
+\item le facteur de prédivision des horloges ACLK, MCLK et SMCLK. Ceci se fait par des champs appelés DIVx dans les divers registres de configuration.
+\item la configuration de la FLL si elle est utilisée. Ceci comprend:
+\begin{itemize}[label=\textbullet,font=\footnotesize]
+\item Détermination des facteurs FLLREFDIV, FLLN et FLLD, de façon à approcher au mieux la fréquence visée, à partir de la fréquence de référence;
+\item Détermination du facteur DCORSEL.
+\end{itemize}
+\end{itemize}
+
+\subsection{Registres de contrôle du circuit UCS}
+Ils sont nommés UCSCTLx et sont au nombre de 10. Toutefois, les plus couramment utilisés sont :
+\begin{itemize}[label=\textbullet,font=\small]
+\item UCSCTL1: contient DCORSEL;
+\item UCSCTL2 et UCSCTL3 : configuration du multiplieur de fréquence FLL; 
+\item UCSCTL4: connections de ACLK, MCLK et SMCLK;
+\item UCSCTL5: facteurs de prédivision de ACLK, MCLK et SMCLK;
+\item .
+\end{itemize}
+Les autres registres permettent de faire des réglages fins sur les oscillateurs XT1 et XT2.
