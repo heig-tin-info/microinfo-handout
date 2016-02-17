@@ -167,7 +167,7 @@ Pour les configurer on doit trouver leurs adresses physiques qui les identifient
 
 \lstset{style=customc}
 \begin{lstlisting}
-#include <msp430.h> 
+#include <msp430.h>
 
 #define P1IN    	(PAIN_L)       /* Port 1 Input */
 #define P1OUT 	(PAOUT_L)      /* Port 1 Output */
@@ -175,7 +175,7 @@ Pour les configurer on doit trouver leurs adresses physiques qui les identifient
 #define P1REN	(PAREN_L)      /* Port 1 Resistor Enable */
 #define P1DS	    (PADS_L)       /* Port 1 Drive Strength */
 #define P1SEL	(PASEL_L)      /* Port 1 Selection */
- \end{lstlisting}
+\end{lstlisting}
 
 Exemple de configuration du port P1.2 et P1.5 en sortie
 
@@ -184,14 +184,19 @@ Exemple de configuration du port P1.2 et P1.5 en sortie
 P1DIR |= BIT5 | BIT2; // Set P1.2 et P1.5 to output direction
 Puis écriture des sorties P1.5 et P1.2:
 P1OUT |= BIT5 | BIT2;
-  \end{lstlisting}
+\end{lstlisting}
 
 Exemple de configuration du port P1.2 et P1.5 en entrée
 
 \lstset{style=customc}
 \begin{lstlisting}
-
-  \end{lstlisting}
+P1DIR &= ~BIT5 & ~BIT2; // Reset P1.2 et P1.5 to input direction
+Puis lecture de l?entrée P1.5 et P1.2:
+REG = P1IN & (BIT5 | BIT2);
+Option: ajouter les résistances de pull-up
+P1OUT |= BIT5 | BIT2;    
+P1REN |= BIT5 | BIT2;
+\end{lstlisting}
 
 
 \lstdefinestyle{customc}{
