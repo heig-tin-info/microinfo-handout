@@ -81,11 +81,11 @@ La "plantée" d'un programme est la plupart du temps due à un défaut dans le prog
 Le microcontrôleur ne réagit plus. Le seul moyen est de le \textit{resetter}.
 Un timer \it chien de garde \rm resette donc le CPU, donc le programme, si celui-ci ne l'a pas remis à 0 avant.
 Lors du développement, on désactive généralement le chien de garde. Dans le MSP430, ceci est effectué au moyen de l'instruction :
-{\fontfamily{pcr}\selectfont
-\begin{tabbing}
-\qquad    \= WDTCTL = WDTPW +WDTHOLD;   \\
-\end{tabbing}
-}
+
+\lstset{style=customc}
+\begin{lstlisting}
+WDTCTL = WDTPW +WDTHOLD;
+\end{lstlisting}
 En opération, cette instruction est mise en commentaire. Le chien de garde est alors actif, et il est nécessaire d'ajouter des instructions dans les boucles d'attente et à des endroits bien choisis du programme pour le remettre à 0 avant qu'il ne force le programme à redémarrer.
 
 \section{Timer à usage général : le timer A}
@@ -236,16 +236,16 @@ TAIFG & & & Indicateur d'interruption \\
 \begin{minipage}{14cm}{
 \subsubsection*{Exemple de configuration}
 Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclus) jusqu'à 8191 (inclus), avec l'horloge SMCLK prédivisée par 8.
-{\fontfamily{pcr}\selectfont
-\begin{tabbing}
-\qquad    \= \#define TASSEL\_2	\= (2*0x100u) \\
-\qquad \> \#define ID\_3       \> (3*0x40u) \\
-\qquad \> \#define MC\_1       \> (1*0x10u) \\
-\\
-\qquad \> TA0CCR0 = 8191; \\
-\qquad \> TA0CTL  = TASSEL\_2 | MC\_1 | ID\_3; \\
-\end{tabbing}
-}
+
+\lstset{style=customc}
+\begin{lstlisting}
+#define TASSEL_2	(2*0x100u)
+#define ID_3		(3*0x40u)
+#define MC_1		(1*0x10u)
+
+TA0CCR0 = 8191;
+TA0CTL  = TASSEL\_2 | MC\_1 | ID\_3;
+\end{lstlisting}
 }
 \end{minipage}
 
@@ -355,18 +355,18 @@ CCIE & & & Autorisation des requêtes d'interruptions de CCIFG \\
 \begin{minipage}{14cm}{
 \subsubsection*{Exemple de configuration}
 Les instructions ci-dessous reprennent la configuration vue au chapitre précédent, en autorisant de plus le bloc de capture/comparaison du timer A0 à émettre des requêtes d'interruptions par son signal CCIFG0.
-{\fontfamily{pcr}\selectfont
-\begin{tabbing}
-\qquad    \= \#define TASSEL\_2	\= (2*0x100u) \\
-\qquad \> \#define ID\_3       \> (3*0x40u) \\
-\qquad \> \#define MC\_1       \> (1*0x10u) \\
-\qquad \> \#define CCIE       \> (1*0x10u) \\
-\\
-\qquad \> TA0CCR0 = 8191; \\
-\qquad \> TA0CTL  = TASSEL\_2 | MC\_1 | ID\_3; \\
-\qquad \> TA0CCTL0  = CCIE; \\
-\end{tabbing}
-}
+
+\lstset{style=customc}
+\begin{lstlisting}
+#define TASSEL_2	(2*0x100u)
+#define ID_3		(3*0x40u)
+#define MC_1		(1*0x10u)
+#define CCIE		(1*0x10u)
+
+TA0CCR0 = 8191;
+TA0CTL  = TASSEL_2 | MC_1 | ID_3;
+TA0CCTL0  = CCIE;
+\end{lstlisting}
 }
 \end{minipage}
 
@@ -400,7 +400,7 @@ Revenant à la figure \ref{fig:TimerAstruct}, on voit que le signal CCIFG0 issu d
 
 Si une interruption provient d'un des signaux TAIFG, CCIFG1 ou CCIFG2, il est donc nécessaire de tester lequel de ces signaux est effectivement responsable de la requête. L'information y relative est disponible dans registre particulier TAIV, appelé abusivement "vecteur d'interruption". Il est ainsi possible de déterminer rapidement la source de l'interruption, en testant la valeur de TAIV au moyen d'une instruction \textit{SWITCH...CASE}.
 
-%\begin{minipage}{20cm}{
+%\begin{minipage}{16cm}{
 La description du registre TAIV est donnée ci-dessous :
 \begin{table}[htb]
 \centering 
@@ -424,38 +424,34 @@ TAIV & 0x00 & pas d'interruption en attente  \\	% inserting body of the table
 %}
 %\end{minipage}
 
-\pagebreak
-\begin{minipage}{14cm}{
 \subsubsection*{Exemple de programme avec interruption}
 Le code ci-dessous configure le timer A en mode continu (jusqu'à 0xFFFF). Le signal TAIFG s'active lors du passage de TAxR à 0, et émet une requête d'interruption. Dans la routine d'interruption, la patte n°1 du port P5 change d'état.
-{\fontfamily{pcr}\selectfont
-\begin{tabbing}
-\qquad \#include <msp430.h> \\
-\qquad void main(void) \\
-\qquad \{ \\
-\qquad \qquad   P5DIR |= 0x02; \\
-\qquad \qquad   TACTL = TASSEL\_2 + MC\_2 + TAIE; \\
-\qquad \qquad   \_\_enable\_interrupts(); \\
-  
-\qquad \qquad   while(1); \\
-\qquad \} \\
 
-\qquad // Timer\_A Interrupt Vector (TAIV) handler \\
-\qquad \#pragma vector=TIMERA1\_VECTOR \\
-\qquad \_\_interrupt void Timer\_A (void) \\
-\qquad \{ \\
-\qquad \qquad   switch(TAIV) \\
-\qquad \qquad   \{ \\
-\qquad \qquad \qquad     case  2: break; \\
-\qquad \qquad \qquad     case  4: break; \\
-\qquad \qquad \qquad     case 14: P5OUT \^= 0x02; \\
-\qquad \qquad \qquad              break; \\
-\qquad \qquad   \} \\
-\qquad \} \\
-\end{tabbing}
+\lstset{style=customc}
+\begin{lstlisting}
+#include <msp430.h>
+void main(void)
+{
+   P5DIR |= 0x02;
+   TACTL = TASSEL_2 + MC_2 + TAIE;
+   __enable_interrupts();
+  
+   while(1);
 }
+
+// Timer_A Interrupt Vector (TAIV) handler
+#pragma vector=TIMERA1_VECTOR
+__interrupt void Timer_A (void)
+{
+   switch(TAIV)
+   {
+      case  2: break;
+      case  4: break;
+      case 14: P5OUT ^= 0x02;
+                break;
+   }
 }
-\end{minipage}
+\end{lstlisting}
 
 \subsection{Module de sortie}
 \label{Module de sortie}

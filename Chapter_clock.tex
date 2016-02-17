@@ -138,8 +138,8 @@ Pour permettre un facteur de multiplication non-entier, il suffit d'ajouter un s
 \end{figure}
 
 La boucle de régulation tend à obtenir :\begin{LARGE} $\frac{F_{in}}{M}=\frac{F_{out}}{N}$ \end{LARGE}\\
-\bigskip
-La fréquence du signal de sortie est :\begin{LARGE} $F_{out}=\frac{N}{M}.F_{in}$\end{LARGE}
+
+La fréquence du signal de sortie est donc :\begin{LARGE} $F_{out}=\frac{N}{M}.F_{in}$\end{LARGE}\\
 
 En pratique, le comparateur de fréquence et le filtre passe-bas sont réalisés au moyen d'un intégrateur numérique, qui consiste en un compteur/décompteur. Durant un intervalle de temps défini, celui-ci s'incrémente sur les impulsions du signal de référence et se décrémente sur les impulsions du signal de sortie. A la fin de l'intervalle de temps, on sait si le VCO doit augmenter ou réduire la fréquence du signal de sortie. Une conséquence importante est que la fréquence moyenne du signal de sortie est stable, mais la fréquence instantanée varie en dents de scie.
 
@@ -181,9 +181,9 @@ Le multiplicateur de fréquence est nommé \it Frequency Locked Loop\rm. Son schém
 
 La fréquence du signal de sortie DCOCLK est donnée par :
 \begin{tabbing}
-\begin{LARGE}
+\begin{Large}
 \qquad $F_{DCOCLK}=F_{FLLREFCLK}.\frac{(FLLN+1).(FLLD)}{FLLREFDIV}$
-\end{LARGE}
+\end{Large}
 \end{tabbing}
 \bigskip
 L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. Il permet aussi de sélectionner la gamme de fréquences que peut générer le VCO. Celui-ci peut générer une fréquence comprise dans un intervalle de quelques dizaines de MHz, mais ne peut pas générer toutes ces fréquences simultanément. La gamme de fréquence est donc déterminée par le \it DC Generator\rm. Les différentes gammes dépendent du modèle de microcontrôleur.
@@ -219,7 +219,7 @@ Le facteur de multiplication vaut 100. Il peut être obtenu avec :
 
 
 \subsection{Configuration du circuit UCS}
-Le schéma détaillé du circuit UCS est donné à la figure \ref{fig:UCS_Schema}. En plus des 5 sources de fréquence principales décrites précédemment, une $6^{eme}$ source est visible: il s'agit de la sortie du \it prescaler\rm, elle est notée DCOCLKDIV. De plus, 2 autres signaux d'horloge sont visibles, en plus de ACLK, MCLK et SMCLK. Ce sont ACLK/n, qui est dérivée de ACLK par une division de fréquence, et MODCLK, qui sert uniquement pour le convertisseur AD. Finalement, les horloges ACLK, MCLK et SMCLK peuvent subir une prédivision de fréquence par 1, 2, 4, 8, 12, 16, 32.
+Le schéma détaillé du circuit UCS est donné à la figure \ref{fig:UCS_Schema}. En plus des 5 sources de fréquence principales décrites précédemment, une $6^{eme}$ source est visible: il s'agit de la sortie du \it prescaler\rm, elle est notée DCOCLKDIV. De plus, 2 autres signaux d'horloge sont visibles, en plus de ACLK, MCLK et SMCLK. Ce sont ACLK/n, qui est dérivée de ACLK par une division de fréquence et disponible sur une patte externe du microcontrôleur, et MODCLK qui sert pour certains périphériques spéciaux dont le convertisseur AD. Finalement, les horloges ACLK, MCLK et SMCLK peuvent subir une postdivision de fréquence par 1, 2, 4, 8, 12, 16, 32.
 
 \begin{figure}[htb]
   \centering
@@ -241,12 +241,196 @@ La configuration du circuit UCS demande donc de spécifier :
 \end{itemize}
 
 \subsection{Registres de contrôle du circuit UCS}
-Ils sont nommés UCSCTLx et sont au nombre de 10. Toutefois, les plus couramment utilisés sont :
+Ils sont nommés UCSCTLx et sont au nombre de 10. En principe, on ne touche pas à UCSCTL0, qui contient des grandeurs internes au comparateur de fréquence. Les plus couramment utilisés sont :
 \begin{itemize}[label=\textbullet,font=\small]
-\item UCSCTL1: contient DCORSEL;
-\item UCSCTL2 et UCSCTL3 : configuration du multiplieur de fréquence FLL; 
-\item UCSCTL4: connections de ACLK, MCLK et SMCLK;
-\item UCSCTL5: facteurs de prédivision de ACLK, MCLK et SMCLK;
-\item .
+\item UCSCTL1: contient DCORSEL (figure \ref{fig:UCSCTL1} et table \ref{table:UCSCTL1});
+\item UCSCTL2 et UCSCTL3 : configuration du multiplieur de fréquence FLL (figures \ref{fig:UCSCTL2} et \ref{fig:UCSCTL3} et tables \ref{table:UCSCTL2} et \ref{table:UCSCTL3}); 
+\item UCSCTL4: connections de ACLK, MCLK et SMCLK (figure \ref{fig:UCSCTL4} et table \ref{table:UCSCTL4});
+\item UCSCTL5: facteurs de prédivision de ACLK, MCLK et SMCLK (figure \ref{fig:UCSCTL5} et table \ref{table:UCSCTL5});
 \end{itemize}
 Les autres registres permettent de faire des réglages fins sur les oscillateurs XT1 et XT2.
+
+\pagebreak
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCSCTL1.pdf}
+  \rule{35em}{0.5pt}
+  \caption{UCSCTL1}
+  \label{fig:UCSCTL1}
+\end{figure}
+
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+DCORSEL & & & Sélection de la gamme (voir figure \ref{fig:FLL_Gammes})  \\
+\hline
+DISMOD & & - & Fonction liée au comportement interne du comparateur de fréquence \\
+\hline
+\end{tabular}
+\caption{UCSCTL1}
+\label{table:UCSCTL1}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCSCTL2.pdf}
+  \rule{35em}{0.5pt}
+  \caption{UCSCTL2}
+  \label{fig:UCSCTL2}
+\end{figure}
+
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+FLLD & & & Facteur de multiplication ($F_{DCOCLK}=F_{FLLREFCLK}.\frac{(FLLN+1).(FLLD)}{FLLREFDIV}$)  \\
+& & 000 & FLLD = 1 \\
+& & 001 & FLLD = 2 \\
+& & 010 & FLLD = 4 \\
+& & 011 & FLLD = 8 \\
+& & 100 & FLLD = 16 \\
+& & 101 & FLLD = 32 \\
+& & 110 & réservé \\
+& & 111 & réservé \\
+\hline
+FLLN & & & Facteur de multiplication (voir chapitre {Frequency Locked Loop} \\
+\hline
+\end{tabular}
+\caption{UCSCTL2}
+\label{table:UCSCTL2}
+\end{table}
+
+\pagebreak
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCSCTL3.pdf}
+  \rule{35em}{0.5pt}
+  \caption{UCSCTL3}
+  \label{fig:UCSCTL3}
+\end{figure}
+
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+SELREF & & & Sélection de la source de référence  \\
+& & 000 & XT1CLK \\
+& & 001 & réservé \\
+& & 010 & REFOCLK \\
+& & 011 & réservé \\
+& & 100 & réservé \\
+& & 101 & XT2CLK \\
+& & 110 & réservé \\
+& & 111 & réservé \\
+\hline
+FLLREFDIV & & & Prédivision de la référence ($F_{DCOCLK}=F_{FLLREFCLK}.\frac{(FLLN+1).(FLLD)}{FLLREFDIV}$) \\
+& & 000 & FLLREFDIV = 1 \\
+& & 001 & FLLREFDIV = 2 \\
+& & 010 & FLLREFDIV = 4 \\
+& & 011 & FLLREFDIV = 8 \\
+& & 100 & FLLREFDIV = 12 \\
+& & 101 & FLLREFDIV = 16 \\
+& & 110 & réservé \\
+& & 111 & réservé \\
+\hline
+\end{tabular}
+\caption{UCSCTL3}
+\label{table:UCSCTL3}
+\end{table}
+
+\pagebreak
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCSCTL4.pdf}
+  \rule{35em}{0.5pt}
+  \caption{UCSCTL4}
+  \label{fig:UCSCTL4}
+\end{figure}
+
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+SELA & & & Connection de ACLK  \\
+& & 000 & XT1CLK \\
+& & 001 & VLOCLK \\
+& & 010 & REFOCLK \\
+& & 011 & DCOCLK \\
+& & 100 & DCOCLKDIV \\
+& & 101 & XT2CLK \\
+& & 110 & réservé \\
+& & 111 & réservé \\
+\hline
+SELS & & & Connection de SMCLK  \\
+& & 000 & XT1CLK \\
+& & 001 & VLOCLK \\
+& & 010 & REFOCLK \\
+& & 011 & DCOCLK \\
+& & 100 & DCOCLKDIV \\
+& & 101 & XT2CLK \\
+& & 110 & réservé \\
+& & 111 & réservé \\
+\hline
+SELM & & & Connection de MCLK  \\
+& & 000 & XT1CLK \\
+& & 001 & VLOCLK \\
+& & 010 & REFOCLK \\
+& & 011 & DCOCLK \\
+& & 100 & DCOCLKDIV \\
+& & 101 & XT2CLK \\
+& & 110 & réservé \\
+& & 111 & réservé \\
+\hline
+\end{tabular}
+\caption{UCSCTL4}
+\label{table:UCSCTL4}
+\end{table}
+
+\pagebreak
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCSCTL5.pdf}
+  \rule{35em}{0.5pt}
+  \caption{UCSCTL5}
+  \label{fig:UCSCTL5}
+\end{figure}
+
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l || l l l l}
+\hline\hline
+Champ & & Valeur & Description & Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+DIVPA & & & génération de ACLK/n  & DIVS & & & Postdivision de SMCLK  \\
+& & 000 & n = 1  & & & 000 & $f_{SMCLK}$ \\
+& & 001 & n = 2  & & & 001 & $f_{SMCLK}/2$ \\
+& & 010 & n = 4  & & & 010 & $f_{SMCLK}/4$ \\
+& & 011 & n = 8  & & & 011 & $f_{SMCLK}/8$ \\
+& & 100 & n = 16  & & & 100 & $f_{SMCLK}/16$ \\
+& & 101 & n = 32  & & & 101 & $f_{SMCLK}/32$ \\
+& & 110 & réservé  & & & 110 & réservé \\
+& & 111 & réservé  & & & 111 & réservé \\
+\hline
+DIVA & & & Postdivision de ACLK  & DIVM & & & Postdivision de MCLK  \\
+& & 000 & $f_{ACLK}$  & & & 000 & $f_{MCLK}$ \\
+& & 001 & $f_{ACLK}/2$  & & & 001 & $f_{MCLK}/2$ \\
+& & 010 & $f_{ACLK}/4$  & & & 010 & $f_{MCLK}/4$ \\
+& & 011 & $f_{ACLK}/8$  & & & 011 & $f_{MCLK}/8$ \\
+& & 100 & $f_{ACLK}/16$  & & & 100 & $f_{MCLK}/16$ \\
+& & 101 & $f_{ACLK}/32$  & & & 101 & $f_{MCLK}/32$ \\
+& & 110 & réservé  & & & 110 & réservé \\
+& & 111 & réservé  & & & 111 & réservé \\
+\hline
+\end{tabular}
+\caption{UCSCTL5}
+\label{table:UCSCTL5}
+\end{table}
