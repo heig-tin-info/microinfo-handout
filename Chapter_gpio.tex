@@ -1,3 +1,4 @@
+
 \chapter{\textsc{GPIO (General Purpose Input Output)}}
 
 Le GPIO (General Purpose Input/Output) est une broche d'entrée ou sortie à usage générique. Les GPIOs sont groupées en ports de 8bits ou 16bits. Au sein d'un port ont peut accéder à chaque broche indépendamment en utilisant un masque (voir §2.2).
@@ -20,7 +21,7 @@ Le fonctionnement matériel du GPIO est décrit à la fig. \ref{fig:gpio}.
 \end{figure}
 
 Il contient trois parties principales:
-\begin{itemize}
+\begin{itemize}[label=\textbullet,font=\small]
 \item Le circuit de sortie
 \item Le circuit d'entrée
 \item Un ou plusieurs commutateurs pour connecter la broche
@@ -50,7 +51,7 @@ Pour programmer les GPIO on utilise des registres organisés par ports. Par exemp
 
 \subsection{Programmation par masque}
 
-Comme les GPIO sont groupés en paquets de 8 ou 16 du point de vue matériel, il faut un moyen pour programmer chaque GPIO individuellement. Cela signifie que si on modifie un GPIO, il ne faut surtout pas affecter les autres du même groupe. Un moyen d'arriver à ceci est d'utiliser un masque créé à l'aide de fonctions logiques.
+Comme les GPIO sont groupés en paquets de 8 ou 16 du point de vue matériel, il faut un moyen pour programmer chaque GPIO individuellement. Cela signifie que si on modifie un GPIO, il ne faut surtout pas affecter les autres du même groupe. Un moyen d'arriver à ceci est d'utiliser un masque qui représente le bit désiré. Par exemple si on désire sélectionner le bit 3 on utilisera le masque BIT3 = 00001000 sur 8 bits (La numérotation commence à zéro). Si on désire sélectionner le bit 3 sur 16 bits alors le masque sera BIT3 = 0000000000001000.
 
 Soit un registre (REG) de 8 bits servant à configurer 8 broches d'un microcontrôleur (fig \ref{fig:pxout}). 
 
@@ -62,52 +63,136 @@ Soit un registre (REG) de 8 bits servant à configurer 8 broches d'un microcontrô
   \label{fig:pxout}
 \end{figure}
 
-Pour mettre à 1 le bit 0 sans changer les bits 1 à 7 on peut utiliser la fonction OU:\\
+Pour mettre à 1 le bit 0 sans changer les bits 1 à 7 on peut utiliser la fonction OU, REG = REG OU BIT0 avec BIT0 = 00000001:
 
-{\fontfamily{qcr}\selectfont
-REG = REG OU BIT0 avec BIT0 = 00000001
-
+\lstset{style=customc}
+\begin{lstlisting}
 REG = REG | BIT0  //en C avec BIT0 = 1
-
 REG |= BIT0		  //en C simplifié
-}\\
+\end{lstlisting}
 
-On appelle cette technique le masquage. Pour mettre un bit à 0, il faut utiliser une autre fonction logique car le OU logique ne fait rien avec un zéro. Il est intéressant de résoudre ce problème par soi-même pour trouver la solution. On cherche donc à mettre un bit à 0 sans changer l'état logique des autres bits du port. Pour trouver la solution on peut partir d'un exemple et procéder par élimination:\\
+On appelle cette technique le masquage. Pour mettre un bit à 0, il faut utiliser une autre fonction logique car le OU logique ne fait rien avec un zéro. Il est intéressant de résoudre ce problème par soi-même pour trouver la solution. On cherche donc à mettre un bit à 0 sans changer l'état logique des autres bits du port. Pour trouver la solution on peut partir d'un exemple et procéder par élimination:
 
-{\fontfamily{qcr}\selectfont
-REG = 00000011  //on désire mettre le premier bit à zéro sans influencer les autres
-\\test avec OU
+\lstset{style=customc}
+\begin{lstlisting}
+REG = 00000011    //on désire mettre le premier bit à zéro sans influencer les autres
+\\test avec OU:
 REG = REG | BIT0  //ne fait rien donc ce n'est pas la solution
-\\test avec ET
-REG = REG \& BITO  //REG = 00000001 FAUX ça ne marche pas non plus
-}\\
+\\test avec ET:
+REG = REG & BITO  //REG = 00000001 FAUX ça ne marche pas non plus
+\end{lstlisting}
 
 Mais si on avait inversé BIT0 alors ça aurait marché:
 
-{\fontfamily{qcr}\selectfont
-REG = REG \& \textasciitilde{}BITO  //REG = 00000010 JUSTE 
-
-REG 	\textasciitilde{}\& BIT0	  //en C simplifié
-}\\
+\lstset{style=customc}
+\begin{lstlisting}
+REG = REG & ~BITO   //REG = 00000010 JUSTE 
+REG ~& BIT0         //en C simplifié
+\end{lstlisting}
 
 On constate donc qu'il faut utiliser la fonction duale mais avec une inversion préalable. Ceci convient pour l'écriture dans un registre mais quand est-il de la lecture? Comment pourrait-on lire un GPIO parmi tous les bits d'un port?
 
-La réponse est similaire au test d'un bit dans un mot en langage C. Prenons comme exemple la lecture, ou test, du BIT0 dans REG et procédons pas élimination:
+La réponse est similaire au test d'un bit dans un mot en langage C. Prenons comme exemple la lecture, ou test, du BIT0 dans REG et procédons par élimination. Il faut trouver la fonction désirée avec par exemple REG = 00000011 et BIT0 = 00000001:
 
-{\fontfamily{qcr}\selectfont
-//fonction désirée:
-TEST\_BIT0 = REG ? BIT0 avec par exemple REG = 00000011 et BIT0 = 00000001\\
-//essai avec OU:
-TEST\_BIT0 = REG | BIT0  //TEST\_BIT0 = 00000011 FAUX
+\lstset{style=customc}
+\begin{lstlisting}
+//essai avec OU avec REG = 00000011 et BIT0 = 00000001:
+TEST_BIT0 = REG | BIT0  //TEST_BIT0 = 00000011 FAUX
 //et si REG = 00000010
-TEST\_BIT0 = REG | BIT0  //TEST\_BIT0 = 00000011 FAUX\\
+TEST_BIT0 = REG | BIT0  //TEST_BIT0 = 00000011 FAUX
+
 //Il est clair que ça ne marche pas avec OU essayons avec ET:
-TEST\_BIT0 = REG \& BIT0  //TEST\_BIT0 = 00000001 JUSTE
+TEST_BIT0 = REG & BIT0  //TEST_BIT0 = 00000001 JUSTE
 //et si REG = 00000010
-TEST\_BIT0 = REG \& BIT0  //TEST\_BIT0 = 00000000 JUSTE
-}\\
+TEST_BIT0 = REG & BIT0  //TEST_BIT0 = 00000000 JUSTE
+\end{lstlisting}
 
-Donc le test ou lecture d'une valeur s'effectue avec l'opérateur logique ET.
+Donc le test ou lecture d'une valeur s'effectue avec l'opérateur logique ET. Dans le cas d'un test en C, on doit se rappeler que le résultat est VRAI pour toute valeur de TEST\_BITx différente de zéro. Il est faux si et seulement si TEST\_BITx = 0. Ceci provient du fait que la variable C la plus petite est de 8 bits. Il n'y a pas de variable de 1 bit en C. 
+
+\subsection{Écriture dans un registre}
+
+Soit le registre REG d'une longueur de 8 bits. Pour écrire la valeur logique 1 dans le registre on utilise la fonction OU entre le registre et le masque du bit voulu. Pour écrire un 0 logique on utilise la fonction ET entre le registre et le masque du bit voulu inversé, exemples:
+
+\lstset{style=customc}
+\begin{lstlisting}
+//Mise à 1 du bit zéro:
+REG = REG | BIT0    //en C avec BIT0 = 1
+REG |= BIT0		    //en C simplifié
+
+//Mise à 0 du bit zéro:
+REG = REG & ~BITO   //REG = 00000010 JUSTE 
+REG ~& BIT0         //en C simplifié
+\end{lstlisting}
+
+Pour la mise à 1 ou 0 simultanée de plusieurs bits on utilise le OU pour sommer les masques et créer un masque contenant les deux bits. Exemple: BIT3 | BIT0 = 00001001:
+
+\lstset{style=customc}
+\begin{lstlisting}
+//Mise à 1 du bit zéro et trois simultanément:
+REG |= BIT0 | BIT3
+
+//Mise à 0 du bit zéro et trois simultanément:
+REG ~& BIT0 | BIT3
+\end{lstlisting}
+
+\subsection{Lecture d'un registre}
+
+Pour lire un registre on compare le registre avec le masque du bit voulu en utilisant la fonction ET: 
+
+\lstset{style=customc}
+\begin{lstlisting}
+//Lecture du BIT3 uniquement:
+TEST_REG = REG & BIT3; // BIT3=00001000
+\end{lstlisting}
+
+Le résultat de cette affectation sera donc 0 si le BIT3 est à zéro et 8 si le BIT3 est à 1. Pour lire plusieurs bits à la fois on peut, comme pour l'écriture, créer un masque combiné. Exemple, on veut lire le bit 5 et le bit 2 simultanément:
+
+\lstset{style=customc}
+\begin{lstlisting}
+//Lecture du BIT5 et du BIT2:
+TEST_REG = REG & (BIT5 | BIT2); // BIT5 | BIT2 = 00100100
+\end{lstlisting}
+
+\section{Configuration des GPIO}
+
+Avant de pouvoir utiliser un GPIO il faut le configurer. Cela inclus principalement:
+
+\begin{itemize}[label=\textbullet,font=\small]
+\item Le multiplexeur d'entrée
+\item La fonction entrée ou sortie
+\item La résistance de pull-up ou pull-down lorsqu'on est en entrée
+\end{itemize}
+
+Pour les configurer on doit trouver leurs adresses physiques qui les identifient à l'intérieur du circuit intégré. Ces adresses peuvent être trouvées dans la documentation du microcontrôleur mais souvent elle sont fournie sous forme de constantes dans une librairie qu'on peut inclure dans le code C.
+
+\lstset{style=customc}
+\begin{lstlisting}
+#include <msp430.h> 
+
+#define P1IN    	(PAIN_L)       /* Port 1 Input */
+#define P1OUT 	(PAOUT_L)      /* Port 1 Output */
+#define P1DIR	(PADIR_L)      /* Port 1 Direction */
+#define P1REN	(PAREN_L)      /* Port 1 Resistor Enable */
+#define P1DS	    (PADS_L)       /* Port 1 Drive Strength */
+#define P1SEL	(PASEL_L)      /* Port 1 Selection */
+ \end{lstlisting}
+
+Exemple de configuration du port P1.2 et P1.5 en sortie
+
+\lstset{style=customc}
+\begin{lstlisting}
+P1DIR |= BIT5 | BIT2; // Set P1.2 et P1.5 to output direction
+Puis écriture des sorties P1.5 et P1.2:
+P1OUT |= BIT5 | BIT2;
+  \end{lstlisting}
+
+Exemple de configuration du port P1.2 et P1.5 en entrée
+
+\lstset{style=customc}
+\begin{lstlisting}
+
+  \end{lstlisting}
+
 
 \lstdefinestyle{customc}{
   belowcaptionskip=1\baselineskip,
