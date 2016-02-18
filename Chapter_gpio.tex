@@ -1,14 +1,13 @@
-
 \chapter{\textsc{GPIO (General Purpose Input Output)}}
 
 Le GPIO (General Purpose Input/Output) est une broche d'entrée ou sortie à usage générique. Les GPIOs sont groupées en ports de 8bits ou 16bits. Au sein d'un port ont peut accéder à chaque broche indépendamment en utilisant un masque (voir §2.2).
 
-Les GPIO sont configurés à l'aide de registres qui ont la dimension d'un port (8 ou 16 bits). Un port est donc juste un groupe de GPIO qui permet une écriture simplifiée du code.
+Les GPIOs sont configurés à l'aide de registres qui ont la dimension d'un port (8 ou 16 bits). Un port est donc juste un groupe de GPIOs qui permet une écriture simplifiée du code.
 
 
 \section{Matériel}
 
-Les GPIO sont présents sur tout les microcontrôleurs en nombre plus ou moins grande dépendamment du nombre de broche disponible sur le boîtier. On choisit souvent un microcontrôleur en fonction du nombre de GPIO disponibles.
+Les GPIOs sont présents sur tout les microcontrôleurs en nombre plus ou moins grande dépendamment du nombre de broche disponible sur le boîtier. On choisit souvent un microcontrôleur en fonction du nombre de GPIO disponibles.
 
 Le fonctionnement matériel du GPIO est décrit à la fig. \ref{fig:gpio}. 
 
@@ -31,7 +30,7 @@ Au delà du circuit de base décrit auparavant, il existe d'autres fonctions optio
 
 \subsection{Input}
 
-Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur logique présente à l'entrée ainsi qu'un bloc pour sélectionner une résistance de pull-up ou pull-down. Ce bloc est très important car il est nécessaire pour éviter qu'une entrée se retrouve flottante. Si une entrée est laissée non-connectée (flottante) alors elle peut prendre n'importe quel valeur et même changer de valeur aléatoirement au cours du temps. Pour éviter se phénomène on doit utilise une résistance placée selon le schéma suivant fig. \ref{fig:pullres}.
+Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur logique présente à l'entrée ainsi qu'un bloc pour sélectionner une résistance de pull-up ou pull-down. Ce bloc est très important car il est nécessaire pour éviter qu'une entrée se retrouve flottante. Si une entrée est laissée non-connectée (flottante) elle peut alors prendre n'importe quel valeur et même changer de valeur aléatoirement au cours du temps. Pour éviter se phénomène on doit utilise une résistance placée selon le schéma suivant fig. \ref{fig:pullres}.
 
 \begin{figure}[htb]
   \centering
@@ -41,17 +40,21 @@ Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur logiq
   \label{fig:pullres}
 \end{figure}
 
+La valeur de cette résistance est choisie de manière optimale entre deux facteurs: i) le courant consommé VCC-GND qui doit être le plus faible possible quand l'interrupteur est fermé et ii) La vitesse à laquelle la résistance décharge la capacité d'entrée du circuit intégré CMOS lorsque l'interrupteur est ouvert. Les valeurs typiques se situent entre $10k\Omega$ et $100k\Omega$. Mais attention sous 3.3V, ça consommera lorsque l'interrupteur est fermé, entre $330µA$ et $33µA$ ce qui n'est pas négligeable!
+
+Dans le cas particulier du MSP430F5529 la valeur typique des résistances de pull est de $35k\Omega$ ce qui provoque un courant de $86\mu A$ sous 3V. Il est donc avantageux de choisir un interrupteur poussoir plutôt que commutant pour minimiser le temps total de consommation. On peut aussi réduire la tension d'alimentation à 1.8V pour réduire le courant mais attention à la réduction de vitesse du microcontrôleur.
+
 \subsection{Output}
 
-Dans la partie "sortie" du GPIO on trouve un tampon qui mémorise la valeur logique qu'on veut sortir sur la broche ainsi qu'un amplificateur pour permettre a u circuit de commuter la charge de sortie. Cette charge est souvent de type capacitif avec une valeur comprise entre 2pF et 10pF.
+Dans la partie "sortie" du GPIO on trouve un tampon qui mémorise la valeur logique que l'on veut sortir sur la broche ainsi qu'un amplificateur pour permettre au circuit de commuter la charge de sortie rapidement. Cette charge est souvent de type capacitive avec une valeur comprise entre 2pF et 10pF typiquement. On peut donc calculer le courant nécessaire pour charger cette capacité à 90\% dans un temps voulu. Ensuite on peut ajuster le courant, si disponible dans le GPIO, pour atteindre la vitesse recherchée.
 
-\section{logiciel}
+\section{Logiciel}
 
-Pour programmer les GPIO on utilise des registres organisés par ports. Par exemple dans la nomenclature Texas Instrument [], le port1 contient huit GPIO et on les nommes P1.0 à P1.7. On peut aussi utiliser le groupement par seize où la notation devient PA, PB, etc. PA est équivalent aux ports P0 et P1 regroupés alors que PB est équivalent aux ports P2 et P3. 
+Pour programmer les GPIOs on utilise des registres organisés en ports. Par exemple dans la nomenclature Texas Instrument [], le port1 contient huit GPIO et on les nommes P1.0 à P1.7. On peut aussi utiliser le groupement par seize où la notation devient PA, PB, etc. PA est équivalent aux ports P0 et P1 regroupés alors que PB est équivalent aux ports P2 et P3. 
 
 \subsection{Programmation par masque}
 
-Comme les GPIO sont groupés en paquets de 8 ou 16 du point de vue matériel, il faut un moyen pour programmer chaque GPIO individuellement. Cela signifie que si on modifie un GPIO, il ne faut surtout pas affecter les autres du même groupe. Un moyen d'arriver à ceci est d'utiliser un masque qui représente le bit désiré. Par exemple si on désire sélectionner le bit 3 on utilisera le masque BIT3 = 00001000 sur 8 bits (La numérotation commence à zéro). Si on désire sélectionner le bit 3 sur 16 bits alors le masque sera BIT3 = 0000000000001000.
+Comme les GPIO sont groupés en paquets de 8 ou 16 du point de vue logiciel, il faut un moyen pour programmer chaque GPIO individuellement. Cela signifie que si on modifie un GPIO, il ne faut surtout pas affecter les autres du même groupe. Un moyen d'arriver à ceci est d'utiliser un masque qui représente le bit désiré. Par exemple si on désire sélectionner le bit 3 on utilisera le masque BIT3 = 00001000 sur 8 bits (La numérotation commence à zéro). Si on désire sélectionner le bit 3 sur 16 bits alors le masque sera BIT3 = 0000000000001000.
 
 Soit un registre (REG) de 8 bits servant à configurer 8 broches d'un microcontrôleur (fig \ref{fig:pxout}). 
 
@@ -169,59 +172,37 @@ Pour les configurer on doit trouver leurs adresses physiques qui les identifient
 \begin{lstlisting}
 #include <msp430.h>
 
-#define P1IN    	(PAIN_L)       /* Port 1 Input */
+#define P1IN   	(PAIN_L)       /* Port 1 Input */
 #define P1OUT 	(PAOUT_L)      /* Port 1 Output */
 #define P1DIR	(PADIR_L)      /* Port 1 Direction */
 #define P1REN	(PAREN_L)      /* Port 1 Resistor Enable */
-#define P1DS	    (PADS_L)       /* Port 1 Drive Strength */
+#define P1DS 	(PADS_L)       /* Port 1 Drive Strength */
 #define P1SEL	(PASEL_L)      /* Port 1 Selection */
 \end{lstlisting}
 
-Exemple de configuration du port P1.2 et P1.5 en sortie
+Exemple de configuration du port P1.2 et P1.5 en sortie:
 
 \lstset{style=customc}
 \begin{lstlisting}
-P1DIR |= BIT5 | BIT2; // Set P1.2 et P1.5 to output direction
-Puis écriture des sorties P1.5 et P1.2:
+P1SEL &= ~BIT5 & ~BIT2;  // Reset P1.2 et P1.5 to select GPIO
+P1DIR |=  BIT5 | BIT2;   // Set P1.2 et P1.5 to output direction
+//Option: ajouter le P1DS pour changer le courant de sortie
+
+//Puis écriture sur les sorties P1.5 et P1.2 d'un 1 logique:
 P1OUT |= BIT5 | BIT2;
 \end{lstlisting}
 
-Exemple de configuration du port P1.2 et P1.5 en entrée
+Exemple de configuration du port P1.2 et P1.5 en entrée:
 
 \lstset{style=customc}
 \begin{lstlisting}
-P1DIR &= ~BIT5 & ~BIT2; // Reset P1.2 et P1.5 to input direction
-Puis lecture de l?entrée P1.5 et P1.2:
-REG = P1IN & (BIT5 | BIT2);
-Option: ajouter les résistances de pull-up
-P1OUT |= BIT5 | BIT2;    
-P1REN |= BIT5 | BIT2;
+P1SEL &= ~BIT5 & ~BIT2;  // Reset P1.2 et P1.5 to select GPIO
+P1DIR &= ~BIT5 & ~BIT2;  // Reset P1.2 et P1.5 to input direction
+//Option: ajouter les résistances de pull
+P1OUT |= BIT5 | BIT2;    // Sélection de la résistance
+P1REN |= BIT5 | BIT2;    // Activation de la résistance
+
+//Puis lecture de l'entrée P1.5 et P1.2:
+TEST_REG = P1IN & (BIT5 | BIT2);
 \end{lstlisting}
 
-
-\lstdefinestyle{customc}{
-  belowcaptionskip=1\baselineskip,
-  breaklines=true,
-  frame=L,
-  xleftmargin=\parindent,
-  language=C,
-  showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
-  keywordstyle=\bfseries\color{green!40!black},
-  commentstyle=\itshape\color{purple!40!black},
-  identifierstyle=\color{blue},
-  stringstyle=\color{orange},
-  extendedchars=true,
-  basicstyle=\fontfamily{pcr}\selectfont
-}
-
-\lstset{style=customc}
-\begin{lstlisting}
-REG = REG & ~BITO   //REG = 00000010 JUSTE 
-REG ~& BIT0         //en C simplifié
-
-for i:=maxint to 0 do
-begin
-{ do nothing }
-end;
-\end{lstlisting}
