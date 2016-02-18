@@ -1,0 +1,35 @@
+\lstset{style=customc}
+\begin{lstlisting}
+#include <msp430.h>
+int main(void) {
+
+// configuration du systeme d'horloge UCS
+UCSCTL1 &= ~(BIT6 | BIT5 | BIT4);        // reset DCORSEL
+UCSCTL1 |= DCORSEL_4;                    // range du DCO
+
+UCSCTL2 = 9 | FLLD__32;                  // multiplication par 10 et par 32
+
+UCSCTL3 = SELREF__XT1CLK + FLLREFDIV__1; // XT1CLK entrée de FLL, prédivision par 1
+
+UCSCTL4 = SELA__DCOCLKDIV + SELM__DCOCLK;// sélection des sources pour ACLK (FXT1*10) et MCLK(FXT1*320)
+
+UCSCTL5 = DIVA__1;                       // division de ACLK par 1
+
+UCSCTL6 &= ~XT1OFF;                      // activation de XT1 pour ACLK
+
+// configuration du timer A0
+// génère une interruption sur CCIFG0 tous les 32768 tops
+TA0CCTL0 = CCIE;
+TA0CCR0 = 32767;
+TA0CTL = TASSEL_1 + MC_1 + TACLR;
+__enable_interrupt();
+while(1);
+}
+
+// Timer_A CCIFG0 handler
+#pragma vector=TIMERA0_VECTOR
+__interrupt void Timer_A (void)
+{
+todo();
+}
+\end{lstlisting}

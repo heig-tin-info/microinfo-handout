@@ -221,14 +221,6 @@ Le facteur de multiplication vaut 100. Il peut être obtenu avec :
 \subsection{Configuration du circuit UCS}
 Le schéma détaillé du circuit UCS est donné à la figure \ref{fig:UCS_Schema}. En plus des 5 sources de fréquence principales décrites précédemment, une $6^{eme}$ source est visible: il s'agit de la sortie du \it prescaler\rm, elle est notée DCOCLKDIV. De plus, 2 autres signaux d'horloge sont visibles, en plus de ACLK, MCLK et SMCLK. Ce sont ACLK/n, qui est dérivée de ACLK par une division de fréquence et disponible sur une patte externe du microcontrôleur, et MODCLK qui sert pour certains périphériques spéciaux dont le convertisseur AD. Finalement, les horloges ACLK, MCLK et SMCLK peuvent subir une postdivision de fréquence par 1, 2, 4, 8, 12, 16, 32.
 
-\begin{figure}[htb]
-  \centering
-  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCS_Schema.pdf}
-  \rule{35em}{0.5pt}
-  \caption{Schéma complet du circuit UCS}
-  \label{fig:UCS_Schema}
-\end{figure}
-
 La configuration du circuit UCS demande donc de spécifier :
 \begin{itemize}[label=\textbullet,font=\small]
 \item la connection des 3 horloges (ACL, MCLK, SMCLK) avec les 6 sources de fréquence, y compris DCOCLKDIV. Ceci se fait par des champs appelés SELx dans les divers registres de configuration.
@@ -249,6 +241,14 @@ Ils sont nommés UCSCTLx et sont au nombre de 10. En principe, on ne touche pas à
 \item UCSCTL5: facteurs de prédivision de ACLK, MCLK et SMCLK (figure \ref{fig:UCSCTL5} et table \ref{table:UCSCTL5});
 \end{itemize}
 Les autres registres permettent de faire des réglages fins sur les oscillateurs XT1 et XT2.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap6_Horloges/UCS_Schema.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Schéma complet du circuit UCS}
+  \label{fig:UCS_Schema}
+\end{figure}
 
 \pagebreak
 \begin{figure}[H]
@@ -434,3 +434,46 @@ DIVA & & & Postdivision de ACLK  & DIVM & & & Postdivision de MCLK  \\
 \caption{UCSCTL5}
 \label{table:UCSCTL5}
 \end{table}
+
+\pagebreak
+\subsection{Exemple de configuration}
+Partant d'un quartz 32768 Hz connecté sur l'oscillateur XT1, le code suivant génère:
+ACLK à 327680 Hz
+MCLK à 10,48576 MHz
+Le signal ACLK est utilisé par le timer A0 pour générer des interruptions toutes les 100 ms.
+
+\lstset{style=customc}
+\begin{lstlisting}
+#include <msp430.h>
+int main(void) {
+
+// configuration du systeme d'horloge UCS
+UCSCTL1 &= ~(BIT6 | BIT5 | BIT4);        // reset DCORSEL
+UCSCTL1 |= DCORSEL_4;                    // range du DCO
+
+UCSCTL2 = 9 | FLLD__32;                  // multiplication par 10 et par 32
+
+UCSCTL3 = SELREF__XT1CLK + FLLREFDIV__1; // XT1CLK entrée de FLL, prédivision par 1
+
+UCSCTL4 = SELA__DCOCLKDIV + SELM__DCOCLK;// sélection des sources pour ACLK (FXT1*10) et MCLK(FXT1*320)
+
+UCSCTL5 = DIVA__1;                       // division de ACLK par 1
+
+UCSCTL6 &= ~XT1OFF;                      // activation de XT1 pour ACLK
+
+// configuration du timer A0
+// génère une interruption sur CCIFG0 tous les 32768 tops
+TA0CCTL0 = CCIE;
+TA0CCR0 = 32767;
+TA0CTL = TASSEL_1 + MC_1 + TACLR;
+__enable_interrupt();
+while(1);
+}
+
+// Timer_A CCIFG0 handler
+#pragma vector=TIMERA0_VECTOR
+__interrupt void Timer_A (void)
+{
+todo();
+}
+\end{lstlisting}
