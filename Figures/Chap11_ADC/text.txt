@@ -1,0 +1,98 @@
+Les Convertisseurs Analogique-Numérique (ADC pour \it Analog to Digital Converter \rm) et Numérique-Analogique (DAC pour \it Digital to Analog Converter \rm) sont des éléments importants de toute chaîne d'acquisition de donnée.
+
+\section{Convertisseur AD}
+L'ADC est un circuit dont la fonction est de convertir une grandeur physique $V_{in}$ - en général une tension, parfois un courant - en un nombre N représenté sur plusieurs bits, "proportionnel" à cette grandeur physique.
+Le terme proportionnel est abusif dans la mesure où la fonction de transfert $N = f(V_{in})$ est une fonction en escalier, comme illustré à la figure
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=8cm]{./Figures/Chap11_ADC/Acq_Chain.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Chaîne d'acquisition et traitement de signal}
+  \label{fig:Osc_RC_1}
+\end{figure}
+
+
+\subsection{ploutch}
+
+Caractéristiques importantes
+Plage d’entrée
+Résolution en nombre de bits
+Fréquence d’échantillonnage
+Linéarité
+
+Convertisseur à approximations successives
+Utilisation d’un processus de dichotomie pour traduire numériquement une tension analogique.
+Un séquenceur (généralement nommé SAR pour Successive Approximation Register), couplé à un DAC génère une tension analogique, qui est comparée au signal à convertir. 
+Le résultat de cette comparaison est alors introduit dans le SAR, qui va le prendre en compte, pour la suite du processus de dichotomie, jusqu'à complétion.
+Le convertisseur réalise donc saconversion en positionnant en premierle bit de poids fort (MSB) et endescendant progressivementjusqu'au LSB.
+Ces convertisseurs ont des résolutionsd'une douzaine de bits environ, maispeuvent atteindre 16 bits au moyen detechnologies spéciales
+
+Echantillonnage :	VAO- = GND; Capas sur Vin
+Fin échantillonnage :	AO- flottant; Capas sur GND (VAO- = -Vin)
+Conversion 1 :		VN-1 = VREF ; VAO- = -Vin + ½ VREF 			Obtention du MSB.	Si Out = 1, VN-1 = VREF ;					Si Out = 0, VN-1 = GND ;
+Conversion 2 :		VN-2 = VREF ; VAO- = -Vin + BN-1x½ VREF + ¼ VREF			Bit de poids N-2.	Si Out = 1, VN-2 = VREF ;					Si Out = 0, VN-2 = GND ;
+Etc…
+
+Le temps de conversion est proportionnel à la résolution
+
+Cas du MSP430F5529
+Convertisseur AD 12 bits à approximations successives
+Plus de 200 kSPS : 200’000 échantillons par seconde
+Echantillonneur-Bloqueur avec période programmable, contrôlée par logiciel ou par timers
+Lancement des conversions par logiciel ou par timers
+Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
+Référence interne ou externe
+Jusqu’à 12 canaux d’entrée configurables individuellement
+Canaux d’entrée pour capteur de température interne, AVCC, et références externes
+Référence de tension positives ou négatives
+Horloge de conversion sélectionnable
+Modes de conversion canal simple, à répétition, en séquence (autoscan), et à répétition de séquence
+Vecteur d’interruption pour 18 requêtes
+Registres de stockage de 16 résultats de conversion
+
+SHI est le signal de lancement du processus
+Mode d’échantillonnage «étendu» (ADC12SHP = 0, SHI est «étendu»)
+SHI contrôle directement SAMPCON, qui définit la durée d’échantillonnage
+Le flanc descendant du signal SAMPCON déclenche le processus de conversionavec ADC12CLK
+
+Mode d’échantillonnage «pulse» (ADC12SHP = 1)
+SHI déclenche le signal SAMPCON
+La durée d’échantillonnage tsample est contrôlée par les bits ADC12SHT0x et ADC12SHT1x dans ADC12CTL0
+
+
+Cas du MSP4340F5529 : Stockage
+ADC12CSTARTADDx définit le début de la séquence de conversions, c’est-à-dire le registre dans lequel est stocké le premier résultat de conversion, ainsi que le registre qui le contrôle (ADC12MCTLa)
+
+Dans ADC12MCTLb, le bit ADC12EOS (End Of Sequence) définit le registre dans lequel est stocké le dernier résultat de conversion
+
+Une séquence de conversion concerne une liste de canaux d’entrée
+
+A la fin de la séquence, une interruption est générée, et il faut déclencher une nouvelle séquence
+
+Il est possible d’enchaîner automatiquement les séquences, en settant le bit ADC12MSC (Multiple Sequence of Conversion)
+
+
+
+CONSEQx	Mode	Fonctionnement
+0	Un seul canal	Une conversion unique du canal sélectionné par les bits ADC12INCHx du registre ADC12MCTLz. Le résultat est stocké dans ADC12MEMz
+	Conversion unique	
+1	Séquence de	Une conversion unique des canaux sélectionnés par les bits ADC12INCHx des registres ADC12MCTLa-b. Le résultat est stocké dans ADC12MEMa à ADC12MEMb. Le bit ADC12EOS doit être à ‘1’ dans ADC12MEMb.
+	n canaux	
+	Conversion unique	
+10	Un seul canal	Un canal est converti plusieurs fois. Il est sélectionné par les bits ADC12INCHx du registre ADC12MCTLz. Le résultat est stocké dans un seul registre ADC12MEMz. Il faut récupérer les résultats successifs au fur et à mesure qu’ils sont produits.
+	Conversion répétitive	
+11	Séquence de	Similaire au mode 01, mais la séquence peut être répétée avec un nouveau signal de déclenchement
+	n canaux	
+	Conversion ré pétitive	
+
+
+Interruptions
+Une interruption est générée à la fin de chaque séquence de conversions (qu’elle soit de longueur 1 ou  plus)
+Trois registres de contrôle:
+ADC12IFG : Flags d’interruption. Le flag activé est celui qui correspond à la dernière conversion de la séquence
+ADC12IE : autorisation des interruptions pour chaque registre de ontrôle de conversion
+ADC12IV : contient le «vecteur d’interruption, qui doit être testé au moyen d’une instruction de type switch...case
+
+
+

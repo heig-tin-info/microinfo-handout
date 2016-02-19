@@ -235,7 +235,7 @@ TAIFG & & & Indicateur d'interruption \\
 \bigskip
 \begin{minipage}{14cm}{
 \subsubsection*{Exemple de configuration}
-Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclus) jusqu'à 8191 (inclus), avec l'horloge SMCLK prédivisée par 8.
+Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclus) jusqu'à 8191 (inclus), soit 8192 cycles, avec l'horloge SMCLK prédivisée par 8.
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -354,7 +354,7 @@ CCIE & & & Autorisation des requêtes d'interruptions de CCIFG \\
 \bigskip
 \begin{minipage}{14cm}{
 \subsubsection*{Exemple de configuration}
-Les instructions ci-dessous reprennent la configuration vue au chapitre précédent, en autorisant de plus le bloc de capture/comparaison du timer A0 à émettre des requêtes d'interruptions par son signal CCIFG0.
+Les instructions ci-dessous reprennent la configuration vue au chapitre 5.3.2, en autorisant de plus le bloc de capture/comparaison du timer A0 à émettre des requêtes d'interruptions par son signal CCIFG0.
 
 \lstset{style=customc}
 \begin{lstlisting}
