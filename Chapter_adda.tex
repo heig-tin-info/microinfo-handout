@@ -1,26 +1,31 @@
 \chapter{\textsc{AD et DA}}
 
 Les Convertisseurs Analogique-Numérique (ADC pour \it Analog to Digital Converter \rm) et Numérique-Analogique (DAC pour \it Digital to Analog Converter \rm) sont des éléments importants de toute chaîne d'acquisition de donnée.\\
-Aujourd'hui, les opérations complexes de traitement de signal sont exécutées par des circuits numériques.
+En effet, les opérations complexes de traitement de signal sont aujourd'hui exécutées par des circuits numériques, dont les microcontrôleurs font partie. Pour être traités par un microcontrôleur, les signaux analogiques doivent donc être convertis en nombres.\\
+La figure \ref{fig:Acq_Chain} illustre une chaîne typique d'acquisition de donnée.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics [angle=0, width=8cm]{./Figures/Chap11_ADC/Acq_Chain.pdf}
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap11_ADC/Acq_Chain.pdf}
   \rule{35em}{0.5pt}
   \caption{Chaîne d'acquisition et traitement de signal}
-  \label{fig:Osc_RC_1}
+  \label{fig:Acq_Chain}
 \end{figure}
-
 
 \section{Convertisseur AD}
 L'ADC est un circuit dont la fonction est de convertir une grandeur physique $V_{in}$ - en général une tension, parfois un courant - en un nombre N représenté sur plusieurs bits, "proportionnel" à cette grandeur physique.
-Le terme proportionnel est abusif dans la mesure où la fonction de transfert $N = f(V_{in})$ est une fonction en escalier, comme illustré à la figure
+Le terme proportionnel est abusif dans la mesure où la fonction de transfert $N = f(V_{in})$ est une fonction en escalier, comme illustré à la figure \ref{fig:ADC_Fonction}.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=10cm]{./Figures/Chap11_ADC/ADC_Fonction.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Fonction de transfert d'un ADC idéal 4-bits}
+  \label{fig:ADC_Fonction}
+\end{figure}
 
 
-
-\subsection{ploutch}
-
-Caractéristiques importantes
+ Caractéristiques importantes
 Plage d?entrée
 Résolution en nombre de bits
 Fréquence d?échantillonnage
