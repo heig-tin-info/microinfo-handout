@@ -24,65 +24,135 @@ Le terme proportionnel est abusif dans la mesure où la fonction de transfert $N 
   \label{fig:ADC_Fonction}
 \end{figure}
 
+Les caractéristiques importantes de cette fonction de transfert sont:
+\begin{itemize}[label=\textbullet,font=\small]
+\item l'intervalle des tensions d'entrée $[V_{in\_min}, V_{in\_max}$]
+\item la résolution, égale à $log_{2}(N_{max})$
+\item les imperfections qui l'entachent, et qui sont:
+\begin{itemize}[label=\textbullet,font=\small]
+\item offset
+\item erreur de gain
+\item "non linéarité" de la fonction
+\end{itemize}
+\end{itemize}
 
- Caractéristiques importantes
-Plage d?entrée
-Résolution en nombre de bits
-Fréquence d?échantillonnage
-Linéarité
+Il existe plusieurs méthodes pour convertir une grandeur physique en un nombre. Elles se différencient principalement par la résolution atteignable et la rapidité du processus de conversion, et aussi par leur complexité.\\
+Dans les microcontrôleurs, le convertisseur AD le plus souvent rencontré est le convertisseur à approximations successives, dont l'avantage est d'offrir un bon compromis entre résolution et rapidité, pour une consommation de courant très faible.
 
-Convertisseur à approximations successives
-Utilisation d?un processus de dichotomie pour traduire numériquement une tension analogique.
-Un séquenceur (généralement nommé SAR pour Successive Approximation Register), couplé à un DAC génère une tension analogique, qui est comparée au signal à convertir. 
-Le résultat de cette comparaison est alors introduit dans le SAR, qui va le prendre en compte, pour la suite du processus de dichotomie, jusqu'à complétion.
+\section{Convertisseur à approximations successives}
 
-Le convertisseur réalise donc sa conversion en positionnant en premierle bit de poids fort (MSB) et endescendant progressivementjusqu'au LSB.
-Ces convertisseurs ont des résolutionsd'une douzaine de bits environ, maispeuvent atteindre 16 bits au moyen detechnologies spéciales
+Ce type de convertisseur utilise un processus de dichotomie pour traduire progressivement une tension analogique en un nombre. Le temps de conversion est fonction du nombre de bits souhaités.\\
+Le principe est illustré à la figure \ref{fig:ADC_SAR_Diagram}.
 
-Echantillonnage :	VAO- = GND; Capas sur Vin
-Fin échantillonnage :	AO- flottant; Capas sur GND (VAO- = -Vin)
-Conversion 1 :		VN-1 = VREF ; VAO- = -Vin + ½ VREF 			Obtention du MSB.	Si Out = 1, VN-1 = VREF ;					Si Out = 0, VN-1 = GND ;
-Conversion 2 :		VN-2 = VREF ; VAO- = -Vin + BN-1x½ VREF + ¼ VREF			Bit de poids N-2.	Si Out = 1, VN-2 = VREF ;					Si Out = 0, VN-2 = GND ;
-Etc?
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=10cm]{./Figures/Chap11_ADC/SA_ADC_block_diagram.png}
+  \rule{35em}{0.5pt}
+  \caption{Principe du convertisseur à approximations successives}
+  \label{fig:ADC_SAR_Diagram}
+\end{figure}
 
-Le temps de conversion est proportionnel à la résolution
+Un séquenceur (généralement nommé SAR pour \it Successive Approximation Register\rm), couplé à un convertisseur Digital-Analogique (DAC) génère une tension analogique, qui est comparée au signal à convertir.
+Le résultat de cette comparaison est alors introduit dans le SAR, qui va le prendre en compte, pour la suite du processus de dichotomie, jusqu'à complétion. La figure \ref{fig:ADC_SAR} illustre la chronologie du processus de conversion, dans le cas d'un ADC 4-bits.\\
+Dans cet exemple, le DAC est capable de générer 16 tensions notées $x.FS$ (FS signifie \it Full Scale\rm), avec $0 \leqslant x \leqslant 15$. Les valeurs minimale et maximale de ces tensions sont appelées \it tensions de référence\rm.\\
+Le test du MSB détermine si $V_{in}$ est supérieur ou inférieur à $\scriptstyle {}^1\!/\!_2.FS$. Dès lors que $V_{in} \leqslant \scriptstyle {}^1\!/\!_2.FS$, le MSB vaut 1. Pour tester le bit de poids inférieur (MSB-1), le séquenceur commande le DAC pour qu'il génère $\scriptstyle {}^3\!/\!_4.FS$. Cette fois,  $V_{in} \geqslant \scriptstyle {}^3\!/\!_4.FS$, donc (MSB-1) = 0; ceci signifie qu'il ne fallait pas ajouter $\scriptstyle {}^1\!/\!_4.FS$ à 
+$\scriptstyle {}^1\!/\!_2.FS$ mais $\scriptstyle {}^1\!/\!_8.FS$.\\
+Le processus continue ainsi jusqu'à l'obtention du LSB, au rythme d'un bit par étape.
 
-Cas du MSP430F5529
-Convertisseur AD 12 bits à approximations successives
-Plus de 200 kSPS : 200?000 échantillons par seconde
-Echantillonneur-Bloqueur avec période programmable, contrôlée par logiciel ou par timers
-Lancement des conversions par logiciel ou par timers
-Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
-Référence interne ou externe
-Jusqu?à 12 canaux d?entrée configurables individuellement
-Canaux d?entrée pour capteur de température interne, AVCC, et références externes
-Référence de tension positives ou négatives
-Horloge de conversion sélectionnable
-Modes de conversion canal simple, à répétition, en séquence (autoscan), et à répétition de séquence
-Vecteur d?interruption pour 18 requêtes
-Registres de stockage de 16 résultats de conversion
+\begin{figure}[htb]
+  \centering
+  \includegraphics [angle=0, width=13cm]{./Figures/Chap11_ADC/ADC_SAR.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Etapes de conversion d'un ADC 4-bits à approximations successives}
+  \label{fig:ADC_SAR}
+\end{figure}
 
-SHI est le signal de lancement du processus
-Mode d?échantillonnage «étendu» (ADC12SHP = 0, SHI est «étendu»)
-SHI contrôle directement SAMPCON, qui définit la durée d?échantillonnage
-Le flanc descendant du signal SAMPCON déclenche le processus de conversionavec ADC12CLK
+Le convertisseur réalise donc sa conversion en positionnant en premier le bit de poids fort (MSB) et en descendant progressivement jusqu'au LSB.
+Ces convertisseurs ont des résolutions d'une douzaine de bits environ, mais peuvent atteindre 16 bits au moyen de technologies spéciales.\\
 
-Mode d?échantillonnage «pulse» (ADC12SHP = 1)
+Il est important de noter que la tension d'entrée doit être mémorisée pendant toute la durée du processus de conversion. Ceci est effectué au moyen d'un circuit auxiliaire appelé "Echantillonneur-Bloqueur" (\it Sample and Hold\rm). Le terme "Echantillonneur" fait référence à l'instant auquel la tension est saisie; "Bloqueur" fait référence à sa mémorisation. 
+
+Le convertisseur DAC peut être construit au moyen de:
+\begin{itemize}[label=\textbullet,font=\small]
+\item un diviseur de tension résistif couplé à des interrupteurs
+\item un diviseur de courant de type R-2R
+\item un diviseur de tension à capacités pondérées
+\end{itemize}
+Le détail de ces circuits sort du cadre de ce cours.
+
+\section{Cas du MSP430}
+Les microcontrôleurs MSP430 peuvent contenir plusieurs types de convertisseurs AD:
+\begin{itemize}[label=\textbullet,font=\small]
+\item AD 10-bits à approximations successives
+\item AD 12-bits à approximations successives
+\item AD 16-bits Sigma-Delta
+\end{itemize}
+
+\subsection{Cas du MSP430F5529}
+Ce microcontrôleur contient un convertisseur AD 12 bits à approximations successives avec les caractéristiques suivantes.
+\begin{itemize}[label=\textbullet,font=\small]
+\item Plus de 200 kSPS : 200?000 échantillons par seconde
+\item Echantillonneur-Bloqueur avec période programmable, contrôlée par logiciel ou par timers
+\item Lancement des conversions par logiciel ou par timers
+\item Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
+\item Référence interne ou externe
+\item Jusqu?à 12 canaux d?entrée configurables individuellement
+\item Canaux d?entrée pour capteur de température interne, AVCC, et références externes
+\item Registres de stockage de 16 résultats de conversion
+\end{itemize}
+
+\subsection{Schéma de l'ADC 12-bits}
+La figure \ref{fig:ADC_Schema} représente le schéma complet du périphérique ADC12, l'ADC 12-bits présent dans le MSP430F5529. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap11_ADC/ADC_Schema.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Schéma du convertisseur ADC12 dans le MSP430F5529}
+  \label{fig:ADC_Schema}
+\end{figure}
+
+On y trouve:
+\begin{itemize}[label=\textbullet,font=\small]
+\item le coeur de l'ADC, au centre
+\item le bloc de sélection des références de tension
+\item le bloc de sélection de l'horloge de conversion, qui définit le rythme auquel les bits du résultat sont obtenus
+\item le bloc de lancement d'une conversion. Il est possible de lancer automatiquement des conversions
+\item une mémoire pouvant contenir les résultats de 16 conversions
+\item à gauche, le circuit de sélection du signal à convertir
+\end{itemize}
+
+Le signal SAMPCON (\it Sampling Control\rm) joue un rôle particulier car ses flancs déterminent le début de la saisie du signal d'entrée et le début de la conversion, durant laquelle le signal d'entrée est mémorisé.
+
+Comme on l'a déjà vu, les réglages du convertisseur ADC12 se font par le logiciel, en positionnant les champs logiques apparaissant sur le schéma, et accessibles dans des registres de contrôle.
+
+
+\subsection{Echantillonnage et conversion}
+Le processus de conversion commence par l'échantillonnage du signal d'entrée, puis continue avec la conversion par approximations successives. Le processus est lancé sur le flanc montant du signal SHI, comme indiqué à la figure .
+
+
+
+
+Mode d'échantillonnage «étendu» (ADC12SHP = 0, SHI est «étendu»)
+SHI contrôle directement SAMPCON, qui définit la durée d'échantillonnage
+Le flanc descendant du signal SAMPCON déclenche le processus de conversion avec ADC12CLK
+
+Mode d'échantillonnage «pulse» (ADC12SHP = 1)
 SHI déclenche le signal SAMPCON
 La durée d?échantillonnage tsample est contrôlée par les bits ADC12SHT0x et ADC12SHT1x dans ADC12CTL0
 
 
 Cas du MSP4340F5529 : Stockage
-ADC12CSTARTADDx définit le début de la séquence de conversions, c?est-à-dire le registre dans lequel est stocké le premier résultat de conversion, ainsi que le registre qui le contrôle (ADC12MCTLa)
+ADC12CSTARTADDx définit le début de la séquence de conversions , c'est-à-dire le registre dans lequel est stocké le premier résultat de conversion, ainsi que le registre qui le contrôle (ADC12MCTLa)
 
 Dans ADC12MCTLb, le bit ADC12EOS (End Of Sequence) définit le registre dans lequel est stocké le dernier résultat de conversion
 
-Une séquence de conversion concerne une liste de canaux d?entrée
+Une séquence de conversion concerne une liste de canaux d'entrée
 
 A la fin de la séquence, une interruption est générée, et il faut déclencher une nouvelle séquence
 
-Il est possible d?enchaîner automatiquement les séquences, en settant le bit ADC12MSC (Multiple Sequence of Conversion)
-
+Il est possible d'enchaîner automatiquement les séquences, en settant le bit ADC12MSC (Multiple Sequence of Conversion)
+ 
 
 
 CONSEQx	Mode	Fonctionnement
@@ -101,7 +171,7 @@ CONSEQx	Mode	Fonctionnement
 Interruptions
 Une interruption est générée à la fin de chaque séquence de conversions (qu?elle soit de longueur 1 ou  plus)
 Trois registres de contrôle:
-ADC12IFG : Flags d?interruption. Le flag activé est celui qui correspond à la dernière conversion de la séquence
+ADC12IFG : Flags d'interruption. Le flag activé est celui qui correspond à la dernière conversion de la séquence
 ADC12IE : autorisation des interruptions pour chaque registre de ontrôle de conversion
 ADC12IV : contient le «vecteur d?interruption, qui doit être testé au moyen d?une instruction de type switch...case
 
