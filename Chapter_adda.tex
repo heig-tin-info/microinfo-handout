@@ -55,7 +55,7 @@ Le principe est illustré à la figure \ref{fig:ADC_SAR_Diagram}.
 Un séquenceur (généralement nommé SAR pour \it Successive Approximation Register\rm), couplé à un convertisseur Digital-Analogique (DAC) génère une tension analogique, qui est comparée au signal à convertir.
 Le résultat de cette comparaison est alors introduit dans le SAR, qui va le prendre en compte, pour la suite du processus de dichotomie, jusqu'à complétion. La figure \ref{fig:ADC_SAR} illustre la chronologie du processus de conversion, dans le cas d'un ADC 4-bits.\\
 Dans cet exemple, le DAC est capable de générer 16 tensions notées $x.FS$ (FS signifie \it Full Scale\rm), avec $0 \leqslant x \leqslant 15$. Les valeurs minimale et maximale de ces tensions sont appelées \it tensions de référence\rm.\\
-Le test du MSB détermine si $V_{in}$ est supérieur ou inférieur à $\scriptstyle {}^1\!/\!_2.FS$. Dès lors que $V_{in} \leqslant \scriptstyle {}^1\!/\!_2.FS$, le MSB vaut 1. Pour tester le bit de poids inférieur (MSB-1), le séquenceur commande le DAC pour qu'il génère $\scriptstyle {}^3\!/\!_4.FS$. Cette fois,  $V_{in} \geqslant \scriptstyle {}^3\!/\!_4.FS$, donc (MSB-1) = 0; ceci signifie qu'il ne fallait pas ajouter $\scriptstyle {}^1\!/\!_4.FS$ à 
+Le test du MSB détermine si $V_{in}$ est supérieur ou inférieur à $\scriptstyle {}^1\!/\!_2.FS$. Dans l'exemple, dès lors que $V_{in} \leqslant \scriptstyle {}^1\!/\!_2.FS$, le MSB vaut 1. Pour tester le bit de poids inférieur (MSB-1), le séquenceur commande le DAC pour qu'il génère $\scriptstyle {}^3\!/\!_4.FS$. Cette fois,  $V_{in} \geqslant \scriptstyle {}^3\!/\!_4.FS$, donc (MSB-1) = 0; ceci signifie qu'il ne fallait pas ajouter $\scriptstyle {}^1\!/\!_4.FS$ à 
 $\scriptstyle {}^1\!/\!_2.FS$ mais $\scriptstyle {}^1\!/\!_8.FS$.\\
 Le processus continue ainsi jusqu'à l'obtention du LSB, au rythme d'un bit par étape.
 
@@ -96,7 +96,7 @@ Ce microcontrôleur contient un convertisseur AD 12 bits à approximations success
 \item Lancement des conversions par logiciel ou par timers
 \item Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
 \item Référence interne ou externe
-\item Jusqu?à 12 canaux d?entrée configurables individuellement
+\item Jusqu'à 12 canaux d?entrée configurables individuellement
 \item Canaux d'entrée pour capteur de température interne, AVCC, et références externes
 \item Registres de stockage de 16 résultats de conversion
 \end{itemize}
@@ -114,7 +114,7 @@ La figure \ref{fig:ADC_Schema} représente le schéma complet du périphérique ADC1
 
 On y trouve:
 \begin{itemize}[label=\textbullet,font=\small]
-\item le coeur de l'ADC, au centre
+\item le coeur de l'ADC, avec l'échantillonneur-bloqueur, au centre
 \item le bloc de sélection des références de tension
 \item le bloc de sélection de l'horloge de conversion, qui définit le rythme auquel les bits du résultat sont obtenus
 \item le bloc de lancement d'une conversion. Il est possible de lancer automatiquement des conversions
@@ -122,7 +122,7 @@ On y trouve:
 \item à gauche, le circuit de sélection du signal à convertir
 \end{itemize}
 
-Comme on l'a déjà vu, les réglages du convertisseur ADC12 se font par le logiciel, en positionnant les champs logiques apparaissant sur le schéma, et accessibles dans des registres de contrôle.
+Comme on l'a déjà vu avec d'autres périphériques, les réglages du convertisseur ADC12 se font par le logiciel, en positionnant les champs logiques apparaissant sur le schéma, qui sont accessibles dans des registres de contrôle.
 
 \pagebreak
 \subsection{Echantillonnage et conversion}
@@ -137,9 +137,22 @@ Le processus de conversion commence par l'échantillonnage du signal d'entrée, pu
 \end{figure}
 
 Le signal SAMPCON (\it Sampling Control\rm) joue un rôle particulier car son flanc montant détermine le début de la saisie du signal d'entrée, qui dure tant que $SAMPCON = 1$. La conversion à proprement parler démarre au flanc descendant de  SAMPCON et dure 13 périodes du signal ADC12CLK pour une conversion sur 12 bits.
-La durée du signal SAMPCON doit être réglable pour pouvoir ajuster le temps d'échantillonnage à la résistance interne de la source d'où provient $V_{in}$.\\
+La durée du signal SAMPCON doit être réglable pour pouvoir ajuster le temps d'échantillonnage à la résistance interne de la source d'où provient $V_{in}$. En effet, l'entrée de l'échantillonneur-bloqueur (le \it Sample and Hold\rm) est une capacité; sa charge est soumise à une constante de temps qui dépend de la résistance de la source.\\
 
+\subsection{Sélection de l'horloge de conversion}
+L'horloge de conversion ADC12CLK rythme le processus de conversion par approximations successives. Elle détermine donc le temps alloué au calcul de chaque bit, du MSB au LSB.\\
 
+Lorsque l'utilisateur souhaite se simplifier la vie (ADC12SHP = 0), elle détermine aussi la durée de l'échantillonnage, via un timer interne à l'ADC. Ce timer, noté \it Sample Timer\rm  sur la figure \ref{fig:ADC_Schema} peut générer une durée d'échantillonnage comprise entre 4 et 1024 cycles du signal ADC12CLK.
+
+\subsection{Lancement d'une conversion}
+Plusieurs méthodes sont envisageables:
+\begin{itemize}[label=\textbullet,font=\small]
+\item lancement par logiciel, en activant le bit ADC12SC (\it Start Conversion\rm)
+\item lancement automatique par un timer
+\end{itemize}
+
+\subsection{Sélection des références de tension}
+Les références de tension déterminent l'intervalle dans lequel la tension à convertir doit se trouver. La borne inférieure peut être égale à GND, mais pas nécessairement. Par contre, la borne supérieure est toujours inférieure à la tension d'alimentation VCC. La raison est que les circuits internes au convertisseur ont besoin d'une marge entre $V_{REF_Sup}$ et VCC pour pouvoir fonctionner correctement.
 
 
 Mode d'échantillonnage «étendu» (ADC12SHP = 0, SHI est «étendu»)
@@ -149,6 +162,19 @@ Le flanc descendant du signal SAMPCON déclenche le processus de conversion avec 
 Mode d'échantillonnage «pulse» (ADC12SHP = 1)
 SHI déclenche le signal SAMPCON
 La durée d?échantillonnage tsample est contrôlée par les bits ADC12SHT0x et ADC12SHT1x dans ADC12CTL0
+
+\subsection{Stockage des résultats}
+Lorsqu'une conversion est terminée, l'ADC peut émettre une requête d'interruption. Toutefois, dans de nombreuses applications, il est nécessaire de convertir plusieurs tensions différentes. Les raisons peuvent être:
+\begin{itemize}[label=\textbullet,font=\small]
+\item les signaux générés par plusieurs capteurs, et connectées sur l'ADC via ses différentes entrées (A0 à A15) doivent être convertis en nombres;
+\item plusieurs valeurs successives d'une même tension doivent être converties, pour pouvoir calculer une moyenne ou y appliquer une fonction de filtrage numérique;
+\item on ne souhaite pas surcharger le CPU avec des interruptions trop fréquentes;
+etc...
+\end{itemize}
+
+Pour résoudre ce genre de situation, l'ADC dispose d'une mémoire pouvant contenir jusqu'à 16 résultats de conversion.
+
+
 
 
 Cas du MSP4340F5529 : Stockage
