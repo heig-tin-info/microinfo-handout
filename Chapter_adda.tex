@@ -91,13 +91,13 @@ Les microcontrôleurs MSP430 peuvent contenir plusieurs types de convertisseurs A
 \subsection{Cas du MSP430F5529}
 Ce microcontrôleur contient un convertisseur AD 12 bits à approximations successives avec les caractéristiques suivantes.
 \begin{itemize}[label=\textbullet,font=\small]
-\item Plus de 200 kSPS : 200?000 échantillons par seconde
+\item Plus de 200 kSPS : 200'000 échantillons par seconde
 \item Echantillonneur-Bloqueur avec période programmable, contrôlée par logiciel ou par timers
 \item Lancement des conversions par logiciel ou par timers
 \item Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
 \item Référence interne ou externe
 \item Jusqu?à 12 canaux d?entrée configurables individuellement
-\item Canaux d?entrée pour capteur de température interne, AVCC, et références externes
+\item Canaux d'entrée pour capteur de température interne, AVCC, et références externes
 \item Registres de stockage de 16 résultats de conversion
 \end{itemize}
 
@@ -122,13 +122,22 @@ On y trouve:
 \item à gauche, le circuit de sélection du signal à convertir
 \end{itemize}
 
-Le signal SAMPCON (\it Sampling Control\rm) joue un rôle particulier car ses flancs déterminent le début de la saisie du signal d'entrée et le début de la conversion, durant laquelle le signal d'entrée est mémorisé.
-
 Comme on l'a déjà vu, les réglages du convertisseur ADC12 se font par le logiciel, en positionnant les champs logiques apparaissant sur le schéma, et accessibles dans des registres de contrôle.
 
-
+\pagebreak
 \subsection{Echantillonnage et conversion}
-Le processus de conversion commence par l'échantillonnage du signal d'entrée, puis continue avec la conversion par approximations successives. Le processus est lancé sur le flanc montant du signal SHI, comme indiqué à la figure .
+Le processus de conversion commence par l'échantillonnage du signal d'entrée, puis continue avec la conversion par approximations successives. Le processus est lancé sur le flanc montant du signal SHI, comme indiqué à la figure \ref{fig:ADC12SHP0}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap11_ADC/ADC12SHP0.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Chronogramme du processus d'échantillonnage et conversion (ADC12SHP = 0)}
+  \label{fig:ADC12SHP0}
+\end{figure}
+
+Le signal SAMPCON (\it Sampling Control\rm) joue un rôle particulier car son flanc montant détermine le début de la saisie du signal d'entrée, qui dure tant que $SAMPCON = 1$. La conversion à proprement parler démarre au flanc descendant de  SAMPCON et dure 13 périodes du signal ADC12CLK pour une conversion sur 12 bits.
+La durée du signal SAMPCON doit être réglable pour pouvoir ajuster le temps d'échantillonnage à la résistance interne de la source d'où provient $V_{in}$.\\
 
 
 
