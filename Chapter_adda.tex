@@ -55,7 +55,7 @@ Le principe est illustré à la figure \ref{fig:ADC_SAR_Diagram}.
 Un séquenceur (généralement nommé SAR pour \it Successive Approximation Register\rm), couplé à un convertisseur Digital-Analogique (DAC) génère une tension analogique, qui est comparée au signal à convertir.
 Le résultat de cette comparaison est alors introduit dans le SAR, qui va le prendre en compte, pour la suite du processus de dichotomie, jusqu'à complétion. La figure \ref{fig:ADC_SAR} illustre la chronologie du processus de conversion, dans le cas d'un ADC 4-bits.\\
 Dans cet exemple, le DAC est capable de générer 16 tensions notées $x.FS$ (FS signifie \it Full Scale\rm), avec $0 \leqslant x \leqslant 15$. Les valeurs minimale et maximale de ces tensions sont appelées \it tensions de référence\rm.\\
-Le test du MSB détermine si $V_{in}$ est supérieur ou inférieur à $\scriptstyle {}^1\!/\!_2.FS$. Dès lors que $V_{in} \leqslant \scriptstyle {}^1\!/\!_2.FS$, le MSB vaut 1. Pour tester le bit de poids inférieur (MSB-1), le séquenceur commande le DAC pour qu'il génère $\scriptstyle {}^3\!/\!_4.FS$. Cette fois,  $V_{in} \geqslant \scriptstyle {}^3\!/\!_4.FS$, donc (MSB-1) = 0; ceci signifie qu'il ne fallait pas ajouter $\scriptstyle {}^1\!/\!_4.FS$ à 
+Le test du MSB détermine si $V_{in}$ est supérieur ou inférieur à $\scriptstyle {}^1\!/\!_2.FS$. Dans l'exemple, dès lors que $V_{in} \leqslant \scriptstyle {}^1\!/\!_2.FS$, le MSB vaut 1. Pour tester le bit de poids inférieur (MSB-1), le séquenceur commande le DAC pour qu'il génère $\scriptstyle {}^3\!/\!_4.FS$. Cette fois,  $V_{in} \geqslant \scriptstyle {}^3\!/\!_4.FS$, donc (MSB-1) = 0; ceci signifie qu'il ne fallait pas ajouter $\scriptstyle {}^1\!/\!_4.FS$ à 
 $\scriptstyle {}^1\!/\!_2.FS$ mais $\scriptstyle {}^1\!/\!_8.FS$.\\
 Le processus continue ainsi jusqu'à l'obtention du LSB, au rythme d'un bit par étape.
 
@@ -96,7 +96,7 @@ Ce microcontrôleur contient un convertisseur AD 12 bits à approximations success
 \item Lancement des conversions par logiciel ou par timers
 \item Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
 \item Référence interne ou externe
-\item Jusqu?à 12 canaux d?entrée configurables individuellement
+\item Jusqu'à 12 canaux d?entrée configurables individuellement
 \item Canaux d'entrée pour capteur de température interne, AVCC, et références externes
 \item Registres de stockage de 16 résultats de conversion
 \end{itemize}
@@ -114,7 +114,7 @@ La figure \ref{fig:ADC_Schema} représente le schéma complet du périphérique ADC1
 
 On y trouve:
 \begin{itemize}[label=\textbullet,font=\small]
-\item le coeur de l'ADC, au centre
+\item le coeur de l'ADC, avec l'échantillonneur-bloqueur, au centre
 \item le bloc de sélection des références de tension
 \item le bloc de sélection de l'horloge de conversion, qui définit le rythme auquel les bits du résultat sont obtenus
 \item le bloc de lancement d'une conversion. Il est possible de lancer automatiquement des conversions
@@ -122,46 +122,116 @@ On y trouve:
 \item à gauche, le circuit de sélection du signal à convertir
 \end{itemize}
 
-Comme on l'a déjà vu, les réglages du convertisseur ADC12 se font par le logiciel, en positionnant les champs logiques apparaissant sur le schéma, et accessibles dans des registres de contrôle.
+Comme on l'a déjà vu avec d'autres périphériques, les réglages du convertisseur ADC12 se font par le logiciel, en positionnant les champs logiques apparaissant sur le schéma, qui sont accessibles dans des registres de contrôle.
 
 \pagebreak
 \subsection{Echantillonnage et conversion}
-Le processus de conversion commence par l'échantillonnage du signal d'entrée, puis continue avec la conversion par approximations successives. Le processus est lancé sur le flanc montant du signal SHI, comme indiqué à la figure \ref{fig:ADC12SHP0}.
+Le processus de conversion commence par l'échantillonnage du signal d'entrée, puis continue avec la conversion par approximations successives. Le processus est lancé sur le flanc montant du signal SHI, comme indiqué à la figure \ref{fig:ADC12SHP1}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics [angle=0, width=14cm]{./Figures/Chap11_ADC/ADC12SHP0.pdf}
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap11_ADC/ADC12SHP1.pdf}
   \rule{35em}{0.5pt}
-  \caption{Chronogramme du processus d'échantillonnage et conversion (ADC12SHP = 0)}
-  \label{fig:ADC12SHP0}
+  \caption{Chronogramme du processus d'échantillonnage et conversion (ADC12SHP = 1)}
+  \label{fig:ADC12SHP1}
 \end{figure}
 
 Le signal SAMPCON (\it Sampling Control\rm) joue un rôle particulier car son flanc montant détermine le début de la saisie du signal d'entrée, qui dure tant que $SAMPCON = 1$. La conversion à proprement parler démarre au flanc descendant de  SAMPCON et dure 13 périodes du signal ADC12CLK pour une conversion sur 12 bits.
-La durée du signal SAMPCON doit être réglable pour pouvoir ajuster le temps d'échantillonnage à la résistance interne de la source d'où provient $V_{in}$.\\
+La durée du signal SAMPCON doit être réglable pour pouvoir ajuster le temps d'échantillonnage à la résistance interne de la source d'où provient $V_{in}$. En effet, l'entrée de l'échantillonneur-bloqueur (le \it Sample and Hold\rm) est une capacité; sa charge est soumise à une constante de temps qui dépend de la résistance de la source.\\
+
+\subsection{Sélection de l'horloge de conversion}
+L'horloge de conversion ADC12CLK rythme le processus de conversion par approximations successives. Elle détermine donc le temps alloué au calcul de chaque bit, du MSB au LSB.\\
+
+Lorsque l'utilisateur souhaite se simplifier la vie (ADC12SHP = 1), elle détermine aussi la durée de l'échantillonnage, via un timer interne à l'ADC\footnote{La durée d'échantillonnage peut aussi être contrôlée par le programme. Dans ce cas (ADC12SHP = 0) le signal SHI contrôle directement la durée d'échantillonnage et la conversion. SHI est alors généré par le programme ou par un des timers à usage général}. Ce timer, noté \it Sample Timer\rm  sur la figure \ref{fig:ADC_Schema} peut générer une durée d'échantillonnage comprise entre 4 et 1024 cycles du signal ADC12CLK.
+
+Les sources d'horloge usuelles (ACLK, SMCLK et MCLK) sèeuvent être utilisées. Par défaut, un autre signal est disponible, noté ADC12OSC, et dont la fréquence est d'environ 5 MHz.
+
+\subsection{Lancement d'une conversion}
+Plusieurs méthodes sont envisageables:
+\begin{itemize}[label=\textbullet,font=\small]
+\item lancement par logiciel, en activant le bit ADC12SC (\it Start Conversion\rm)
+\item lancement automatique par un timer
+\end{itemize}
+
+\subsection{Sélection des références de tension}
+Les références de tension déterminent l'intervalle dans lequel la tension à convertir doit se trouver. La borne inférieure peut être égale à GND, mais pas nécessairement. Par contre, la borne supérieure est toujours inférieure à la tension d'alimentation VCC. La raison est que les circuits internes au convertisseur ont besoin d'une marge entre $V_{REF_Sup}$ et VCC pour pouvoir fonctionner correctement.
+
+\subsection{Stockage des résultats}
+Lorsqu'une conversion est terminée, l'ADC peut émettre une requête d'interruption. Toutefois, dans de nombreuses applications, il est nécessaire de convertir plusieurs tensions différentes. Les raisons peuvent être:
+\begin{itemize}[label=\textbullet,font=\small]
+\item les signaux générés par plusieurs capteurs, et connectées sur l'ADC via ses différentes entrées (A0 à A15) doivent être convertis en nombres;
+\item plusieurs valeurs successives d'une même tension doivent être converties, pour pouvoir calculer une moyenne ou y appliquer une fonction de filtrage numérique;
+\item on ne souhaite pas surcharger le CPU avec des interruptions trop fréquentes;
+etc...
+\end{itemize}
+
+Pour résoudre ce genre de situation, l'ADC dispose d'une mémoire pouvant contenir jusqu'à 16 résultats de conversion. Il est possible de définir des séquences de conversion, et de faire en sorte qu'une interruption ne soit émise qu'à la fin de la séquence.\\
+Chacun des 16 registres de stockage, notés ADC12MEMx est associé à un registre de contrôle noté ADC12MCTLx (x = 0..15).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=14cm]{./Figures/Chap11_ADC/ADC12Stockage.pdf}
+  \rule{35em}{0.5pt}
+  \caption{Organisation des registres de stockage et leur contrôle}
+  \label{fig:ADC12Stockage}
+\end{figure}
+
+Un champ noté ADC12CSTARTADDx contient l'adresse du registre dans lequel se trouvera le résultat de la conversion. SI plusieurs conversions doivent être enchaînées, ce champ indique dans quel registre se trouve le premier résultat, les autres se trouvant dans les registres ADC12MEMx suivants.
+Pour contrôler les conversions, chaque registre ADC12MCTLx contient 3 champs :
+\begin{itemize}[label=\textbullet,font=\small]
+\item INCHx : le numéro de l'entrée à convertir;
+\item SREFx : le jeu de tensions de référence à utiliser;
+\item EOS : le registre ADC12MCTLy contenant ce bit à '1' marque la fin de la séquence.
+\end{itemize}
+
+Ainsi, chaque conversion d'une séquence dispose de ses paramètres propres. Il est bien entendu possible de convertir le signal d'une seule entrée, auquel cas il s'agit d'une séquence d'une seule conversion.\\
+
+Lors de l'écriture d'un résultat de conversion dans un registre, une requête d'interruption est émise. Dans le cas d'une séquence de conversions, il suffit de n'autoriser que celle correspondant à la fin de la séquence.
+
+\subsection{Registres de contrôle du convertisseur ADC12}
+
+Ils sont nommés ADC12CTLx et sont au nombre de 3.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap11_ADC/ADC12CTL0.pdf}
+  \rule{35em}{0.5pt}
+  \caption{ADC12CTL0}
+  \label{fig:ADC12CTL0}
+\end{figure}
+
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+ADC12SHT1 & & & Durée d'échantillonnage pour les conversions contrôlées par ADC12MCTL8 à ADC12MCTL15   \\
+\hline
+ADC12SHT0 & & & Durée d'échantillonnage pour les conversions contrôlées par ADC12MCTL0 à ADC12MCTL7   \\
+& & 0000b & 4 cycles de ADC12CLK \\
+& & 0001b & 8 cycles de ADC12CLK \\
+& & 0010b & 16 cycles de ADC12CLK \\
+& & 0011b & 32 cycles de ADC12CLK \\
+& & 0100b & 64 cycles de ADC12CLK \\
+& & 0101b & 96 cycles de ADC12CLK \\
+& & 0110b & 128 cycles de ADC12CLK \\
+& & 0111b & 192 cycles de ADC12CLK \\
+& & 1000b & 256 cycles de ADC12CLK \\
+& & 1001b & 384 cycles de ADC12CLK \\
+& & 1010b & 512 cycles de ADC12CLK \\
+& & 1011b & 768 cycles de ADC12CLK \\
+& & 11xxb & 1024 cycles de ADC12CLK \\
+\hline
+ADC12MSC & & - & Permet d'enchaîner des conversions multiples \\
+\hline
+\end{tabular}
+\caption{ADC12CTL0}
+\label{table:ADC12CTL0}
+\end{table}
 
 
 
-
-Mode d'échantillonnage «étendu» (ADC12SHP = 0, SHI est «étendu»)
-SHI contrôle directement SAMPCON, qui définit la durée d'échantillonnage
-Le flanc descendant du signal SAMPCON déclenche le processus de conversion avec ADC12CLK
-
-Mode d'échantillonnage «pulse» (ADC12SHP = 1)
-SHI déclenche le signal SAMPCON
-La durée d?échantillonnage tsample est contrôlée par les bits ADC12SHT0x et ADC12SHT1x dans ADC12CTL0
-
-
-Cas du MSP4340F5529 : Stockage
-ADC12CSTARTADDx définit le début de la séquence de conversions , c'est-à-dire le registre dans lequel est stocké le premier résultat de conversion, ainsi que le registre qui le contrôle (ADC12MCTLa)
-
-Dans ADC12MCTLb, le bit ADC12EOS (End Of Sequence) définit le registre dans lequel est stocké le dernier résultat de conversion
-
-Une séquence de conversion concerne une liste de canaux d'entrée
-
-A la fin de la séquence, une interruption est générée, et il faut déclencher une nouvelle séquence
-
-Il est possible d'enchaîner automatiquement les séquences, en settant le bit ADC12MSC (Multiple Sequence of Conversion)
- 
 
 
 CONSEQx	Mode	Fonctionnement
@@ -175,26 +245,4 @@ CONSEQx	Mode	Fonctionnement
 11	Séquence de	Similaire au mode 01, mais la séquence peut être répétée avec un nouveau signal de déclenchement
 	n canaux	
 	Conversion ré pétitive	
-
-
-Interruptions
-Une interruption est générée à la fin de chaque séquence de conversions (qu?elle soit de longueur 1 ou  plus)
-Trois registres de contrôle:
-ADC12IFG : Flags d'interruption. Le flag activé est celui qui correspond à la dernière conversion de la séquence
-ADC12IE : autorisation des interruptions pour chaque registre de ontrôle de conversion
-ADC12IV : contient le «vecteur d?interruption, qui doit être testé au moyen d?une instruction de type switch...case
-
-
-
-
-
-\section{AD}
-
-
-\subsection{ploutch}
-
-
-
-
-
 
