@@ -190,7 +190,7 @@ Lors de l'écriture d'un résultat de conversion dans un registre, une requête d'i
 
 \subsection{Registres de contrôle du convertisseur ADC12}
 
-Ils sont nommés ADC12CTLx et sont au nombre de 3.
+Ils sont nommés ADC12CTLx et sont au nombre de 3. Dans les tableaux suivants, on donne uniquement la signification des champs de contrôle les plus importants.
 
 \begin{figure}[H]
   \centering
@@ -206,9 +206,11 @@ Ils sont nommés ADC12CTLx et sont au nombre de 3.
 \hline\hline
 Champ & & Valeur & Description \\ %[0.5ex]
 \hline
-ADC12SHT1 & & & Durée d'échantillonnage pour les conversions contrôlées par ADC12MCTL8 à ADC12MCTL15   \\
+ADC12SHT1 & & & Durée d'échantillonnage pour les conversions \\
+& & & contrôlées par ADC12MCTL8 à ADC12MCTL15   \\
 \hline
-ADC12SHT0 & & & Durée d'échantillonnage pour les conversions contrôlées par ADC12MCTL0 à ADC12MCTL7   \\
+ADC12SHT0 & & & Durée d'échantillonnage pour les conversions \\
+& & &  contrôlées par ADC12MCTL0 à ADC12MCTL7   \\
 & & 0000b & 4 cycles de ADC12CLK \\
 & & 0001b & 8 cycles de ADC12CLK \\
 & & 0010b & 16 cycles de ADC12CLK \\
@@ -225,24 +227,146 @@ ADC12SHT0 & & & Durée d'échantillonnage pour les conversions contrôlées par ADC1
 \hline
 ADC12MSC & & - & Permet d'enchaîner des conversions multiples \\
 \hline
+ADC12ON & & - & Mise en marche du convertisseur \\
+& & 0 & Convertisseur arrêté \\
+& & 1 & Convertisseur en marche \\
+\hline
+ADC12ENC & & - & Lancement du contrôleur de conversions \\
+& & 0 & Contrôleur arrêté \\
+& & 1 & Contrôleur prêt \\
+\hline
+ADC12SC & & - & Lancement d'une conversion \\
+& & 1 & Start \\
+\hline
 \end{tabular}
 \caption{ADC12CTL0}
 \label{table:ADC12CTL0}
 \end{table}
 
+\pagebreak
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap11_ADC/ADC12CTL1.pdf}
+  \rule{35em}{0.5pt}
+  \caption{ADC12CTL1}
+  \label{fig:ADC12CTL1}
+\end{figure}
 
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+ADC12CSTARTADD & & - & Adresse du registre de contrôle de la conversion \\
+& & & ou de la première conversion, dans le cas d'une séquence \\
+\hline
+ADC12SHS & & & Sélection du signal de conversion \\
+& & 00b & bit ADC12SC (lancement par logiciel) \\
+& & 01b & timer (consulter la fiche technique du MCU) \\
+& & 10b & timer (consulter la fiche technique du MCU) \\
+& & 11b & timer (consulter la fiche technique du MCU) \\
+\hline
+ADC12SHP & & & Contrôle de la durée d'échantillonnage \\
+& & 0 & SAMPCON égale le signal de conversion \\
+& & 1 & Le niveau haut de SAMPCON est fixé par le timer de conversion \\
+& & & voir le champ ADC12SHT0 ou ADC12SHT1 dans ADC12CTL0 \\
+\hline
+ADC12ISSH & & - & Inversion du signal de conversion (\ref{fig:ADC_Schema})\\
+& & 0 & Pas d'inversion \\
+& & 1 & Inversion \\
+\hline
+ADC12DIV & & - & Prédivision de l'horloge de conversion ADC12CLK \\
+& & 000b & Division par 1 \\
+& & 001b & Division par 2 \\
+& & 010b & Division par 3 \\
+& & 011b & Division par 4 \\
+& & 100b & Division par 5 \\
+& & 101b & Division par 6 \\
+& & 110b & Division par 7 \\
+& & 111b & Division par 8 \\
+\hline
+ADC12SSEL & & - & Sélection de l'horloge de conversion ADC12CLK \\
+& & 00b & ADC12OSC \\
+& & 01b & ACLK \\
+& & 10b & MCLK \\
+& & 11b & SMCLK \\
+\hline
+ADC12CONSEQ & & - & Mode de conversion \\
+& & 00b & Conversion unique sur un canal unique \\
+& & 01b & Séquence de conversions \\
+& & 10b & Canal unique en répétition \\
+& & 11b & Séquence en répétition \\
+\hline
+ADC12BUSY & & - & Indicateur de conversion en cours\\
+& & 0 & Pas de conversion en cours \\
+& & 1 & Une conversion en cours \\
+\hline
+\end{tabular}
+\caption{ADC12CTL1}
+\label{table:ADC12CTL1}
+\end{table}
 
+\pagebreak
+\begin{figure}[H]
+  \centering
+  \includegraphics [angle=0, width=16cm]{./Figures/Chap11_ADC/ADC12CTL2.pdf}
+  \rule{35em}{0.5pt}
+  \caption{ADC12CTL2}
+  \label{fig:ADC12CTL2}
+\end{figure}
 
-
-CONSEQx	Mode	Fonctionnement
-0	Un seul canal	Une conversion unique du canal sélectionné par les bits ADC12INCHx du registre ADC12MCTLz. Le résultat est stocké dans ADC12MEMz
-	Conversion unique	
-1	Séquence de	Une conversion unique des canaux sélectionnés par les bits ADC12INCHx des registres ADC12MCTLa-b. Le résultat est stocké dans ADC12MEMa à ADC12MEMb. Le bit ADC12EOS doit être à ?1? dans ADC12MEMb.
-	n canaux	
-	Conversion unique	
-10	Un seul canal	Un canal est converti plusieurs fois. Il est sélectionné par les bits ADC12INCHx du registre ADC12MCTLz. Le résultat est stocké dans un seul registre ADC12MEMz. Il faut récupérer les résultats successifs au fur et à mesure qu?ils sont produits.
-	Conversion répétitive	
-11	Séquence de	Similaire au mode 01, mais la séquence peut être répétée avec un nouveau signal de déclenchement
-	n canaux	
-	Conversion ré pétitive	
-
+\begin{table}[H]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+ADC12CSTARTADD & & - & Adresse du registre de contrôle de la conversion \\
+& & & ou de la première conversion, dans le cas d'une séquence \\
+\hline
+ADC12SHS & & & Sélection du signal de conversion \\
+& & 00b & bit ADC12SC (lancement par logiciel) \\
+& & 01b & timer (consulter la fiche technique du MCU) \\
+& & 10b & timer (consulter la fiche technique du MCU) \\
+& & 11b & timer (consulter la fiche technique du MCU) \\
+\hline
+ADC12SHP & & & Contrôle de la durée d'échantillonnage \\
+& & 0 & SAMPCON éagle le signal de conversion \\
+& & 1 & Le niveau haut de SAMPCON est fixé par le timer de conversion \\
+& & & voir le champ ADC12SHT0 ou ADC12SHT1 dans ADC12CTL0 \\
+\hline
+ADC12ISSH & & - & Inversion du signal de conversion (\ref{fig:ADC_Schema})\\
+& & 0 & Pas d'inversion \\
+& & 1 & Inversion \\
+\hline
+ADC12DIV & & - & Prédivision de l'horloge de conversion ADC12CLK \\
+& & 000b & Division par 1 \\
+& & 001b & Division par 2 \\
+& & 010b & Division par 3 \\
+& & 011b & Division par 4 \\
+& & 100b & Division par 5 \\
+& & 101b & Division par 6 \\
+& & 110b & Division par 7 \\
+& & 111b & Division par 8 \\
+\hline
+ADC12SSEL & & - & Sélection de l'horloge de conversion ADC12CLK \\
+& & 00b & ADC12OSC \\
+& & 01b & ACLK \\
+& & 10b & MCLK \\
+& & 11b & SMCLK \\
+\hline
+ADC12CONSEQ & & - & Mode de conversion \\
+& & 00b & Conversion unique sur un canal unique \\
+& & 01b & Séquence de conversions \\
+& & 10b & Canal unique en répétition \\
+& & 11b & Séquence en répétition \\
+\hline
+ADC12BUSY & & - & Indicateur de conversion en cours\\
+& & 0 & Pas de conversion en cours \\
+& & 1 & Une conversion en cours \\
+\hline
+\end{tabular}
+\caption{ADC12CTL2}
+\label{table:ADC12CTL2}
+\end{table}
