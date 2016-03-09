@@ -188,6 +188,7 @@ Ainsi, chaque conversion d'une séquence dispose de ses paramètres propres. Il es
 
 Lors de l'écriture d'un résultat de conversion dans un registre, une requête d'interruption est émise. Dans le cas d'une séquence de conversions, il suffit de n'autoriser que celle correspondant à la fin de la séquence.
 
+\pagebreak
 \subsection{Registres de contrôle du convertisseur ADC12}
 
 Ils sont nommés ADC12CTLx et sont au nombre de 3. Dans les tableaux suivants, on donne uniquement la signification des champs de contrôle les plus importants.
@@ -280,9 +281,7 @@ ADC12DIV & & - & Prédivision de l'horloge de conversion ADC12CLK \\
 & & 000b & Division par 1 \\
 & & 001b & Division par 2 \\
 & & 010b & Division par 3 \\
-& & 011b & Division par 4 \\
-& & 100b & Division par 5 \\
-& & 101b & Division par 6 \\
+& & ... & ... \\
 & & 110b & Division par 7 \\
 & & 111b & Division par 8 \\
 \hline
@@ -322,49 +321,22 @@ ADC12BUSY & & - & Indicateur de conversion en cours\\
 \hline\hline
 Champ & & Valeur & Description \\ %[0.5ex]
 \hline
-ADC12CSTARTADD & & - & Adresse du registre de contrôle de la conversion \\
-& & & ou de la première conversion, dans le cas d'une séquence \\
+ADC12PDIV & & - & Prédivision de l'horloge de conversion ADC12CLK \\
+& & & en plus de la prédivision contrôlée par ADC12DIV \\
+& & 0 & Prédivision par 1 \\
+& & 1 & Prédivision par 4 \\
 \hline
-ADC12SHS & & & Sélection du signal de conversion \\
-& & 00b & bit ADC12SC (lancement par logiciel) \\
-& & 01b & timer (consulter la fiche technique du MCU) \\
-& & 10b & timer (consulter la fiche technique du MCU) \\
-& & 11b & timer (consulter la fiche technique du MCU) \\
+ADC12RES & & & Spécifie le nombre de bits du résultat de conversion \\
+& & 00b & 8 bits (9 cycles de ADC12CLK) \\
+& & 01b & 10 bits (11 cycles de ADC12CLK) \\
+& & 10b & 12 bits (13 cycles de ADC12CLK) \\
+& & 11b & Réservé \\
 \hline
-ADC12SHP & & & Contrôle de la durée d'échantillonnage \\
-& & 0 & SAMPCON éagle le signal de conversion \\
-& & 1 & Le niveau haut de SAMPCON est fixé par le timer de conversion \\
-& & & voir le champ ADC12SHT0 ou ADC12SHT1 dans ADC12CTL0 \\
-\hline
-ADC12ISSH & & - & Inversion du signal de conversion (\ref{fig:ADC_Schema})\\
-& & 0 & Pas d'inversion \\
-& & 1 & Inversion \\
-\hline
-ADC12DIV & & - & Prédivision de l'horloge de conversion ADC12CLK \\
-& & 000b & Division par 1 \\
-& & 001b & Division par 2 \\
-& & 010b & Division par 3 \\
-& & 011b & Division par 4 \\
-& & 100b & Division par 5 \\
-& & 101b & Division par 6 \\
-& & 110b & Division par 7 \\
-& & 111b & Division par 8 \\
-\hline
-ADC12SSEL & & - & Sélection de l'horloge de conversion ADC12CLK \\
-& & 00b & ADC12OSC \\
-& & 01b & ACLK \\
-& & 10b & MCLK \\
-& & 11b & SMCLK \\
-\hline
-ADC12CONSEQ & & - & Mode de conversion \\
-& & 00b & Conversion unique sur un canal unique \\
-& & 01b & Séquence de conversions \\
-& & 10b & Canal unique en répétition \\
-& & 11b & Séquence en répétition \\
-\hline
-ADC12BUSY & & - & Indicateur de conversion en cours\\
-& & 0 & Pas de conversion en cours \\
-& & 1 & Une conversion en cours \\
+ADC12DF & & & Format du résultat de conversion sur 16-bits \\
+& & 0 & Binaire non signé. -VREF = 0000h, +VREF = 0FFFh \\
+& & & Le résultat est justifié à droite (vers les poids faibles) \\
+& & 1 & Binaire signé. -VREF = 8000h, +VREF = 7FF0h \\
+& & & Le résultat est justifié à gauche (vers les poids forts) \\
 \hline
 \end{tabular}
 \caption{ADC12CTL2}

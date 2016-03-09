@@ -99,7 +99,8 @@ Toutes ces fonctionnalités sont contrôlées par le logiciel, en positionnant des 
 
 Dans une version de MSP430 donnée, plusieurs Timers A peuvent coexister.
 
-La figure \ref{fig:TimerAsimplifie} est un schéma très simplifié du timer A, illustrant ses 3 principaux sous-blocs.
+La figure \ref{fig:TimerAsimplifie} est un schéma très simplifié du timer A, illustrant ses 3 principaux sous-blocs. A la partie supérieure, on retrouve le bloc de comptage et son registre appelé TAxR (x est le numéro du timer; x=0 ou 1 s'il y a deux timers de type A dans le microcontrôleur). TAIFG est le signal d'overflow du compteur. En dessous, le bloc dit de "capture/comparaison" permet de capturer l'état du registre TAxR lors d'un évènement ou de comparer la valeur de TAxR avec une constante contenue dans un registre appelé TAxCCRy. Le bloc de "capture/comparaison" contient un sous-bloc, noté "Output module", qui est chargé de générer un signal PWM à partir du contenu du registre TAxR et de la constante contenue dans le registre TAxCCRy.
+Comme on le voit sur la figure \ref{fig:TimerAsimplifie}, Chaque sous-bloc offre de la fonctionnalité utile.
 
 \begin{figure}[htb]
   \centering
@@ -109,11 +110,18 @@ La figure \ref{fig:TimerAsimplifie} est un schéma très simplifié du timer A, ill
   \label{fig:TimerAsimplifie}
 \end{figure}
 
-A la partie supérieure, on retrouve le bloc de comptage et son registre appelé TAxR (x est le numéro du timer; x=0 ou 1 s'il y a deux timers de type A dans le microcontrôleur). TAIFG est le signal d'overflow du compteur. En dessous, le bloc dit de "capture/comparaison" permet de capturer l'état du registre TAxR lors d'un évènement ou de comparer la valeur de TAxR avec une constante contenue dans un registre appelé TAxCCRy. Le bloc de "capture/comparaison" contient un sous-bloc, noté "Output module", qui est chargé de générer un signal PWM à partir du contenu du registre TAxR et de la constante contenue dans le registre TAxCCRy. 
 
-Pour enrichir encore les possibilités offertes par le timer A, celui-ci dispose de plusieurs blocs de "capture/comparaison". Selon le type de microcontrôleur, le timer A dispose de 3, 5 ou 7 de ces blocs. Nous y reviendrons ultérieurement.
+\subsection{Bloc de comptage}
+La figure \ref{fig:TimerTAR} illustre en détail le bloc de comptage. On y voit les différents éléments et leurs champs de contrôle, tous inclus dans un registre de contrôle appelé TAxCTL, que nous verrons plus loin.
 
-\subsection{Modes de comptage}
+\begin{figure}[H]
+  \centering
+  \includegraphics[angle=0, width=16cm]{./Figures/Chap5_Timer/Timer_Detail_1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[TimerTAR]{Schéma de détail du bloc de comptage}
+  \label{fig:TimerTAR}
+\end{figure}
+
 Le registre de comptage TAxR a 3 modes de comptage possibles. Le mode est déterminé par la valeur du champ MCx dans le registre de contrôle TACTLx:
 \begin{itemize}[label=\textbullet,font=\small]
 \item Mode 1 (MCx = 01): Comptage jusqu'à la valeur contenue dans le registre TAxCCR0, localisé dans un sous-bloc de capture/comparaison, puis retour à 0;
@@ -122,7 +130,7 @@ Le registre de comptage TAxR a 3 modes de comptage possibles. Le mode est déterm
 \end{itemize}
 
 Les figures \ref{fig:TimerAmode1}, \ref{fig:TimerAmode2} et \ref{fig:TimerAmode3a} montrent les chronogrammes associés à chaque mode.
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
   \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_Mode_1.pdf}
   \rule{35em}{0.5pt}
@@ -130,7 +138,7 @@ Les figures \ref{fig:TimerAmode1}, \ref{fig:TimerAmode2} et \ref{fig:TimerAmode3
   \label{fig:TimerAmode1}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
   \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_Mode_2.pdf}
   \rule{35em}{0.5pt}
@@ -138,7 +146,7 @@ Les figures \ref{fig:TimerAmode1}, \ref{fig:TimerAmode2} et \ref{fig:TimerAmode3
   \label{fig:TimerAmode2}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
   \includegraphics[angle=0, width=12cm]{./Figures/Chap5_Timer/Timer_Mode_3a.pdf}
   \rule{35em}{0.5pt}
@@ -147,7 +155,7 @@ Les figures \ref{fig:TimerAmode1}, \ref{fig:TimerAmode2} et \ref{fig:TimerAmode3
 \end{figure}
 
 Dans le cas du mode 3, la figure  \ref{fig:TimerAmode3b} précise le comportement des signaux TAIFG et du signal de sortie CCIFG du bloc de capture/comparaison n°0 (celui qui contient le registre TAxCCR0).
-\begin{figure} [!h]
+\begin{figure} [H]
   \centering
   \includegraphics[angle=0, width=12cm]{./Figures/Chap5_Timer/Timer_Mode_3b.pdf}
   \rule{35em}{0.5pt}
@@ -157,32 +165,23 @@ Dans le cas du mode 3, la figure  \ref{fig:TimerAmode3b} précise le comportement
 
 Grâce à cette variété des modes de comptage, le timer A va être capable de générer un grand nombre de signaux différents.
 
+\begin{minipage}{14cm}{
+\subsubsection*{Exemple de configuration}
+Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclus) jusqu'à 8191 (inclus), soit 8192 cycles, avec l'horloge SMCLK prédivisée par 8.
 
-\subsection{Contrôle du bloc de comptage}
-TAxR : Timer A Register (n° x) ou registre de comptage du timer n° x. Sa valeur évolue entre 0 et 0xFFFF ou le contenu de TAxCCR0.
+\lstset{style=customc}
+\begin{lstlisting}
+#define TASSEL_2	(2*0x100u)
+#define ID_3		(3*0x40u)
+#define MC_1		(1*0x10u)
 
-TAxCTL : Timer A Control (n° x) ou registre de contrôle du comptage du timer n° x. Il permet de spécifier le comportement du bloc de comptage.
-Il est composé de 5 champs, pour:
-\begin{itemize}[label=\textbullet,font=\small]
-\item sélectionner l'horloge de référence (champ TASSEL)
-\item sélectionner le facteur de prédivision de l'horloge de référence (champ ID)
-\item sélectionner le mode de comptage (champ MC)
-\item la remise à 0 (reset) du registre de comptage TAxR
-\item l'autorisation des interruptions (TAIE) issues du registre de comptage. A l'évidence, ces interruptions ne peuvent être générées qu'au moment particulier où le registre de comptage TAxR est à 0, puisqu'on ne connait pas la valeur maximale que peut prendre le registre de comptage TAxR.
-\end{itemize}
+TA0CCR0 = 8191;
+TA0CTL  = TASSEL\_2 | MC\_1 | ID\_3;
+\end{lstlisting}
+}
+\end{minipage}
 
-Un dernier champ (TAIFG) contient le flag d'état de l'interruption issue du registre de comptage TAxR.
-\\
-La figure \ref{fig:TimerTAR} illustre en détail le bloc de comptage. On y voit les différents sous blocs et leurs champs de contrôle, tous éléments du registre de contrôle TAxCTL.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[angle=0, width=16cm]{./Figures/Chap5_Timer/Timer_Detail_1.pdf}
-  \rule{35em}{0.5pt}
-  \caption[TimerTAR]{Schéma de détail du bloc de comptage}
-  \label{fig:TimerTAR}
-\end{figure}
-
+\pagebreak
 Le détail du registre de contrôle TAxCTL est donné à la figure \ref{fig:TAxCTL} et dans le tableau \ref{table:TAxCTL}.
 
 \begin{figure}[h]
@@ -232,28 +231,27 @@ TAIFG & & & Indicateur d'interruption \\
 \label{table:TAxCTL}
 \end{table}
 
-\bigskip
-\begin{minipage}{14cm}{
-\subsubsection*{Exemple de configuration}
-Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclus) jusqu'à 8191 (inclus), soit 8192 cycles, avec l'horloge SMCLK prédivisée par 8.
 
-\lstset{style=customc}
-\begin{lstlisting}
-#define TASSEL_2	(2*0x100u)
-#define ID_3		(3*0x40u)
-#define MC_1		(1*0x10u)
+\subsection{Contrôle du bloc de comptage}
+TAxR : Timer A Register (n° x) ou registre de comptage du timer n° x. Sa valeur évolue entre 0 et 0xFFFF ou le contenu de TAxCCR0.
 
-TA0CCR0 = 8191;
-TA0CTL  = TASSEL\_2 | MC\_1 | ID\_3;
-\end{lstlisting}
-}
-\end{minipage}
+TAxCTL : Timer A Control (n° x) ou registre de contrôle du comptage du timer n° x. Il permet de spécifier le comportement du bloc de comptage.
+Il est composé de 5 champs, pour:
+\begin{itemize}[label=\textbullet,font=\small]
+\item sélectionner l'horloge de référence (champ TASSEL)
+\item sélectionner le facteur de prédivision de l'horloge de référence (champ ID)
+\item sélectionner le mode de comptage (champ MC)
+\item la remise à 0 (reset) du registre de comptage TAxR
+\item l'autorisation des interruptions (TAIE) issues du registre de comptage. A l'évidence, ces interruptions ne peuvent être générées qu'au moment particulier où le registre de comptage TAxR est à 0, puisqu'on ne connait pas la valeur maximale que peut prendre le registre de comptage TAxR.
+\end{itemize}
 
-\pagebreak
-\subsection{Structure détaillée du timer A}
+Un dernier champ (TAIFG) contient le flag d'état de l'interruption issue du registre de comptage TAxR.
+
+\subsection{Blocs de capture/comparaison}
+Pour enrichir encore les possibilités offertes par le timer A, celui-ci dispose de plusieurs blocs de "capture/comparaison". Selon le type de microcontrôleur, le timer A dispose de 3, 5 ou 7 de ces blocs.
 La figure \ref{fig:TimerAstruct} illustre plus en détail la structure du timer A, en mettant en évidence uniquement les registres et les signaux de sortie du timer. Comme dit précédemment, il peut y avoir 3, 5 ou 7 blocs de "capture/comparaison". Sur la figure, n vaut donc 2, 4 ou 6.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[angle=0, width=14cm]{./Figures/Chap5_Timer/Timer_blocs_2.pdf}
   \rule{35em}{0.5pt}
