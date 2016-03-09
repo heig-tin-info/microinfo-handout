@@ -43,6 +43,7 @@
 %\usepackage{tikz}
 \hypersetup{pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue, pdftitle=microinformatique, pdfauthor=linuxmint , pdfsubject=Chapitre 01 - Introduction, pdfkeywords=}
 \usepackage{fancyhdr}
+\usepackage{chappg}
 
 % taille imprimable
 \usepackage{fullpage} % Agrandit les dimensions du texte (hauteur, largeur,
@@ -317,20 +318,25 @@ V 1.0 & 19 février 2016 & Version initiale (PFT)\\
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{1pt}
 \fancyfoot[RE,LO]{HEIG-VD  / Cédric Bornand Pierre Favrat Bertrand Hochet}
-\fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
+\fancyfoot[LE,RO]{Page \thepage}
+%\fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
 
 % redfini le style pour plain (1re page des chapitres)
 
 \fancypagestyle{plain}{%
   \fancyfoot[RE,LO]{HEIG-VD / MUI/ Cédric Bornand Pierre Favrat Bertrand Hochet}
-  \fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
+%  \fancyfoot[LE,RO]{Page \thepage\ sur \pageref{LastPage}}
+  \fancyfoot[LE,RO]{Page \thepage}
   \fancyhead[LE,RO]{}
  \renewcommand{\headrulewidth}{1pt}
   \renewcommand{\footrulewidth}{1pt}
 }
 
 
-\pagenumbering{arabic} \setcounter{page}{1}
+\pagenumbering{arabic} \setcounter{page}{2} \numberwithin{page}{chapter}
+
+\pagenumbering{bychapter}
+
 \input{./Chapter_intro.tex} 
 
 \input{./Chapter_gpio.tex} 
@@ -338,7 +344,7 @@ V 1.0 & 19 février 2016 & Version initiale (PFT)\\
 \input{./Chapter_arith.tex}     
 
 \input{./Chapter_interrupt.tex}
- 
+
 \input{./Chapter_timer.tex}
 
 \input{./Chapter_clock.tex}
@@ -357,5 +363,5 @@ V 1.0 & 19 février 2016 & Version initiale (PFT)\\
 
 \input{./Appendix01.tex}   %TBD
 
-\bigskip
+%\bigskip
 \end{document}
