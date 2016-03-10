@@ -96,7 +96,7 @@ Ce microcontrôleur contient un convertisseur AD 12 bits à approximations success
 \item Lancement des conversions par logiciel ou par timers
 \item Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
 \item Référence interne ou externe
-\item Jusqu'à 12 canaux d?entrée configurables individuellement
+\item Jusqu'à 12 canaux d'entrée configurables individuellement
 \item Canaux d'entrée pour capteur de température interne, AVCC, et références externes
 \item Registres de stockage de 16 résultats de conversion
 \end{itemize}
@@ -155,6 +155,14 @@ Plusieurs méthodes sont envisageables:
 
 \subsection{Sélection des références de tension}
 Les références de tension déterminent l'intervalle dans lequel la tension à convertir doit se trouver. La borne inférieure peut être égale à GND, mais pas nécessairement. Par contre, la borne supérieure est toujours inférieure à la tension d'alimentation VCC. La raison est que les circuits internes au convertisseur ont besoin d'une marge entre $V_{REF_Sup}$ et VCC pour pouvoir fonctionner correctement.
+Le résultat $N_{ADC}$ de la conversion est donné par la formule suivante :
+
+\begin{tabbing}
+\begin{Large}
+\qquad $N_{ADC}=4095.\frac{V_{in}-V_{Ref-}}{V_{Ref+}-V_{Ref-}}$
+\end{Large}
+\end{tabbing}
+
 
 \subsection{Stockage des résultats}
 Lorsqu'une conversion est terminée, l'ADC peut émettre une requête d'interruption. Toutefois, dans de nombreuses applications, il est nécessaire de convertir plusieurs tensions différentes. Les raisons peuvent être:
@@ -342,3 +350,128 @@ ADC12DF & & & Format du résultat de conversion sur 16-bits \\
 \caption{ADC12CTL2}
 \label{table:ADC12CTL2}
 \end{table}
+
+\subsection{Exemples de configuration}
+
+\begin{minipage}{16cm}{
+\subsubsection*{Exemple 1}
+L'entrée A0 est convertie sur ordre logiciel. La référence est AVcc. ADC12SC est remis à 0 automatiquement à la fin de la conversion. Le résultat est dans ADC12MEM0. Dans la boucle principale, le CPU attend en LPM0 jusqu'à l'interruption de ADC12. Au retour de l'interruption, le CPU ne retourne pas en LPM0 pour pouvoir lancer une nouvelle conversion. Si A0 > 0.5*AVcc, P1.0 est mis à '1', sinon '0'.
+
+\lstset{style=customc}
+\begin{lstlisting}
+//*******************************************************************
+// MSP430F552x Demo - MSP430F55xx_adc_01
+// Bhargavi Nisarga, Texas Instruments Inc.
+//*******************************************************************
+#include <msp430.h>
+
+int main(void)
+{
+  WDTCTL = WDTPW + WDTHOLD;              // Stoppe le WDT
+  ADC12CTL0 = ADC12SHT02 + ADC12ON;      // Temps d'échant., ADC12 on
+  ADC12CTL1 = ADC12SHP;                  // Timer d'échant. (SHP = 1)
+  ADC12IE = 0x01;                        // Interruption autorisée
+  ADC12CTL0 |= ADC12ENC;                 // Armement de l'ADC
+  P6SEL |= 0x01;                         // P6.0 mis en connection avec A0
+  P1DIR |= 0x01;                         // P1.0 en sortie
+
+  while (1)
+  {
+    ADC12CTL0 |= ADC12SC;                // Lancer échant./conversion
+    __bis_SR_register(LPM0_bits + GIE);  // LPM0
+  }
+}
+
+#pragma vector = ADC12_VECTOR
+__interrupt void ADC12_ISR(void)
+{
+  switch(__even_in_range(ADC12IV,34))
+  {
+  case  0: break;                        // Vecteur  0:  Pas d'interruption
+  case  2: break;                        // Vecteur  2:  ADC overflow
+  case  4: break;                        // Vecteur  4:  ADC timing overflow
+  case  6:                               // Vecteur  6:  ADC12IFG0
+    if (ADC12MEM0 >= 0x7ff)              // ADC12MEM = A0 > 0.5*AVcc?
+      P1OUT |= BIT0;                     // P1.0 = 1
+    else
+      P1OUT &= ~BIT0;                    // P1.0 = 0
+    __bic_SR_register_on_exit(LPM0_bits);// le CPU ne retournera pas en LPM0
+  case  8: break;                        // Vecteur  8:  ADC12IFG1
+  case 10: break;                        // Vecteur  10: ADC12IFG2
+  case 12: break;                        // Vecteur  12: ADC12IFG3
+  case 14: break;                        // Vecteur  14: ADC12IFG4
+  ...
+  case 16 à 28 omis pour des raisons de mise en page
+  ...
+  case 30: break;                        // Vecteur  30: ADC12IFG12
+  case 32: break;                        // Vecteur  32: ADC12IFG13
+  case 34: break;                        // Vecteur  34: ADC12IFG14
+  default: break; 
+  }
+}
+\end{lstlisting}
+}
+\end{minipage}
+
+\begin{minipage}{16cm}{
+\subsubsection*{Exemple 2}
+Les entrées A0 à A3 sont converties en séquence. Les références sont AVcc.
+Les résultats sont dans ADC12MEM0-3. Dans la boucle principale, le CPU attend en LPM4 jusqu'à l'interruption.
+
+\lstset{style=customc}
+\begin{lstlisting}
+//*******************************************************************
+// MSP430F552x Demo - MSP430F55xx_adc_09
+// Bhargavi Nisarga, Texas Instruments Inc.
+//*******************************************************************
+
+#include <msp430.h>
+
+volatile unsigned int results[4];          // tableau pour stocker les résultats
+
+int main(void)
+{
+  WDTCTL = WDTPW+WDTHOLD;                  // Stoppe le WDT
+  P6SEL = 0x0F;                            // P6.0-3 connectés avec A0-A3
+  ADC12CTL0 = ADC12ON+ADC12MSC+ADC12SHT0_2;// Temps d'échant., ADC12 on
+  ADC12CTL1 = ADC12SHP + ADC12CONSEQ_1;    // Timer d'échant., séq. simple
+  ADC12MCTL0 = ADC12INCH_0;                // ref+ = AVcc, channel = A0
+  ADC12MCTL1 = ADC12INCH_1;                // idem channel A1
+  ADC12MCTL2 = ADC12INCH_2;                // idem channel A2
+  ADC12MCTL3 = ADC12INCH_3+ADC12EOS;       // idem channel A3, fin séquence
+  ADC12IE = 0x08;                          // Autorisation ADC12IFG.3
+  ADC12CTL0 |= ADC12ENC;                   // Armement de l'ADC
+
+  while(1)
+  {
+    ADC12CTL0 |= ADC12SC;                  // Lancer échant./conversion
+    __bis_SR_register(LPM4_bits + GIE);    // LPM4, autorisation interrupts
+  }
+}
+
+#pragma vector=ADC12_VECTOR
+__interrupt void ADC12ISR (void)
+{
+    switch(__even_in_range(ADC12IV,34))
+  {
+  case  0: break;                        // Vecteur  0:  No interrupt
+  case  2: break;                        // Vecteur  2:  ADC overflow
+  case  4: break;                        // Vecteur  4:  ADC timing overflow
+  case  6: break;                        // Vecteur  6:  ADC12IFG0
+  case  8: break;                        // Vecteur  8:  ADC12IFG1
+  case 10: break;                        // Vecteur  10:  ADC12IFG2
+  case 12:                               // Vecteur  12:  ADC12IFG3
+    results[0] = ADC12MEM0;              // sauver résultat, IFG remis à 0
+    results[1] = ADC12MEM1;              // sauver résultat, IFG remis à 0
+    results[2] = ADC12MEM2;              // sauver résultat, IFG remis à 0
+    results[3] = ADC12MEM3;              // sauver résultat, IFG remis à 0
+    __bic_SR_register_on_exit(LPM4_bits);// le CPU ne retournera pas en LPM4  
+  case 14: break;                        // Vecteur  14:  ADC12IFG4
+  // case 16 à 32 omis pour des raisons de mise en page
+  case 34: break;                           // Vector 34:  ADC12IFG14
+  default: break; 
+  }
+}
+\end{lstlisting}
+}
+\end{minipage}
