@@ -143,6 +143,7 @@ La fréquence du signal de sortie est donc :\begin{LARGE} $F_{out}=\frac{N}{M}.F_
 
 En pratique, le comparateur de fréquence et le filtre passe-bas sont réalisés au moyen d'un intégrateur numérique, qui consiste en un compteur/décompteur. Durant un intervalle de temps défini, celui-ci s'incrémente sur les impulsions du signal de référence et se décrémente sur les impulsions du signal de sortie. A la fin de l'intervalle de temps, on sait si le VCO doit augmenter ou réduire la fréquence du signal de sortie. Une conséquence importante est que la fréquence moyenne du signal de sortie est stable, mais la fréquence instantanée varie en dents de scie.
 
+\pagebreak
 \section{Cas du MSP430} 
 La figure \ref{fig:UCS_Blocs} est un schéma synoptique du circuit d'horloge, appelé UCS pour \it Unified Clock System \rm. Ceci est valable pour les microcontrôleurs de la famille MSP430F5xxx.\\
 Cinq sources de fréquence sont disponibles:
@@ -186,7 +187,7 @@ La fréquence du signal de sortie DCOCLK est donnée par :
 \end{Large}
 \end{tabbing}
 \bigskip
-L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. Il permet aussi de sélectionner la gamme de fréquences que peut générer le VCO. Celui-ci peut générer une fréquence comprise dans un intervalle de quelques dizaines de MHz, mais ne peut pas générer toutes ces fréquences simultanément. La gamme de fréquence est donc déterminée par le \it DC Generator\rm. Les différentes gammes dépendent du modèle de microcontrôleur.
+L'élément \textit{DC Generator} génère un courant de polarisation pour le VCO. Il permet aussi de sélectionner la gamme de fréquences que peut générer le VCO. Ces fréquences sont comprises dans un intervalle de quelques dizaines de MHz, mais le VCO ne peut pas toutes les générer simultanément. La gamme de fréquence est donc déterminée par le \it DC Generator\rm. Les différentes gammes dépendent du modèle de microcontrôleur.
 
 \begin{figure}[htb]
   \centering
@@ -209,7 +210,7 @@ A titre d'exemple, la figure \ref{fig:FLL_Gammes} donne les gammes de fréquence 
 
 
 \subsubsection*{Exemple}
-On souhaite générer une fréquence de 3,2768 MHz à partir d'une horloge de 32768 Hz. on peut choisir DCORSEL = 2,3 ou 4. La valeur 2 est la meilleure car la gamme correspondante est la mieux centrée autour de 3,2768 MHz.
+On souhaite générer une fréquence de 3,2768 MHz à partir d'une horloge de 32768 Hz. On peut choisir DCORSEL = 2,3 ou 4. La valeur 2 est la meilleure car la gamme correspondante est la mieux centrée autour de 3,2768 MHz.
 Le facteur de multiplication vaut 100. Il peut être obtenu avec :
 \begin{itemize}[label=\textbullet,font=\small]
 \item $FLLREFDIV = 1$;
