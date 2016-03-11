@@ -1,32 +1,45 @@
 \chapter{\textsc{Unité centrale}}
 
-TBD
+L'unité centrale ou CPU et le coeur du microcontrôleur. Elle effectue des opération élémentaires sur des données ou sur des adresses.
 
 
 \section{Principes}
 
-\newpage 
+Un processeur se décompose en deux unité fondamentales: i) une unité de contrôle et ii) une unité de traitement  (fig. \ref{fig:cpu}). L'unité de contrôle décode les instructions et pilote le chemin de données qui exécute les opérations. Le pilote du chemin de données s'appelle le séquenceur, il communique avec le chemin de données à l'aide de signaux de commande et reçois des informations sur son état.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=270, width=12cm]{./Figures/cpu/cpu.pdf}
+  \rule{35em}{0.5pt}
+  \caption[cpu]{Principe de fonctionnement de l'unité centrale}
+  \label{fig:cpu}
+\end{figure}
+
+Le séquenceur est aussi responsable d'amener et de stocker des données dans la mémoire. On constate que le processeur à besoin de deux types d'information, les instructions et les données. Il y a donc deux possibilités, l'une ou l'on stock les deux informations dans une seule mémoire et l'autre ou on utilise deux mémoires séparées. Ce choix à provoqué une distinction une importante en architecture des processeurs qu'on a nommé Von Neumann et Harvard.
+
 \subsection{Architecture de Von Neumann}
 
 \subsection{Architecture de Harvard}
 
 
-\newpage 
+%\newpage 
 \section{Cycles des instructions}
 
 
 \subsection{Recherche de l'instruction}
-\newpage 
+%\newpage 
 \subsection{Décodage de l'instruction}
-\newpage 
+%\newpage 
 \subsection{Recherche des opérandes}
-\newpage 
+%\newpage 
 \subsection{Exécution de l'instruction}
-\newpage 
+%\newpage 
 \subsection{Écriture du résultat}
 
-\newpage 
+%\newpage 
 \section{Séquenceur des instructions}
 
-\newpage 
-\section{Pipeline des instructions}
+%\newpage 
+\section{Pipeline des unité de calcul}
+
+\section{Processeur super scalaire}
