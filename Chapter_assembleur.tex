@@ -1,10 +1,32 @@
 \chapter{\textsc{Assembleur}}
 
-<<<<<<< Updated upstream
-TBD
-=======
-On appelle \textit{assembleur} le langage natif du CPU, c'est à dire
->>>>>>> Stashed changes
+On appelle \textit{langage machine} le langage natif du CPU, c'est à dire le langage que celui-ci \textit{comprend}. Les instructions sont des mots binaires organisés en champs, qui commandent chacun des actions spécifiques telles que :
+\begin{itemize}[label=\textbullet,font=\small]
+\item le type d'opération à effectuer
+\item les opérandes
+\item le mode d'adressage
+\end{itemize}
+
+Un langage d'assemblage (ou langage assembleur ou simplement assembleur par abus de
+langage, abrégé ASM) est le langage de bas niveau proche du langage machine qui peut être
+directement interprété par le processeur tout en restant lisible par un utilisateur.
+
+Il consiste à représenter les codes binaires des instructions par des symboles appelés mnémoniques (du grec mnêmonikos, relatif à la mémoire), c'est-à-dire faciles à retenir.
+
+Par exemple, l?unité de contrôle d?un processeur particulier reconnaît l?instruction en langage
+machine suivante :
+
+          en hexadécimal : 4035 0055 ou en binaire : 01000000 00110101 00000000 01010101
+
+En langage assembleur, cette instruction sera traduite par un équivalent plus facile à comprendre
+pour le programmeur 
+
+          MOV.W   #85H,R5
+
+Ce qui signifie "mettre la valeur décimale 85 (0x55 en hexadécimal) dans le registre R5.
+
+
+On appelle \textit{assembleur} le langage natif du CPU, c'est à dire le langage que celui-ci \textit{comprend}. 
 
 
 \section{Chaine de compilation}
