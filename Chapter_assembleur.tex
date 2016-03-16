@@ -1,32 +1,59 @@
 \chapter{\textsc{Assembleur}}
 
-On appelle \textit{langage machine} le langage natif du CPU, c'est à dire le langage que celui-ci \textit{comprend}. Les instructions sont des mots binaires organisés en champs, qui commandent chacun des actions spécifiques telles que :
+On appelle \textit{langage machine} le langage natif du CPU, c'est à dire le langage qui peut être directement \textit{interprété} par le processeur. Les instructions sont des mots binaires organisés en champs, qui commandent chacun des actions spécifiques telles que :
 \begin{itemize}[label=\textbullet,font=\small]
 \item le type d'opération à effectuer
 \item les opérandes
 \item le mode d'adressage
 \end{itemize}
+Le langage machine est donc intrinsèquement lié au CPU auquel il s'applique,
 
-Un langage d'assemblage (ou langage assembleur ou simplement assembleur par abus de
-langage, abrégé ASM) est le langage de bas niveau proche du langage machine qui peut être
-directement interprété par le processeur tout en restant lisible par un utilisateur.
+Le langage d'assemblage (ou langage assembleur ou simplement assembleur par abus de
+langage, abrégé ASM) est une version lisible du langage machine. Il consiste à représenter les codes binaires des instructions par des symboles appelés mnémoniques (du grec mnêmonikos, relatif à la mémoire), c'est-à-dire faciles à retenir.
 
-Il consiste à représenter les codes binaires des instructions par des symboles appelés mnémoniques (du grec mnêmonikos, relatif à la mémoire), c'est-à-dire faciles à retenir.
-
-Par exemple, l?unité de contrôle d?un processeur particulier reconnaît l?instruction en langage
+Par exemple, l'unité de contrôle d'un processeur particulier reconnaît l'instruction en langage
 machine suivante :
+\begin{tabbing}
+\qquad 4035 0055h en hexadécimal\\
+\qquad 01000000 00110101 00000000 01010101 b en binaire
+\end{tabbing}
 
-          en hexadécimal : 4035 0055 ou en binaire : 01000000 00110101 00000000 01010101
+On voit bien qu'il est impossible de comprendre directement ce que peut faire cette instruction.
+En langage assembleur, cette instruction est traduite par un équivalent plus facile à comprendre
+pour le programmeur :
+\begin{tabbing}
+\qquad MOV.W   \#85H,R5
+\end{tabbing}
 
-En langage assembleur, cette instruction sera traduite par un équivalent plus facile à comprendre
-pour le programmeur 
+qui signifie "mettre la valeur décimale 85" (0x55 en hexadécimal) dans le registre R5.
 
-          MOV.W   #85H,R5
+\section{Jeu d'instructions}
+Le jeu d'instructions est l'ensemble de toutes les instructions que le CPU est capable d'exécuter. On peut en général les regrouper en plusieurs catégories:
+\begin{itemize}[label=\textbullet,font=\small]
+\item instructions de transfert de données; elles consistent à copier le contenu d'un registre ou d'une case mémoire vers un autre registre ou une autre cas mémoire.
+\item opérations arithmétiques;
+\item opérations logiques;
+\item sauts et rupture de séquence contrôlés ou non par un test, qui permettent (par exemple) de faire des appels de sous-programme.
+\end{itemize}
 
-Ce qui signifie "mettre la valeur décimale 85 (0x55 en hexadécimal) dans le registre R5.
+Le jeu d'instruction d'un CPU peut être plus ou moins complet selon la complexité du CPU. Par exemple, celui de la famille MCS-51 (famille de microcontrôleurs Intel 8051 et 8052) comprend environ 110 instructions, alors que le MSP430 a "seulement" 27 instructions, tout en offrant des performances comparables.
+La raison est liée au\it mode d'adressage\rm, qui définit la façon dont le CPU accède aux données qu'il s'apprête à traiter, que ce soit pour un simple transfert de données ou une opération arithmétique sophistiquée.
+
+\section{Mode d'adressage}
+Selon que l'opérande d'une instruction est une constante, une variable, un pointeur ou autre, il est évident que cet opérande n'est pas identifié de la même manière.
+Reprenant l'instruction prise comme exemple dans l'introduction:
+\begin{tabbing}
+\qquad MOV.W   \#85H,R5
+\end{tabbing}
+la valeur "85", qui était codée par "0055" pourrait représenter:
+\begin{itemize}[label=\textbullet,font=\small]
+\item le nombre (la constante) 85;
+\item la case mémoire numéro 85;
+\item si c'est la case mémoire numéro 85, est c'est son contenu qui est l'opérande ou autre chose ?
+\item etc...
+\end{itemize}
 
 
-On appelle \textit{assembleur} le langage natif du CPU, c'est à dire le langage que celui-ci \textit{comprend}. 
 
 
 \section{Chaine de compilation}
