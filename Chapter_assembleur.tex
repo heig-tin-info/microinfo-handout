@@ -22,7 +22,7 @@ On voit bien qu'il est impossible de comprendre directement ce que peut faire ce
 En langage assembleur, cette instruction est traduite par un équivalent plus facile à comprendre
 pour le programmeur :
 \begin{tabbing}
-\qquad MOV.W   \#85H,R5
+\qquad MOV.W   \#85,R5
 \end{tabbing}
 
 qui signifie "mettre la valeur décimale 85" (0x55 en hexadécimal) dans le registre R5.
@@ -43,7 +43,7 @@ La raison est liée au\it mode d'adressage\rm, qui définit la façon dont le CPU a
 Selon que l'opérande d'une instruction est une constante, une variable, un pointeur ou autre, il est évident que cet opérande n'est pas identifié de la même manière.
 Reprenant l'instruction prise comme exemple dans l'introduction:
 \begin{tabbing}
-\qquad MOV.W   \#85H,R5
+\qquad MOV.W   \#85,R5
 \end{tabbing}
 la valeur "85", qui était codée par "0055" pourrait représenter:
 \begin{itemize}[label=\textbullet,font=\small]
@@ -53,6 +53,34 @@ la valeur "85", qui était codée par "0055" pourrait représenter:
 \item etc...
 \end{itemize}
 
+Même si les modes d'adressage varient grandement d'un CPU à un autre, on peut en identifier quelques uns qui leurs sont communs.
+
+\subsection{Adressage immédiat}
+En adressage \textit{immédiat}, la donnée est identifiée explicitement. Dans l'exemple déjà vu 
+\begin{tabbing}
+\qquad MOV.W   \#85,R5
+\end{tabbing}
+le symbole \# spécifie que la valeur est à prendre telle quelle.
+L'adressage immédiat est donc associé à une constante.
+
+\subsection{Adressage direct}
+En adressage \textit{direct}, l'identifiant est l'adresse de la case contenant la donnée. L'exemple devient
+\begin{tabbing}
+\qquad MOV.W   85,R5
+\end{tabbing}
+C'est l'adressage "par défaut", le plus courant, spécifié par le symbole & ou par l'absence de symbole. L'adressage direct est donc associé à une variable. La case mémoire ou le registre identifié est une variable.
+
+\subsection{Adressage indirect}
+En adressage \textit{indirect}, l'identifiant est l'adresse d'une case mémoire, qui contient l'adresse de la donnée visée . L'exemple devient
+\begin{tabbing}
+\qquad MOV.W   @85,R5
+\end{tabbing}
+Cet adressage est spécifié par le symbole @. L'adressage indirect permet donc d'implémenter un pointeur.
+
+\subsection{Adressage indexé}
+L'adressage \textit{indexé} permet de gérer des tableaux de façon efficace. 
+
+\subsection{Orthogonalité du jeu d'instruction}
 
 
 
