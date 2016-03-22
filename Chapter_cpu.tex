@@ -1,45 +1,205 @@
 \chapter{\textsc{Unité centrale}}
 
-L'unité centrale ou CPU et le coeur du microcontrôleur. Elle effectue des opération élémentaires sur des données ou sur des adresses.
-
+L'unité centrale ou CPU (Central Processing Unit) et le coeur du microcontrôleur. Elle effectue des opérations élémentaires sur des données ou sur des adresses. A l'intérieur du cpu on trouve une unité arithmétique et logique qu'on nomme ALU (Aritmetic and Logic Unit). c'est elle qui effectue les opérations de base tel que addition, multiplication, décalages et fonctions logiques. Pour qu'elle fonctionne optimalement, il faut l'alimenter avec des données de manière continue. Par la suite, on va détailler ce processus.
 
 \section{Principes}
 
-Un processeur se décompose en deux unité fondamentales: i) une unité de contrôle et ii) une unité de traitement  (fig. \ref{fig:cpu}). L'unité de contrôle décode les instructions et pilote le chemin de données qui exécute les opérations. Le pilote du chemin de données s'appelle le séquenceur, il communique avec le chemin de données à l'aide de signaux de commande et reçois des informations sur son état.
+Un processeur se décompose en deux unité fondamentales: i) une unité de contrôle et ii) une unité de traitement  (fig. \ref{fig:cpu1}). L'unité de contrôle décode les instructions et pilote le chemin de données qui exécute les opérations. Le pilote du chemin de données s'appelle le séquenceur, il communique avec le chemin de données à l'aide de signaux de commandes et reçois des informations sur son état.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[angle=270, width=12cm]{./Figures/cpu/cpu.pdf}
+  \includegraphics[angle=270, width=10cm,trim=100 1 100 1,clip]{./Figures/cpu/cpu1.pdf}
   \rule{35em}{0.5pt}
-  \caption[cpu]{Principe de fonctionnement de l'unité centrale}
-  \label{fig:cpu}
+  \caption[cpu1]{Principe de fonctionnement de l'unité centrale}
+  \label{fig:cpu1}
 \end{figure}
 
-Le séquenceur est aussi responsable d'amener et de stocker des données dans la mémoire. On constate que le processeur à besoin de deux types d'information, les instructions et les données. Il y a donc deux possibilités, l'une ou l'on stock les deux informations dans une seule mémoire et l'autre ou on utilise deux mémoires séparées. Ce choix à provoqué une distinction une importante en architecture des processeurs qu'on a nommé Von Neumann et Harvard.
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=15cm, trim=0 20 0 30,clip]{./Figures/cpu/cpu2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[cpu2]{Exemple d'unité centrale}
+  \label{fig:cpu2}
+\end{figure}
 
-\subsection{Architecture de Von Neumann}
-
-\subsection{Architecture de Harvard}
+Le séquenceur est aussi responsable d'amener et de stocker des données dans la mémoire. On constate que le processeur à besoin de deux types d'information, les instructions et les données. Il y a donc deux possibilités, l'une ou l'on stock les deux informations dans une seule mémoire et l'autre ou on utilise deux mémoires séparées. Ce choix à provoqué une distinction importante en architecture des processeurs qu'on a nommé Von Neumann et Harvard.
 
 
-%\newpage 
-\section{Cycles des instructions}
+\subsection{Architectures de Von Neumann et Harvard}
+Cette différence de stockage des données et des instructions peut amener des avantages et des inconvénients. Si les données et les instructions sont séparées, il faut deux mémoires et deux bus d'accès. Par contre, si il y a deux mémoires, le chargement se fait en parallèle. On peut donc considérer que l'architecture de Von Neumann est plus simple mais moins performante que celle de Harvard.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=270,width=10cm,trim=50 1 50 1,clip]{./Figures/cpu/vonneumann.pdf}
+  \rule{35em}{0.5pt}
+  \caption[vn]{Les architectures de Von Neumann et Harvard}
+  \label{fig:vn}
+\end{figure}
+
+
+\section{Cycle des instructions}
+Pour analyser en détail le fonctionnement du processeur soumis à une instruction, on va diviser le processus en cinq parties:
+
+\begin{itemize}[label=\textbullet,font=\small]
+\item Recherche de l'instruction (IF: Instruction Fetch)
+\item Décodage de l'instruction (ID: Instruction Decode)
+\item Recherche des opérandes (OF: Operand Fetch)
+\item Exécution de l'instruction (EX: EXecute)
+\item Écriture du résultat (WR: Write Register ou WB: Write Back)
+\end{itemize}
 
 \subsection{Recherche de l'instruction}
-%\newpage 
+Dans cette phase, on doit amener l'instruction de la mémoire vers un registre d'instruction dans le séquenceur. La première chose à faire c'est de placer sur le bus d'adresses la valeur du pointeur de programme (Le pointeur de programme contient l'adresse de la ligne du programme). Cette adresse est alors dirigée sur la mémoire qui retourne la valeur qu'elle contient sur le bus de données (fig. \ref{fig:instr1}).
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[instr1]{Recherche de l'instruction}
+  \label{fig:instr1}
+\end{figure}
+
 \subsection{Décodage de l'instruction}
-%\newpage 
+Dés que l'instruction est arrivée dans le séquenceur, il peut la décoder en lisant d'abord l'opcode qui identifie l'instruction à effectuer par exemple add (fig. \ref{fig:opcode1}). Deuxièmement, il lit la méthode d'adressage utilisée pour trouver l'endroit de la source et de la destination. 
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[instr2]{Décodage de l'instruction}
+  \label{fig:instr2}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=12cm, trim=0 80 0 80,clip]{./Figures/cpu/opcode1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[opcode1]{Exemple d'instruction assembleur}
+  \label{fig:opcode1}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm, trim=0 70 0 70,clip]{./Figures/cpu/opcode2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[opcode2]{Exemple de codage d'une instruction}
+  \label{fig:opcode2}
+\end{figure}
+
 \subsection{Recherche des opérandes}
-%\newpage 
+Après décodage, le séquenceur entre en oeuvre et va chercher les opérandes suivant le mode d'adressage utilisé. Si l'adressage est direct, les registres internes au chemin de données sont activés et présentent leurs valeurs aux entrées de l'ALU. Si l'adressage est indirect, le séquenceur place la valeur contenue dans un registre sur le bus d'adresse. Ensuite la valeur en mémoire située à cette adresse est placée sur le bus de donnée pour atteindre finalement l'entrée de l'ALU.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction3.pdf}
+  \rule{35em}{0.5pt}
+  \caption[instr3]{Recherche des opérandes}
+  \label{fig:instr3}
+\end{figure}
+ 
 \subsection{Exécution de l'instruction}
-%\newpage 
+A partir du moment ou les données sont présentent aux deux entrées de l'ALU, le séquenceur commande l'exécution de l'opération. Suivant la complexité de l'opération, l'exécution se décomposera en plusieurs sous opérations.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction4.pdf}
+  \rule{35em}{0.5pt}
+  \caption[instr4]{Exécution de l'instruction}
+  \label{fig:instr4}
+\end{figure}
+
 \subsection{Écriture du résultat}
+Après le calcul de l'ALU, le résultat est placé dans le registre de destination. Le registre d'état est aussi mis à jour en même temps. Ce registre nous donne les informations suivantes:
 
-%\newpage 
+\begin{itemize}[label=\textbullet,font=\small]
+\item Indication d'une retenue: C (pour Carry)
+\item Indication d'un dépassement: V (pour oVerflow)
+\item Indication d'un résultat négatif: N (pour Negative)
+\item Indication d'un résultat nul: Z (pour Zero)
+\end{itemize}
+
+Grâce à ces informations, nous pouvons programmer en utilisant des conditions. Par exemple, pour tester lorsque qu'une boucle for arrive à zéro.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction5.pdf}
+  \rule{35em}{0.5pt}
+  \caption[instr5]{Écriture du résultat}
+  \label{fig:instr5}
+\end{figure}
+
+ 
 \section{Séquenceur des instructions}
+Le séquenceur est un composants clé qui à pour but de gérer le bon fonctionnement du processeur. Il prend en compte les temps d'exécutions de chaque sous composants. On peut le réaliser de deux manières différentes: i) cablé (fig. \ref{fig:sc}), c-à-d par des fonctions logique séquentielles ou ii) microprogrammé (fig. \ref{fig:sm}), qui signifie qu'il peut être reconfiguré.
+ 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=12cm]{./Figures/cpu/Sequenceur1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[sc]{Séquenceur câblé}
+  \label{fig:sc}
+\end{figure}
 
-%\newpage 
-\section{Pipeline des unité de calcul}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=12cm, trim=0 40 0 40,clip]{./Figures/cpu/Sequenceur2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[sm]{Séquenceur microprogrammé}
+  \label{fig:sm}
+\end{figure}
 
-\section{Processeur super scalaire}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=12cm, trim=0 20 0 20,clip]{./Figures/cpu/withoutpipeline1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[flux1]{Flux des instructions sans pipeline}
+  \label{fig:flux1}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=90, width=12cm,trim=60 1 60 1,clip]{./Figures/cpu/wpipeline2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[flux2]{Flux des instructions sans pipeline}
+  \label{fig:flux2}
+\end{figure}
+ 
+\section{Pipeline du cycle des instructions}
+Les cinq étapes citées auparavant doivent être exécutées à la suite ce qui donne un cycle minimum de cinq coup d'horloges pour exécuter une instruction (fig. \ref{fig:flux2}). On désire donc commencer une nouvelle instruction dés que possible c-à-d dés qu'un étape est terminée ((fig. \ref{fig:flux4})).
+
+Pour se faire, on intercale des registres entre les différentes phases du processus ((fig. \ref{fig:flux3})). Ceci permet d'isoler chaque phase et ainsi de permettre la réutilisation des phases à chaque cycle d'horloge du processeur.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=12cm, trim=1 20 1 20,clip]{./Figures/cpu/withpipeline1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[flux3]{Flux des instructions avec pipeline}
+  \label{fig:flux3}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=12cm, trim=1 30 1 30,clip]{./Figures/cpu/withpipeline2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[flux4]{Flux des instructions avec pipeline}
+  \label{fig:flux4}
+\end{figure}
+
+Certaines opérations sont plus longues que d'autres ce qui fait que l'horloge doit être ajustée pour l'étape la plus lente. Pour éviter de devoir ralentir l'horloge du cpu on peut ajouter des niveaux de pipeline pour accélérer le processeur. Par exemple un multiplieur prendra plus de temps qu'un additionneur, il est donc judicieux de réaliser le multiplieur avec plusieurs étages de pipeline. 
+
+\section{Processeur superscalaire}
+Un processeur capable d'exécuter plusieurs instructions en parallèle est dit superscalaire. Ce n'est pas un ensemble de processeurs mais un seul CPU avec plusieurs ALU qui peut aussi avoir plusieurs décodeurs/séquenceurs. On utilise aussi la terminologie anglo-saxone "dual-issue" pour un processeur qui peut exécuter deux instructions en parallèle et "multiple-issue" pour un processeur qui peut en exécuter plusieurs. Un processeur qui peut exécuter une seule instruction par cycle d'horloge est donc appelé "single-issue", c'est le cas de la plupart des micro-contrôleurs. 
+
+Un processeur qui possède plusieurs ALU mais pas plusieurs décodeurs d'instructions est dit avec pipeline superscalaire. L'ARM cortex M7, par exemple, possède cinq pipelines: deux ALU entères, un pour les opération mémoire, un pour faire des multiplications/accumulations et un pour le calcul en virgule flottante. Cela permet d'équilibrer les opérations qui ont des temps d'exécutions différents tel que le calcul en virgule flottante par rapport au calcul entier. Par exemple, une instruction flottante prend 4 étages de pipeline alors qu'une instruction entière en prend 2. Donc si on place une instruction flottante suivie par une instruction entière, on a bien deux instructions qui s'exécutent en parallèle. L'instruction entière se terminera un cycle avant l'instruction flottante.
+
+La présence de processeurs de plus en plus puissants dans les micro-contrôleurs est inévitable. Ceci est dû à plusieurs facteurs: 
+\begin{enumerate}
+\item La densité d'intégration des technologies CMOS => plus de transistors disponibles
+\item La réduction de la consommation dynamique liée aux circuits plus petits
+\item La vitesse et complexité des interfaces de communications, par exemple l'USB
+\item La complexité des périphériques disponibles, par exemple les afficheurs
+\end{enumerate}
+
+On peut donc s'attendre à trouver des microcontroleurs qui s'approchent des fonctionnalités d'un ordinateur de base.
+
+
