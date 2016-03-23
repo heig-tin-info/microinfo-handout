@@ -20,17 +20,19 @@ machine suivante :
 %\qquad 0x78 0x55 en hexadécimal
 %\end{tabbing}
 
-\begin{tabbing}
-\qquad 01000000 00110101 00000000 01010101 b en binaire\\
-\qquad 4035 0055h en hexadécimal
-\end{tabbing}
+\lstset{style=customc}
+\begin{lstlisting}
+01000000 00110101 00000000 01010101 (b en binaire)
+4035 0055h (en hexadécimal)
+\end{lstlisting}
 
 On voit bien qu'il est impossible de comprendre directement ce que peut faire cette instruction.
 En langage assembleur, cette instruction est traduite par un équivalent plus facile à comprendre
 pour le programmeur :
-\begin{tabbing}
-\qquad MOV.W   \#85,R5
-\end{tabbing}
+\lstset{style=customc}
+\begin{lstlisting}
+MOV.W #85,R5
+\end{lstlisting}
 
 qui signifie "mettre la valeur décimale 85" (0x55 en hexadécimal) dans le registre R5.
 
@@ -44,50 +46,104 @@ Le jeu d'instructions est l'ensemble de toutes les instructions que le CPU est c
 \end{itemize}
 
 Le jeu d'instruction d'un CPU peut être plus ou moins complet selon la complexité du CPU. Par exemple, celui de la famille MCS-51 (famille de microcontrôleurs Intel 8051 et 8052) comprend environ 110 instructions, alors que le MSP430 a "seulement" 27 instructions, tout en offrant des performances comparables.
-La raison est liée au\it mode d'adressage\rm, qui définit la façon dont le CPU accède aux données qu'il s'apprête à traiter, que ce soit pour un simple transfert de données ou une opération arithmétique sophistiquée.
+Une raison est liée au \it mode d'adressage\rm, qui définit la façon dont le CPU accède aux données qu'il s'apprête à traiter, que ce soit pour un simple transfert de données ou une opération arithmétique sophistiquée.
 
-\section{Mode d'adressage}
+\section{Modes d'adressage}
 Selon que l'opérande d'une instruction est une constante, une variable, un pointeur ou autre, il est évident que cet opérande n'est pas identifié de la même manière.
 Reprenant l'instruction prise comme exemple dans l'introduction:
-\begin{tabbing}
-\qquad MOV.W   \#85,R5
-\end{tabbing}
+\lstset{style=customc}
+\begin{lstlisting}
+MOV.W #85,R5
+\end{lstlisting}
+
 la valeur "85", qui était codée par "0055" pourrait représenter:
 \begin{itemize}[label=\textbullet,font=\small]
-\item le nombre (la constante) 85;
-\item la case mémoire numéro 85;
-\item si c'est la case mémoire numéro 85, est-ce son contenu qui est l'opérande ou autre chose ?
+\item le nombre (la constante) 0x55 (ou 85 en décimal);
+\item la case mémoire numéro 0x55;
+\item si c'est la case mémoire numéro 0x55, est-ce son contenu qui est l'opérande ou autre chose ?
 \item etc...
 \end{itemize}
 
-Même si les modes d'adressage varient grandement d'un CPU à un autre, on peut en identifier quelques uns qui leurs sont communs.
+Même si les modes d'adressage varient grandement d'un CPU à un autre, on peut en identifier quelques uns qui leurs sont communs. Ce sont:
+\begin{itemize}[label=\textbullet,font=\small]
+\item l'adressage immédiat;
+\item l'adressage direct;
+\item l'adressage indirect;
+\item l'adressage relatif
+\end{itemize}
+
+D'autres modes d'adressage sont imaginables selon le type de machine.
 
 \subsection{Adressage immédiat}
 En adressage \textit{immédiat}, la donnée est identifiée explicitement. Dans l'exemple déjà vu 
-\begin{tabbing}
-\qquad MOV.W   \#85,R5
-\end{tabbing}
+\lstset{style=customc}
+\begin{lstlisting}
+MOV.W #85,R5
+\end{lstlisting}
+
 le symbole \# spécifie que la valeur est à prendre telle quelle.
 L'adressage immédiat est donc associé à une constante.
 
 \subsection{Adressage direct}
-En adressage \textit{direct}, l'identifiant est l'adresse de la case contenant la donnée. L'exemple devient
-\begin{tabbing}
-\qquad MOV.W   85,R5
-\end{tabbing}
+En adressage \textit{direct}, parfois aussi appelé \textit{absolu}, l'identifiant est l'adresse de la case contenant la donnée. L'exemple devient
+\lstset{style=customc}
+\begin{lstlisting}
+MOV.W 85,R5
+\end{lstlisting}
 C'est l'adressage "par défaut", le plus courant, spécifié par le symbole \& ou par l'absence de symbole. L'adressage direct est donc associé à une variable. La case mémoire ou le registre identifié est une variable.
 
 \subsection{Adressage indirect}
 En adressage \textit{indirect}, l'identifiant est l'adresse d'une case mémoire, qui contient l'adresse de la donnée visée . L'exemple devient
-\begin{tabbing}
-\qquad MOV.W   @85,R5
-\end{tabbing}
-Cet adressage est spécifié par le symbole @. L'adressage indirect permet donc d'implémenter un pointeur.
+\lstset{style=customc}
+\begin{lstlisting}
+MOV.W @85,R5
+\end{lstlisting}
+Cet adressage est souvent spécifié par le symbole @. L'adressage indirect permet donc d'implémenter un pointeur.
+
+\subsection{Adressage relatif}
+Le terme "adressage" est ici abusif dans la mesure où l'adressage relatif est utilisé pour faire des sauts et branchements. L?adresse est ici celle d?une instruction. L?adressage relatif spécifie l?adresse de la prochaine instruction sous forme d?un saut par rapport à la position de l'instruction en cours d'exécution.
+En pratique, il n?y a pas à se soucier du calcul du déplacement pour faire le saut au bon endroit; c?est l?assembleur qui se charge de calculer la bonne valeur.
+Un exemple d'instruction avec adressage relatif est:
+\lstset{style=customc}
+\begin{lstlisting}
+JMP Label
+\end{lstlisting}
+
+{\fontfamily{pcr}\selectfont Label} est une \textit{étiquette} permettant de repérer la prochaine instruction, par exemple:
+\lstset{style=customc}
+\begin{lstlisting}
+Label	MOV.W @85,R5
+\end{lstlisting}
 
 \subsection{Adressage indexé}
-L'adressage \textit{indexé} permet de gérer des tableaux de façon efficace. 
+L'adressage \textit{indexé} permet de gérer des tableaux de façon efficace. Il est le plus souvent associé à de l'adressage direct ou indirect. L'index permet d'accéder à plusieurs opérandes successifs à partir d'une position de départ.
+
+\subsection{Adressage par registre}
+Comme nous le verrons dans le chapitre suivant, le coeur du CPU contient des registres à usage général et à accès rapide, permettant de minimiser le temps d'exécution de certaines instructions. Ces registres sont identifiés explicitement, par un nom symbolique (R0, R1, R2, etc...).
+Parfois appelé adressage \it implicite\rm ou \it inhérent\rm , le mode d'adressage par registre utilise donc explicitement le nom du registre impliqué. Par exemple:
+\lstset{style=customc}
+\begin{lstlisting}
+MOV R1,0x40
+\end{lstlisting}
+est une instruction du jeu d'instruction MCS-51 (microcontrôleurs de la famille 8051) et qui consiste à copier le contenu de la case d'adresse 0x40 (adressage direct pour la source de la donnée) dans le registre appelé R1. Bien que R1 pourrait être identifié par son adresse, il l'est ici par son nom explicite. L'intérêt est de pouvoir représenter le code de l'instruction sur moins d'octets que si l'adresse de R1 devait être fournie.
+
+L'exemple suivant (toujours du jeu d'instruction MCS-51) utilise de l'adressage indirect par registre et de l'adressage avec un registre particulier appelé \it accumulateur\rm .:
+\lstset{style=customc}
+\begin{lstlisting}
+MOV A,@R2
+\end{lstlisting}
 
 \subsection{Orthogonalité du jeu d'instruction}
+Le jeu d'instruction d'un CPU est dit orthogonal lorsque tous les modes d'adressage disponibles sont utilisables avec toutes les instructions, pour autant que le mode d'adressage considéré a du sens avec l'instruction considérée.
+
+\section{Jeu d'instruction du MSP430}
+Nous donnons ici quelques exemples d'instructions du MSP430. La liste exhaustive peut être consultée dans le manuel d'utilisateur de la famille MSP430 (document SLAU208, pages 185 à 340).
+
+\subsection{Modes d'adressage}
+Sept modes d'adressage pour les opérandes de source et quatre modes d'adressage
+pour les opérandes de destination permettent d?adresser l'espace d'adressage complet
+de la mémoire, sans exceptions. Ces modes d?adressage sont valables aussi bien sur de chargement (MOV) que sur des opérations arithmétiques (ADD, SUB,...).
+
 
 
 
