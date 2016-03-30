@@ -69,7 +69,8 @@ Même si les modes d'adressage varient grandement d'un CPU à un autre, on peut en
 \item l'adressage immédiat;
 \item l'adressage direct;
 \item l'adressage indirect;
-\item l'adressage relatif
+\item l'adressage relatif;
+\item l'adressage indexé.
 \end{itemize}
 
 D'autres modes d'adressage sont imaginables selon le type de machine.
@@ -119,7 +120,7 @@ Label	MOV.W @85,R5
 L'adressage \textit{indexé} permet de gérer des tableaux de façon efficace. Il est le plus souvent associé à de l'adressage direct ou indirect. L'index permet d'accéder à plusieurs opérandes successifs à partir d'une position de départ.
 
 \subsection{Adressage par registre}
-Comme nous le verrons dans le chapitre suivant, le coeur du CPU contient des registres à usage général et à accès rapide, permettant de minimiser le temps d'exécution de certaines instructions. Ces registres sont identifiés explicitement, par un nom symbolique (R0, R1, R2, etc...).
+Comme nous le verrons dans le chapitre suivant, le coeur du CPU contient des registres à usage général et à accès rapide, permettant de minimiser le temps d'exécution de certaines instructions. Ces registres sont identifiés explicitement, par un nom symbolique (par exemple A, ACC, R0, R1, R2, etc...).
 Parfois appelé adressage \it implicite\rm ou \it inhérent\rm , le mode d'adressage par registre utilise donc explicitement le nom du registre impliqué. Par exemple:
 \lstset{style=customc}
 \begin{lstlisting}
@@ -127,7 +128,7 @@ MOV R1,0x40
 \end{lstlisting}
 est une instruction du jeu d'instruction MCS-51 (microcontrôleurs de la famille 8051) et qui consiste à copier le contenu de la case d'adresse 0x40 (adressage direct pour la source de la donnée) dans le registre appelé R1. Bien que R1 pourrait être identifié par son adresse, il l'est ici par son nom explicite. L'intérêt est de pouvoir représenter le code de l'instruction sur moins d'octets que si l'adresse de R1 devait être fournie.
 
-L'exemple suivant (toujours du jeu d'instruction MCS-51) utilise de l'adressage indirect par registre et de l'adressage avec un registre particulier appelé \it accumulateur\rm .:
+L'exemple suivant (toujours du jeu d'instruction MCS-51) utilise de l'adressage indirect par registre et de l'adressage avec un registre particulier appelé \it accumulateur\rm:
 \lstset{style=customc}
 \begin{lstlisting}
 MOV A,@R2
@@ -141,9 +142,47 @@ Nous donnons ici quelques exemples d'instructions du MSP430. La liste exhaustive
 
 \subsection{Modes d'adressage}
 Sept modes d'adressage pour les opérandes de source et quatre modes d'adressage
-pour les opérandes de destination permettent d?adresser l'espace d'adressage complet
-de la mémoire, sans exceptions. Ces modes d?adressage sont valables aussi bien sur de chargement (MOV) que sur des opérations arithmétiques (ADD, SUB,...).
-
+pour les opérandes de destination permettent d'adresser l'espace complet
+de la mémoire, sans exceptions. Ces modes d'adressage sont applicables aussi bien à des instructions de transfert de données(MOV) qu'à des opérations arithmétiques (ADD, SUB,...).
+La table \ref{table:MSP430_Addr_Reg} 
+\begin{table}[h]
+\centering 
+\begin{tabular}{l l l l}
+\hline\hline
+Champ & & Valeur & Description \\ %[0.5ex]
+\hline
+TASSEL & & & Sélection de l'horloge d'incrémentation  \\
+& & 00 & TAxCLK  \\
+& & 01 & ACLK  \\
+& & 10 & SMCLK  \\
+& & 11 & INCLK  \\
+\hline
+ID & & & Prédivision de l'horloge d'incrémentation  \\
+& & 00 & /1  \\
+& & 01 & /2  \\
+& & 10 & /4  \\
+& & 11 & /8  \\
+\hline
+MC & & & Mode de comptage  \\
+& & 00 & Stop. Le timer est arrêté  \\
+& & 01 & Mode Up. Le timer compte jusqu'à TAxCCR0  \\
+& & 10 & Mode continu. Le timer compte jusqu'à 0xFFFF  \\
+& & 11 & Mode Up/Down. Le timer compte jusqu'à TAxCCR0 puis décompte jusqu'à 0  \\
+\hline
+TACLR & & & Met TAxR à 0. TACLR revient automatiquement à 0 \\
+\hline
+TAIE & & & Autorisation des requêtes d'interruptions de TAIFG \\
+& & 0 & Interruptions non autorisées \\
+& & 1 & Interruptions autorisées \\
+\hline
+TAIFG & & & Indicateur d'interruption \\
+& & 0 & Aucune interruption n'est en attente \\
+& & 1 & Une interruption est en attente de traitement \\
+\hline
+\end{tabular}
+\caption{Modes d'adressage par registre du MSP430}
+\label{table:MSP430_Addr_Reg}
+\end{table}
 
 
 
