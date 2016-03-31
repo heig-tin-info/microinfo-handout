@@ -22,8 +22,8 @@ machine suivante :
 
 \lstset{style=customc}
 \begin{lstlisting}
-01000000 00110101 00000000 01010101 (b en binaire)
-4035 0055h (en hexadécimal)
+01000000 00110101 00000000 01010101 b (en binaire)
+4035 0055 h (en hexadécimal)
 \end{lstlisting}
 
 On voit bien qu'il est impossible de comprendre directement ce que peut faire cette instruction.
@@ -45,6 +45,14 @@ Le jeu d'instructions est l'ensemble de toutes les instructions que le CPU est c
 \item sauts et rupture de séquence contrôlés ou non par un test, qui permettent (par exemple) de faire des appels de sous-programme.
 \end{itemize}
 
+En plus de cette classification, les instructions peuvent être à un ou deux opérandes. Dans les machines simples, jusqu'à 16-bits, les instructions à deux opérandes sont en général de la forme:
+\lstset{style=customc}
+\begin{lstlisting}
+OP SRC DST
+\end{lstlisting}
+Le résultat de l'opération écrase l'un des opérandes.
+
+\bigskip
 Le jeu d'instruction d'un CPU peut être plus ou moins complet selon la complexité du CPU. Par exemple, celui de la famille MCS-51 (famille de microcontrôleurs Intel 8051 et 8052) comprend environ 110 instructions, alors que le MSP430 a "seulement" 27 instructions, tout en offrant des performances comparables.
 Une raison est liée au \it mode d'adressage\rm, qui définit la façon dont le CPU accède aux données qu'il s'apprête à traiter, que ce soit pour un simple transfert de données ou une opération arithmétique sophistiquée.
 
@@ -91,7 +99,7 @@ En adressage \textit{direct}, parfois aussi appelé \textit{absolu}, l'identifian
 \begin{lstlisting}
 MOV.W 85,R5
 \end{lstlisting}
-C'est l'adressage "par défaut", le plus courant, spécifié par le symbole \& ou par l'absence de symbole. L'adressage direct est donc associé à une variable. La case mémoire ou le registre identifié est une variable.
+C'est l'adressage "par défaut", le plus courant, spécifié par le symbole \& ou par l'absence de symbole. L'adressage direct est donc associé à une variable. De fait, la case mémoire ou le registre identifié est une variable.
 
 \subsection{Adressage indirect}
 En adressage \textit{indirect}, l'identifiant est l'adresse d'une case mémoire, qui contient l'adresse de la donnée visée . L'exemple devient
@@ -102,8 +110,8 @@ MOV.W @85,R5
 Cet adressage est souvent spécifié par le symbole @. L'adressage indirect permet donc d'implémenter un pointeur.
 
 \subsection{Adressage relatif}
-Le terme "adressage" est ici abusif dans la mesure où l'adressage relatif est utilisé pour faire des sauts et branchements. L?adresse est ici celle d?une instruction. L?adressage relatif spécifie l?adresse de la prochaine instruction sous forme d?un saut par rapport à la position de l'instruction en cours d'exécution.
-En pratique, il n?y a pas à se soucier du calcul du déplacement pour faire le saut au bon endroit; c?est l?assembleur qui se charge de calculer la bonne valeur.
+Le terme "adressage" est ici abusif dans la mesure où l'adressage relatif est utilisé pour faire des sauts et branchements. L'adresse est ici celle d'une instruction. L'adressage relatif spécifie l'adresse de la prochaine instruction sous forme d'un saut par rapport à la position de l'instruction en cours d'exécution.
+En pratique, il n'y a pas à se soucier du calcul du déplacement pour faire le saut au bon endroit; c'est le logiciel de développement qui se charge de calculer la bonne valeur.
 Un exemple d'instruction avec adressage relatif est:
 \lstset{style=customc}
 \begin{lstlisting}
@@ -115,6 +123,7 @@ JMP Label
 \begin{lstlisting}
 Label	MOV.W @85,R5
 \end{lstlisting}
+L'exécution de l'instruction {\fontfamily{pcr}\selectfont JMP Label} fait que la prochaine instruction est {\fontfamily{pcr}\selectfont MOV.W @85,R5} quel que soit l'endroit du programme où se trouve cette dernière.
 
 \subsection{Adressage indexé}
 L'adressage \textit{indexé} permet de gérer des tableaux de façon efficace. Il est le plus souvent associé à de l'adressage direct ou indirect. L'index permet d'accéder à plusieurs opérandes successifs à partir d'une position de départ.
@@ -138,53 +147,139 @@ MOV A,@R2
 Le jeu d'instruction d'un CPU est dit orthogonal lorsque tous les modes d'adressage disponibles sont utilisables avec toutes les instructions, pour autant que le mode d'adressage considéré a du sens avec l'instruction considérée.
 
 \section{Jeu d'instruction du MSP430}
-Nous donnons ici quelques exemples d'instructions du MSP430. La liste exhaustive peut être consultée dans le manuel d'utilisateur de la famille MSP430 (document SLAU208, pages 185 à 340).
+Les chapitres suivants donnent les modes d'adressage disponibles, et des exemples d'instructions du MSP430 pour chaque mode d'adressage. La liste exhaustive peut être consultée dans le manuel d'utilisateur de la famille MSP430 (document SLAU208, pages 185 à 340).
 
 \subsection{Modes d'adressage}
-Sept modes d'adressage pour les opérandes de source et quatre modes d'adressage
-pour les opérandes de destination permettent d'adresser l'espace complet
-de la mémoire, sans exceptions. Ces modes d'adressage sont applicables aussi bien à des instructions de transfert de données(MOV) qu'à des opérations arithmétiques (ADD, SUB,...).
-La table \ref{table:MSP430_Addr_Reg} 
-\begin{table}[h]
+L'espace mémoire complet est adressable sans exception. Toutefois, les modes d'adressage disponibles sont différents pour l'opérande source et l'opérande destination:
+\begin{itemize}[label=\textbullet,font=\small]
+\item sept modes d'adressage pour les opérandes de source
+\item quatre modes d'adressage pour les opérandes de destination
+\end{itemize}
+
+Ces modes d'adressage sont applicables aussi bien à des instructions de transfert de données(MOV) qu'à des opérations arithmétiques (ADD, SUB,...).
+La table \ref{table:MSP430_Addr_Reg} donne les différents modes d'adressage. Les champs \textit{Ad} (destination) et \textit{As} (source) définissent le mode pour chaque opérande et font partie du code de l'instruction. 
+\begin{table}[H]
 \centering 
-\begin{tabular}{l l l l}
+\begin{tabular}{l c l l l l l}
 \hline\hline
-Champ & & Valeur & Description \\ %[0.5ex]
+As & Ad & & Mode & & Syntaxe & Description \\ %[0.5ex]
 \hline
-TASSEL & & & Sélection de l'horloge d'incrémentation  \\
-& & 00 & TAxCLK  \\
-& & 01 & ACLK  \\
-& & 10 & SMCLK  \\
-& & 11 & INCLK  \\
-\hline
-ID & & & Prédivision de l'horloge d'incrémentation  \\
-& & 00 & /1  \\
-& & 01 & /2  \\
-& & 10 & /4  \\
-& & 11 & /8  \\
-\hline
-MC & & & Mode de comptage  \\
-& & 00 & Stop. Le timer est arrêté  \\
-& & 01 & Mode Up. Le timer compte jusqu'à TAxCCR0  \\
-& & 10 & Mode continu. Le timer compte jusqu'à 0xFFFF  \\
-& & 11 & Mode Up/Down. Le timer compte jusqu'à TAxCCR0 puis décompte jusqu'à 0  \\
-\hline
-TACLR & & & Met TAxR à 0. TACLR revient automatiquement à 0 \\
-\hline
-TAIE & & & Autorisation des requêtes d'interruptions de TAIFG \\
-& & 0 & Interruptions non autorisées \\
-& & 1 & Interruptions autorisées \\
-\hline
-TAIFG & & & Indicateur d'interruption \\
-& & 0 & Aucune interruption n'est en attente \\
-& & 1 & Une interruption est en attente de traitement \\
+00 & 0 & & Registre & & Rn & Les opérandes sont les contenus des registres  \\
+01 & 1 & & Indexé & & x(Rn) & [Rn+x] pointe l'opérande. Les instructions utilisant ce mode\\
+& & & & & & d'adressage contiennent au moins deux mots. Le second contient x \\
+01 & 1 & & Symbolique & & Adresse & [PC+x] pointe l'opérande. Il s'agit d'un mode indexé x(PC)\\
+& & & & & & Les instructions utilisant ce mode d'adressage contiennent\\
+& & & & & &  au moins deux mots. Le second contient x \\
+01 & 1 & & Direct (Absolu) & & \&Adresse & Le ou les deux mots de 16 bits suivant l'instruction contiennent les\\
+& & & & & & valeurs des adresses. Le mode utilisé est le mode indexé x(SR) \\
+10 & - & & Indirect & & @Rn & [Rn] pointe l'opérande \\
+11 & - & & Indirect avec & & @Rn+ & [Rn] pointe l'opérande puis Rn+1 -> Rn\\
+& & & autoincrément & & & Il y a donc post-incrémentation \\
+11 & - & & Immédiat & & $\#N$ & Les instructions utilisant ce mode d'adressage contiennent\\
+& & & & & & au moins deux mots. Le second contient N \\
+& & & & & & Il s'agit d'un mode avec auto-incrémentation\\
+& & & & & & PC+1 -> PC puis [PC] pointe N \\
 \hline
 \end{tabular}
-\caption{Modes d'adressage par registre du MSP430}
+\caption{Modes d'adressage du MSP430}
 \label{table:MSP430_Addr_Reg}
 \end{table}
 
 
+
+\subsection{Format des instructions}
+Les instructions sont en principe codées sur un mot de 16 bits, auquel s'ajoutent éventuellement 1 ou 2 mots selon le mode d'adressage utilisé. Par exemple, l'adressage immédiat nécessite de joindre le ou les opérandes au code de l'instruction.
+
+Pour le codage de l'instruction elle-même, il existe trois formats selon le nombre d'opérandes:
+\begin{itemize}[label=\textbullet,font=\small]
+\item format I pour les instructions à 2 opérandes. Par exemple, une addition exécute une opération du type\\ $SRC + DST -> DST$ (source + destination va dans destination)
+\item format II pour les instructions à 1 opérandes;
+\item un format spécifique pour les instructions de test et branchement.
+\end{itemize}
+
+les figures \ref{fig:Inst_format_1}, \ref{fig:Inst_format_2} et \ref{fig:Inst_format_jump} illustrent comment sont structurées les instructions selon leur format.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Assembleur/Inst_format_1.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Format I des instructions à deux opérandes}
+  \label{fig:Inst_format_1}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Assembleur/Inst_format_2.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Format II des instructions à un opérande}
+  \label{fig:Inst_format_2}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Assembleur/Inst_format_jump.pdf}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Format des instructions de test et branchement}
+  \label{fig:Inst_format_jump}
+\end{figure}
+
+\subsection{Exemple 1: adressage par registre}
+Le CPU MSP430 contient 16 registres notés R0 à R15. Chacun d'entre eux peut être utilisé avec ce mode d'adressage. L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+MOV.W R10,R8
+\end{lstlisting}
+permet de copier le contenu du registre R10 dans le registre R8. Le suffixe \textit{.W} spécifie que les opérandes sont des mots (de 16 bits).
+L'instruction est codée sur un mot de 16 bits et utilise le format I, comme indiqué dans la figure \ref{fig:Inst_format_1}. Du fait que l'adressage est \it par registre \rm, cette instruction n'a pas besoin d'autres informations que l'identification des registres R10 et R8.
+Son code exact est:
+\lstset{style=customc}
+\begin{lstlisting}
+0100 1010 0000 1000 (en binaire)
+0x4A08
+\end{lstlisting}
+
+Op-code = 4, Rsrc = 10, Ad=0, B/W=0, As=0, Rdst=8
+
+\subsection{Exemple 2: adressage indexé par registre}
+L'adressage indexé du MSP430 est en fait un adressage indirect indexé. En effet, le contenu du registre considéré est additionné à l'index pour obtenir l'adresse de l'opérande. L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+MOV.B R10,5(R8)
+\end{lstlisting}
+permet de copier le contenu du registre R10 dans la case mémoire dont l'adresse est égale à 5 plus le contenu du registre R8. Le suffixe \textit{.B} spécifie que les opérandes sont des octets.
+L'instruction utilise le format I, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, l'autre est égal à 5.
+Son code exact est:
+\lstset{style=customc}
+\begin{lstlisting}
+0100 1010 1100 1000 (en binaire)
+0x4AC8 0x0005
+\end{lstlisting}
+
+Op-code = 4, Rsrc = 10, Ad=1, B/W=1, As=0, Rdst=8
+
+\subsection{Exemple 4: adressage direct}
+L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+ADD.W   R10,&3110
+\end{lstlisting}
+permet d'additionner le contenu du registre R10 à celui de la case mémoire d'adresse 3110 et de placer le résultat dans cette case mémoire.
+L'instruction utilise le format I, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, l'autre est égal à 0x0C26 (3110 en décimal) .
+Son code exact est:
+\lstset{style=customc}
+\begin{lstlisting}
+Premier mot : 0101 1010 1110 1000	ou 0x5A82
+Second mot  : 0000 1100 1110 1110   ou 0x0CEE
+\end{lstlisting}
+
+Op-code = 5, Rsrc = 10, Ad=1, B/W=0, As=1, Rdst=0
+
+
+\subsection{Exemple 5: adressage indirect}
+\subsection{Exemple 6: adressage indirect avec autoincrément}
+\subsection{Exemple 7: adressage immédiat}
+
+\subsection{Exemple 3: adressage }
 
 \section{Chaine de compilation}
 
