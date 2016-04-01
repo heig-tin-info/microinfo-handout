@@ -185,7 +185,7 @@ As & Ad & & Mode & & Syntaxe & Description \\ %[0.5ex]
 \label{table:MSP430_Addr_Reg}
 \end{table}
 
-
+Les modes \textit{indexé}, \textit{symbolique} et \textit{direct} sont considérés comme trois cas particuliers du mode \textit{indexé}. Le mode \textit{direct} considère l'adresse comme un index à ajouter à l'adresse 0x0000. Le mode \textit{symbolique} considère l'adresse comme un index à ajouter au compteur de programme PC.
 
 \subsection{Format des instructions}
 Les instructions sont en principe codées sur un mot de 16 bits, auquel s'ajoutent éventuellement 1 ou 2 mots selon le mode d'adressage utilisé. Par exemple, l'adressage immédiat nécessite de joindre le ou les opérandes au code de l'instruction.
@@ -194,7 +194,7 @@ Pour le codage de l'instruction elle-même, il existe trois formats selon le nomb
 \begin{itemize}[label=\textbullet,font=\small]
 \item format I pour les instructions à 2 opérandes. Par exemple, une addition exécute une opération du type\\ $SRC + DST -> DST$ (source + destination va dans destination)
 \item format II pour les instructions à 1 opérandes;
-\item un format spécifique pour les instructions de test et branchement.
+\item format III, spécifique pour les instructions de test et branchement.
 \end{itemize}
 
 les figures \ref{fig:Inst_format_1}, \ref{fig:Inst_format_2} et \ref{fig:Inst_format_jump} illustrent comment sont structurées les instructions selon leur format.
@@ -219,10 +219,11 @@ les figures \ref{fig:Inst_format_1}, \ref{fig:Inst_format_2} et \ref{fig:Inst_fo
   \centering
   \includegraphics[angle=0, width=14cm]{./Figures/Assembleur/Inst_format_jump.pdf}
   \rule{35em}{0.5pt}
-  \caption[Schéma Timer]{Format des instructions de test et branchement}
+  \caption[Schéma Timer]{Format III pour instructions de test et branchement}
   \label{fig:Inst_format_jump}
 \end{figure}
 
+\pagebreak
 \subsection{Exemple 1: adressage par registre}
 Le CPU MSP430 contient 16 registres notés R0 à R15. Chacun d'entre eux peut être utilisé avec ce mode d'adressage. L'instruction
 \lstset{style=customc}
@@ -231,11 +232,10 @@ MOV.W R10,R8
 \end{lstlisting}
 permet de copier le contenu du registre R10 dans le registre R8. Le suffixe \textit{.W} spécifie que les opérandes sont des mots (de 16 bits).
 L'instruction est codée sur un mot de 16 bits et utilise le format I, comme indiqué dans la figure \ref{fig:Inst_format_1}. Du fait que l'adressage est \it par registre \rm, cette instruction n'a pas besoin d'autres informations que l'identification des registres R10 et R8.
-Son code exact est:
+Son code est:
 \lstset{style=customc}
 \begin{lstlisting}
-0100 1010 0000 1000 (en binaire)
-0x4A08
+Instruction: 0100 1010 0000 1000 ou 0x4A08
 \end{lstlisting}
 
 Op-code = 4, Rsrc = 10, Ad=0, B/W=0, As=0, Rdst=8
@@ -248,40 +248,144 @@ MOV.B R10,5(R8)
 \end{lstlisting}
 permet de copier le contenu du registre R10 dans la case mémoire dont l'adresse est égale à 5 plus le contenu du registre R8. Le suffixe \textit{.B} spécifie que les opérandes sont des octets.
 L'instruction utilise le format I, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, l'autre est égal à 5.
-Son code exact est:
+Son code est:
 \lstset{style=customc}
 \begin{lstlisting}
-0100 1010 1100 1000 (en binaire)
-0x4AC8 0x0005
+Premier mot: 0101 1010 1100 1000   ou 0x4AC8
+Second mot : 0000 0000 0000 0101   ou 0x0005
 \end{lstlisting}
 
 Op-code = 4, Rsrc = 10, Ad=1, B/W=1, As=0, Rdst=8
 
-\subsection{Exemple 4: adressage direct}
+\subsection{Exemple 3: adressage direct}
 L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-ADD.W   R10,&3110
+ADD.W   R10,&3310
 \end{lstlisting}
-permet d'additionner le contenu du registre R10 à celui de la case mémoire d'adresse 3110 et de placer le résultat dans cette case mémoire.
-L'instruction utilise le format I, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, l'autre est égal à 0x0C26 (3110 en décimal) .
-Son code exact est:
+permet d'additionner le contenu du registre R10 à celui de la case mémoire d'adresse 3310 et de placer le résultat dans cette case mémoire.
+L'instruction utilise le format I, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, l'autre est égal à 0x0CEE (3310 en décimal).
+Son code est:
 \lstset{style=customc}
 \begin{lstlisting}
-Premier mot : 0101 1010 1110 1000	ou 0x5A82
-Second mot  : 0000 1100 1110 1110   ou 0x0CEE
+Premier mot: 0101 1010 1000 0010   ou 0x5A82
+Second mot : 0000 1100 1110 1110   ou 0x0CEE
 \end{lstlisting}
 
-Op-code = 5, Rsrc = 10, Ad=1, B/W=0, As=1, Rdst=0
+Op-code = 5, Rsrc = 10, Ad=1, B/W=0, As=0, Rdst=2
+Comme indiqué dans la table \ref{table:MSP430_Addr_Reg}, cet adressage est considéré comme de l'adressage indexé. Le registre R2 est ici utilisé comme générateur de l'adresse de départ 0x0000.
 
+\subsection{Exemple 4: adressage indirect}
+L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+ADD.W   @R10,R8
+\end{lstlisting}
+permet d'additionner le contenu de la case mémoire dont l'adresse est dans le registre R10 au contenu de R8 et de placer le résultat dans R8.
+L'instruction utilise le format I, et est codée sur un mot de 16 bits.
+Son code est:
+\lstset{style=customc}
+\begin{lstlisting}
+Instruction: 0101 1010 0010 1000 ou 0x5A28
+\end{lstlisting}
 
-\subsection{Exemple 5: adressage indirect}
-\subsection{Exemple 6: adressage indirect avec autoincrément}
-\subsection{Exemple 7: adressage immédiat}
+Op-code = 5, Rsrc = 10, Ad=0, B/W=0, As=2, Rdst=8
 
-\subsection{Exemple 3: adressage }
+\subsection{Exemple 5: adressage indirect avec autoincrément}
+L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+ADD.W   @R10+,R8
+\end{lstlisting}
+permet d'additionner le contenu de la case mémoire dont l'adresse est dans le registre R10 au contenu de R8 et de placer le résultat dans R8. A la fin de cette instruction, le contenu de R10 est incrémenté de 2 unités pour pointer sur le prochain mot. Il serait incrémenté de 1 si le suffixe \textit{.B} avait été utilisé.
+L'instruction utilise le format I, et est codée sur un mot de 16 bits.
+Son code est:
+\lstset{style=customc}
+\begin{lstlisting}
+Instruction: 0101 1010 0011 1000 ou 0x5A38
+\end{lstlisting}
+
+Op-code = 5, Rsrc = 10, Ad=1, B/W=0, As=3, Rdst=8
+
+\subsection{Exemple 6: adressage immédiat}
+L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+ADD.W   #3253,&3310
+\end{lstlisting}
+permet d'additionner la valeur 3253 (décimal) au contenu de la case mémoire d'adresse 3310 et de placer le résultat dans cette case mémoire.
+L'instruction utilise le format I, et est codée sur trois mots de 16 bits; un pour l'instruction elle-même, le second pour la valeur 3253, le troisième est égal à 0x0CEE (3310 en décimal).
+Son code est:
+\lstset{style=customc}
+\begin{lstlisting}
+Premier mot   : 0101 1010 1000 0010	ou 0x50B2
+Second mot    : 0000 1100 1011 0101 ou 0x0CB5 (3253 en décimal)
+Troisième mot : 0000 1100 1110 1110 ou 0x0CEE
+\end{lstlisting}
+
+Op-code = 5, Rsrc = 00, Ad=1, B/W=0, As=0, Rdst=2
+
+\subsection{Exemple 7: adressage symbolique}
+L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+CALL   #routine
+\end{lstlisting}
+permet "d'envoyer" le CPU exécuter l'instruction située à l'adresse {\fontfamily{pcr}\selectfont routine}. Cette instruction sera de fait considérée comme la première du groupe qui suit, qui constitue donc un \textit{sous-programme}. La fin de ce sous-programme est délimitée par une instruction appelée {\fontfamily{pcr}\selectfont RET}.
+L'instruction donnée en exemple utilise le format II, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, le second pour l'adresse {\fontfamily{pcr}\selectfont routine}.
+Si {\fontfamily{pcr}\selectfont routine = 0x31A2}, le code de l'instruction est:
+\lstset{style=customc}
+\begin{lstlisting}
+Premier mot   : 0001 0010 1011 0000	ou 0x50B2
+Second mot    : 0011 0001 1010 0010 ou 0x31A2 
+\end{lstlisting}
+
+Op-code = 0x25, B/W=0, Ad=3, Rdst=0
+
+\subsection{Exemple 8: adressage symbolique}
+L'instruction
+\lstset{style=customc}
+\begin{lstlisting}
+JMP   label
+\end{lstlisting}
+permet de faire un saut dans le programme, dans un sens ou dans l'autre, d'au maximum 1024 adresses, sans retour prévu.
+L'instruction donnée en exemple utilise le format III, et est codée sur un mot de 16 bits.
+Si {\fontfamily{pcr}\selectfont label = 0x31A8}, et si l'instruction est localisée à l'adresse 0x314E, alors le code de l'instruction est:
+\lstset{style=customc}
+\begin{lstlisting}
+Instruction :  0011 1100 0010 1101	ou 0x3C2D
+\end{lstlisting}
+Le champ "PC Offset" (voir figure \ref{fig:Inst_format_jump}) est calculé de sorte que\\
+$0x0314E + 2*PC\_Offset = 0x31A8 $
 
 \section{Chaine de compilation}
+Le développement d'un programme pour microcontrôleur consiste à générer du code machine à partir d'un programme écrit en C ou en C++, en passant par une vue en langage \textit{assembleur}.
+En général, le processus de génération du code machine doit permettre de réutiliser du code déjà écrit, comme une librairie de fonctions que l'on aura déjà testées, validées et documentées. Une question se pose alors, qui est le calcul des adresses de début de ces fonctions. Ce calcul est réalisé lors d'une opération appelée \it édition de lien\rm.
 
+la figure \ref{fig:develop_flow} illustre le processus de développement de code.
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=14cm]{./Figures/Assembleur/develop_flow.jpg}
+  \rule{35em}{0.5pt}
+  \caption[Schéma Timer]{Processus de développement de code}
+  \label{fig:develop_flow}
+\end{figure}
 
-\section{Debug}
+La partie grisée de la figure montre le chemin le plus courant pour le développement. Les autres parties sont optionnelles.\\
+
+Le point d'entrée du processus (haut de la figure) est le code source, écrit en langage C ou C++.\\
+
+La première étape est la compilation, qui traduit le code source en langage assembleur. Dans l'outil de développement, il est possible de voir le code assembleur correspondant au code source.
+A ce stade, la localisation du code assembleur dans la mémoire est provisoire, puisqu'il faut encore tenir compte des fonctions déjà existantes.\\
+
+Dans la seconde étape, l'outil d'assemblage (appelé \textit{l'assembleur} transforme donc les fichiers en langage assembleur en fichiers \textit{objet} relocalisables. Cette étape implique de connaître en particulier les liens entre les instructions de type {\fontfamily{pcr}\selectfont JMP} et {\fontfamily{pcr}\selectfont CALL} et les instructions vers lequel elles pointent.\\
+
+La troisième étape est l'édition de lien, qui consiste à combiner les fichiers relocalisables en un fichier exécutable (en langage machine) unique, dans lequel les adresses exactes de toutes les instructions sont fixées.\\
+
+Une fois le fichier contenant le code exécutable obtenu, il peut être transféré dans la mémoire du microcontrôleur via un port spécifique appelé JTAG.  En général, le transfert s'effectue par une liaison USB. L'interface entre le port USB et le port JTAG offre des fonctionnalités de debug, telles que:
+\begin{itemize}[label=\textbullet,font=\small]
+\item possibilité de placer des points d'arrêt lors de l'exécution du code;
+\item possibilité d'exécuter le programme pas à pas;
+\item etc...
+\end{itemize}
+Pour cette raison, cette interface est souvent appelée \it sonde programmation et debug \rm ou \it sonde de debug \rm ou encore \it sonde JTAG\rm.
