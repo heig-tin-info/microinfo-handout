@@ -3,10 +3,10 @@
 Les interruptions sont une méthode pour gérer l'exécution de tâches simultanées. Elles se ramènent à la notion de parallélisme dans les processeurs d'ordinateurs. La problématique provient du fait qu'un processeur exécute une tâche à la fois et qu'il est fréquent que plusieurs événements apparaissent simultanément comme par exemple lorsqu'on appuie sur une touche et que le processeur effectue un calcul. 
 
 \section{Interaction entre le processeur et les périphériques}
-Le processeur exécute des programmes et en même temps il interagit avec les périphériques. Il existe deux possibilités pour effectuer toutes les tâches.
+Le processeur exécute des programmes et en même temps il interagit avec les périphériques. Il existe deux possibilités pour effectuer toutes les tâches, le sondage et les interruptions.
 
 \subsection{Sondage}
-Le sondage consiste à lire l'état d'un périphériques de manière périodique pour savoir s'il a quelque chose à dire à l'unité centrale. S'il y a plusieurs périphériques, par exemple un clavier et une souris, on les sonde l'un après l'autre. Cette méthode est simple et marche bien pour un nombre réduit de périphériques qui ont des requêtes fréquentes comme une interface de communication. S'ils ont des requêtes peu fréquentes alors on gaspille du temps à leur redemander si quelque chose a changé.
+Le sondage consiste à lire l'état d'un périphériques de manière périodique pour savoir s'il a quelque chose à dire à l'unité centrale. S'il y a plusieurs périphériques, par exemple un clavier et une souris, on les sonde l'un après l'autre. Cette méthode est simple et marche bien pour un nombre réduit de périphériques qui ont des requêtes fréquentes comme une interface de communication. Si ils ont des requêtes peu fréquentes alors on gaspille du temps à leur redemander si quelque chose a changé.
 
 \subsection{Interruptions}
 La méthode par interruptions est initiée par le périphérique qui demande "audience" au processeur. Ce dernier peut répondre a son "sujet" quand il lui plaît. Ce procédé fonctionne bien avec des périphériques qui ont des requêtes peu fréquentes tel que la souris ou le clavier.
@@ -26,25 +26,74 @@ Chaque périphérique possède un flag unique et il y a en général une ISR par type
 Lorsque plusieurs interruptions sont en attente, le processeur peut en exécuter certaines en priorité. Le fabriquant du processeur défini une liste de priorités par type d'interruption. Il est possible de modifier la priorité dans le programme utilisateur en utilisant des masques. Le masque est simplement une désactivation de l'interruption momentanée. Certaine interruptions critiques, tel que le reset, ne peuvent pas être masquées. On les nommes "non-maskable interrupts" ou NMI.
 
 \section{Déclaration d'une interruption en C}
-L'interruption est similaire à une fonction à part qu'on ne peut pas passer de paramètres ni en retourner. On interagi donc à l'aide de variables globales. L'autre différence est la présence d'un vecteur d'interruption pour référencer notre interruption dans la table des vecteurs. Ce lien est effectué à l'aide de la directive #pragma.
+L'interruption est similaire à une fonction à part qu'on ne peut pas passer de paramètres ni en retourner. On interagi donc à l'aide de variables globales. L'autre différence est la présence d'un vecteur d'interruption pour référencer notre interruption dans la table des vecteurs. Ce lien est effectué à l'aide de la directive \# pragma qui permet de placer du code à une adresse mémoire spécifiée.
 
 \lstset{style=customc}
 \begin{lstlisting}
-// Basic Timer Interrupt Service Routine
-#pragma vector = BASICTIMER_VECTOR
-__interrupt void Basic_timer_ISR(void)
+// Timer Interrupt Service Routine
+#pragma vector = TIMER_VECTOR
+__interrupt void Timer_ISR(void)
 {
-  P5OUT ^= 0x02;                      // Toggle P5.1 (LED)
+  P1OUT ^= BIT0;                      // P1.0 = toggle (LED)
 }
 \end{lstlisting}
 
+L'ISR ci-dessus sera activée par un timer est sa seule fonction est de commuter une LED.
+
 \section{Interruptions externes}
+Les interruptions externes proviennent des périphériques, on les appelles aussi interruptions matérielles à l'opposé des interruptions logicielle qui proviennent du programme lui même.
 
 \subsection{Interruption depuis un GPIO}
+Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption approprié, $PORT1_VECTOR$ par exemple:
 
+\lstset{style=customc}
+\begin{lstlisting}
+// Port 1 interrupt service routine
+#pragma vector = PORT1_VECTOR
+__interrupt void Port_1(void)
+{
+  P1OUT ^= BIT0;                            // P1.0 = toggle
+  P1IFG &= ~BIT7;                           // P1.7 IFG cleared
+}
+\end{lstlisting}
+
+On constate que le flag est remis à zéro avant de sortir de l'interruption.
+
+\subsection{Interruption depuis un timer}
+Pour une interruption depuis un timer, il nous faut un vecteur d'interruption approprié, $TIMERA_VECTOR$ par exemple:
+
+\lstset{style=customc}
+\begin{lstlisting}
+// Timer Interrupt Service Routine
+#pragma vector = TIMERA_VECTOR
+__interrupt void TimerA_ISR(void)
+{
+  P1OUT ^= BIT0;                      // P1.0 = toggle (LED)
+}
+\end{lstlisting}
 
 \subsection{Interruption depuis une interface série}
+Pour une interruption depuis une interface série, il nous faut un vecteur d'interruption approprié, $USCI_A0_VECTOR$ par exemple:
 
- 
+\lstset{style=customc}
+\begin{lstlisting}
+#pragma vector=USCI_A0_VECTOR
+__interrupt void USCI_A0_ISR(void)
+{
+  switch(__even_in_range(UCA0IV,4))
+  {
+    case  0: 	break;
+    case  2: 	while (!(UCA0IFG & UCTXIFG));
+ 		UCA0TXBUF = UCA0RXBUF;
+    		break;
+    case  4: 	P2OUT ^= 0x01;            			// toggle P2.0 avec exclusive-OR 
+		break;
+    default: 	break;
+  }
+}
+\end{lstlisting}
+
+Cette interruption est plus compliquée à cause du fait que plusieurs causes peuvent provoquer l'interruption et de ce fait doivent être sélectionnée avec un switch case.
+
 \section{Latence}
 
