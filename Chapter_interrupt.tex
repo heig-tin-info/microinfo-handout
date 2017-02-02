@@ -1,30 +1,43 @@
 \chapter{\textsc{Interruptions}}
 
-TBD
-
+Les interruptions sont une méthode pour gérer l'exécution de tâches simultanées. Elles se ramènent à la notion de parallélisme dans les processeurs d'ordinateurs. La problématique provient du fait qu'un processeur exécute une tâche à la fois et qu'il est fréquent que plusieurs événements apparaissent simultanément comme par exemple lorsqu'on appuie sur une touche et que le processeur effectue un calcul. 
 
 \section{Interaction entre le processeur et les périphériques}
-
+Le processeur exécute des programmes et en même temps il interagit avec les périphériques. Il existe deux possibilités pour effectuer toutes les tâches.
 
 \subsection{Sondage}
+Le sondage consiste à lire l'état d'un périphériques de manière périodique pour savoir s'il a quelque chose à dire à l'unité centrale. S'il y a plusieurs périphériques, par exemple un clavier et une souris, on les sonde l'un après l'autre. Cette méthode est simple et marche bien pour un nombre réduit de périphériques qui ont des requêtes fréquentes comme une interface de communication. S'ils ont des requêtes peu fréquentes alors on gaspille du temps à leur redemander si quelque chose a changé.
 
 \subsection{Interruptions}
+La méthode par interruptions est initiée par le périphérique qui demande "audience" au processeur. Ce dernier peut répondre a son "sujet" quand il lui plaît. Ce procédé fonctionne bien avec des périphériques qui ont des requêtes peu fréquentes tel que la souris ou le clavier.
 
-
-%\newpage 
 \section{Mécanisme de l'interruption}
+Pour que ça fonctionne il faut définir un protocole de traitement d'une interruption. Le protocole le plus simple est le suivant:
+\begin{enumerate}
+\item On enregistre la requête sous la forme d'un drapeau ou \textbf{flag} qui est levé
+\item Lorsque le processeur est libre, il exécute un programme pour traiter l'interruption qu'on appelle: \textbf{routine de service d'interruption ou Interrupt Service Routine ou encore ISR}
+\item Après l'exécution de l'ISR, le flag est baissé et le processeur retourne à ce qu'il faisait avant.
+\end{enumerate}
 
-
-%\newpage 
 \section{Vecteurs d'interruption}
+Chaque périphérique possède un flag unique et il y a en général une ISR par type de périphérique. Le processeur doit donc associer chaque flag à une ISR. C'est le vecteur d'interruption qui est simplement un pointeur sur l'adresse de l'ISR en mémoire. Ce pointeur est inscrit dans une table qui se situe à un endroit bien précis de la mémoire. Le processeur va donc toujours chercher le vecteur d'interruption dans cette table par un offset de l'adresse de début qui est fixe.
 
-%\newpage 
-\section{Priorités des interruptions}
+\section{Priorités des interruptions et masques}
+Lorsque plusieurs interruptions sont en attente, le processeur peut en exécuter certaines en priorité. Le fabriquant du processeur défini une liste de priorités par type d'interruption. Il est possible de modifier la priorité dans le programme utilisateur en utilisant des masques. Le masque est simplement une désactivation de l'interruption momentanée. Certaine interruptions critiques, tel que le reset, ne peuvent pas être masquées. On les nommes "non-maskable interrupts" ou NMI.
 
-%\newpage 
 \section{Déclaration d'une interruption en C}
+L'interruption est similaire à une fonction à part qu'on ne peut pas passer de paramètres ni en retourner. On interagi donc à l'aide de variables globales. L'autre différence est la présence d'un vecteur d'interruption pour référencer notre interruption dans la table des vecteurs. Ce lien est effectué à l'aide de la directive #pragma.
 
-%\newpage 
+\lstset{style=customc}
+\begin{lstlisting}
+// Basic Timer Interrupt Service Routine
+#pragma vector = BASICTIMER_VECTOR
+__interrupt void Basic_timer_ISR(void)
+{
+  P5OUT ^= 0x02;                      // Toggle P5.1 (LED)
+}
+\end{lstlisting}
+
 \section{Interruptions externes}
 
 \subsection{Interruption depuis un GPIO}
@@ -32,6 +45,6 @@ TBD
 
 \subsection{Interruption depuis une interface série}
 
-%\newpage 
+ 
 \section{Latence}
 

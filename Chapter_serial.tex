@@ -1,13 +1,62 @@
 \chapter{\textsc{Interfaces séries}}
 
-TBD
+Les interfaces parallèles ne sont quasiment plus utilisées aujourd'hui à cause du nombre de broches nécessaires et des performances électriques demandées. L'interface série n'utilise que 2 ou 3 broches et bénéficie de meilleur performances. Elles demandent, par contre, plus de matériel et de logiciel pour effectuer la sérialisation et dé-sérialisation.
 
 
 \section{Notion de pile protocolaire}
+Il est utile d'inscrire les interfaces séries au sein des notions de la téléinformatique comme celle de la pile protocolaire. Cette pile permet de découper toutes les opérations nécessaires en couches. Chaque couche à une fonction bien précise et est développée indépendamment des autres. 
 
+\subsection{Modèle OSI (Open Systems Interconnection)}
+Le modèle OSI est un modèle théorique d'une pile de communication avec sept couches (fig. \ref{fig:osi}). 
 
-\subsection{Modèle OSI}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=10cm]{./Figures/serial/modelOSI.pdf}
+  \rule{35em}{0.5pt}
+  \caption[osi]{Modèle OSI}
+  \label{fig:osi}
+\end{figure}
 
+Les couches qui sont nécessaires à l'établissement d'une communication sont les couches 1 à 4. Les autres sont des couches liées aux services et aux applications.
+
+\begin{enumerate}
+\item Couche physique: Traite les aspects électriques de la ligne série
+\item Couche paquet: Encapsule les données avec des bits de contrôle e.g. pour la détection d'erreurs
+\item Couche réseau: Indique la destination (s'il y a plus que deux noeuds sur le réseau)
+\item Couche transport: Découpe les données en paquets et gère la retransmission en cas d'erreurs
+\end{enumerate}
+
+\subsection{Pile protocolaire IP}
+Le protocole IP (Internet Protocol) est simplifié par rapport au modèle OSI (fig. \ref{fig:tcpip}). Il ne contient que quatre couches ce qui parait plus simple mais en pratique n'est pas idéal car il groupe plusieurs fonctions dans une seule couche.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=0, width=10cm]{./Figures/serial/tcpipstack.pdf}
+  \rule{35em}{0.5pt}
+  \caption[tcpip]{Comparaison des piles protocolaires}
+  \label{fig:tcpip}
+\end{figure}
+
+\section{UART (Universal Asynchronous Receiver Transmitter)}
+
+Les UART sont des sérialiseurs/désérialiseurs simples. Un UART permet d'implémenter la couche 2 du modèle OSI. 
+
+\subsection{RS-232C}
+Historiquement, les interfaces séries étaient très simples d'un point de vue logiciel mais par contre plus compliquées d'un point de vue matériel. C'est le cas de l'interface RS-232C développée en 1969.
+
+La couche physique du RS-232C à néanmoins évolué depuis 1969, par contre la couche 2 est toujours la même. On peut réaliser cette couche 2 avec un UART.
+
+\section{Interface SPI}
+
+Dix ans après la RS-232C, Motorola invente l'interface SPI en 1979. C'est un changement radical, avec une communication synchrone entre les émetteurs et les récepteurs. Ce changement permet d'aller beaucoup plus vite dans la transmission.
+
+\section{Interface I2C}
+
+Trois ans après la SPI, Philips invente l'interface i2C en 1982. Cette interface amène une innovation majeur qui est la réalisation d'une couche 3 logicielle permettant d'adresser 256 noeuds. On peut donc relier tous les périphériques d'une carte à l'aide d'une interface i2C.
+
+\section{Interface USB}
+
+L'interface série la plus récente que l'on trouve dans les microcontrôleurs est l'USB (Universial Serial Bus) développée en 1996. Cette interface à comme avantage majeur sur les autres l'utilisation d'une signalisation basse tension différentielle LVDS (Low Voltage Differential Signal). Par contre, cette interface est purement point à point c-à-d qu'elle ne relie qu'un noeud à un autre. Par ce fait, elle ne remplace pas les précédentes.
 
 
 
