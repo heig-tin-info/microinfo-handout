@@ -44,7 +44,7 @@ L'ISR ci-dessus sera activée par un timer est sa seule fonction est de commuter 
 Les interruptions externes proviennent des périphériques, on les appelles aussi interruptions matérielles à l'opposé des interruptions logicielle qui proviennent du programme lui même.
 
 \subsection{Interruption depuis un GPIO}
-Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption approprié, $PORT1_VECTOR$ par exemple:
+Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption approprié, PORT1\_VECTOR par exemple:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -60,7 +60,7 @@ __interrupt void Port_1(void)
 On constate que le flag est remis à zéro avant de sortir de l'interruption.
 
 \subsection{Interruption depuis un timer}
-Pour une interruption depuis un timer, il nous faut un vecteur d'interruption approprié, $TIMERA_VECTOR$ par exemple:
+Pour une interruption depuis un timer, il nous faut un vecteur d'interruption approprié, TIMERA\_VECTOR par exemple:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -68,12 +68,12 @@ Pour une interruption depuis un timer, il nous faut un vecteur d'interruption ap
 #pragma vector = TIMERA_VECTOR
 __interrupt void TimerA_ISR(void)
 {
-  P1OUT ^= BIT0;                      // P1.0 = toggle (LED)
+  P1OUT ^= BIT0;                      		// P1.0 = toggle (LED)
 }
 \end{lstlisting}
 
 \subsection{Interruption depuis une interface série}
-Pour une interruption depuis une interface série, il nous faut un vecteur d'interruption approprié, $USCI_A0_VECTOR$ par exemple:
+Pour une interruption depuis une interface série, il nous faut un vecteur d'interruption approprié, USCI\_A0\_VECTOR par exemple:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -86,7 +86,7 @@ __interrupt void USCI_A0_ISR(void)
     case  2: 	while (!(UCA0IFG & UCTXIFG));
  		UCA0TXBUF = UCA0RXBUF;
     		break;
-    case  4: 	P2OUT ^= 0x01;            			// toggle P2.0 avec exclusive-OR 
+    case  4: 	P2OUT ^= 0x01;            	// toggle P2.0 avec exclusive-OR 
 		break;
     default: 	break;
   }
@@ -96,4 +96,14 @@ __interrupt void USCI_A0_ISR(void)
 Cette interruption est plus compliquée à cause du fait que plusieurs causes peuvent provoquer l'interruption et de ce fait doivent être sélectionnée avec un switch case.
 
 \section{Latence}
+La latence est le temps total nécessaire pour traiter une requête depuis la levée du flag jusqu'au retour au programme principal. Cela tient compte de plusieurs phénomènes:
 
+\begin{itemize}
+\item Attente du feu vert du contrôleur d'interruption
+\item Mise en pause du programme principal (vidage du pipeline)
+\item Saut à l'adresse de l'ISR (Sauvegarde du contexte)
+\item Exécution de l'ISR
+\item Retour à l'adresse du programme principal (Restauration du contexte)
+\end{itemize}
+
+Comme on peut le constater, l'exécution d'une interruption peut être assez longue dépendamment des circonstances. Il faut donc faire attention à ne pas surcharger le processeur avec des interruptions.

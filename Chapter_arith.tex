@@ -276,7 +276,7 @@ fixedpt fixedpt_mul(fixedpt A, fixedpt B)
 }
 \end{lstlisting}
 
-Le but de ce décalage est de replacer la virgule au bon endroit dans le résultat car le nombre de bits de la partie fractionnaire vaut $2n$ est donc il faut le décaler de $n$ à droite.
+Le but de ce décalage est de replacer la virgule au bon endroit dans le résultat car le nombre de bits de la partie fractionnaire vaut $2n$ et donc il faut le décaler de $n$ à droite.
 
 \paragraph{Réduction de la complexité du calcul de la multiplication}
 En faisant le calcul selon la méthode en colonnes deux problèmes se posent:
@@ -286,10 +286,53 @@ En faisant le calcul selon la méthode en colonnes deux problèmes se posent:
 \end{enumerate}
 On peut résoudre ces problèmes de capacité en utilisant l'\textbf{algorithme de Booth} qui consiste à effectuer les sommes intermédiaires au fur et à mesure à la place de les sommer à la fin. Ce qui permet de réduire le nombre de registres intermédiaires à 1. Cet algorithme permet aussi de réduire la largeur des résultats. 
 
+\subsection{Division}
+La division entière ou Euclidienne est très simple à implémenter à l'aide de la soustraction successive du diviseur:
 
-%\section{Exercices}
-%
-%
-%\paragraph{Ex 1}
+\lstset{style=customc}
+\begin{lstlisting}
+function divide(N, D)
+{
+	Q = 0;
+	while  N ? D 
+	{
+  		N = N - D;
+  		Q++;
+	}
+	return (Q, N)
+}
+\end{lstlisting}
+
+La division entière peut donc s'effectuer avec un additionneur, une négation et un test. Le temps d'exécution est par contre relativement long si N>>D.
+
+Pour le cas de la virgule fixe, il faut décaler le multiplicande vers la gauche avant division:
+
+\lstset{style=customc}
+\begin{lstlisting}
+#define FIXEDPT_IBITS	8
+#define FIXEDPT_FBITS	8
+
+typedef int16_t fixedpt;
+
+/* Divides two fixedpt numbers, returns the result. */
+static inline fixedpt
+fixedpt_div(fixedpt A, fixedpt B)
+{
+	return (((fixedptd)A << FIXEDPT_FBITS) / (fixedptd)B);
+}
+\end{lstlisting}
+
+Comme pour la multiplication, il existe des algorithmes plus efficaces pour faire la division entière comme celle appelée SRT.
+
+\section{Exercices}
+
+\paragraph{Ex 1}
+Implémenter l'algorithme de Booth en C puis en assembleur.
+
+\paragraph{Ex 2}
+Écrire en C une fonction de division de deux nombres entiers en complément à 2 qui retourne le résultat et le reste en utilisant seulement des additions ou des soustractions.
+
+\paragraph{Ex 3}
+Implémenter l'algorithme SRT en C.
 
 

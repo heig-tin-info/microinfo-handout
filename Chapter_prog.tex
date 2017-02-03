@@ -1,13 +1,24 @@
 \chapter{\textsc{Programmation en C}}
-
-TBD
-
-
-\section{Mots clés}
+Pour atteindre le matériel depuis un langage de plus haut niveau, il faut un certain nombre d'instructions et de règles pour pouvoir rester dans un ensemble cohérent.
 
 
+\section{Programmation système et programmation applicative}
+Les règles de programmation sont différentes si on écrit du code relatif à du matériel par rapport à des applications purement logiciel. Le premier exemple, déjà traité au chapitre 4, est les interruptions. Ce sont des fonctions système que l'on trouve seulement lorsqu'on programme à bas niveau. 
+
+\subsection{Directive pragma}
+La directive \#pragma est définie par le standard ISO/ANSI C. Elle permet de garder une certaine portabilité du logiciel en contrôlant de manière particulière les extensions spécifiques à un fabricant. Cette directive permet de  spécifier une adresse absolue qui désigne la position mémoire pour la déclaration suivant cette directive. La variable doit être déclarée soit \_\_no\_init ou const. 
+
+\lstset{style=customc}
+\begin{lstlisting}
+#pragma location=0x22E
+__no_init volatile char PORT1;	//PORT1 est un registre du périphérique
+                                //du même nom placé à l'adresse 0x22E
+\end{lstlisting}
 
 
+
+\section{Librairies d'abstraction du matériel: HAL}
+Pour rendre l'écriture de programmes plus propre on peut ajouter de la hiérarchie. Une façon de faire est de placer toutes les fonctions relatives aux périphériques dans des librairies d'abstraction de matériel ou HAL (Hardware Abstraction Library).
 
 
 
