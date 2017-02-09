@@ -291,15 +291,15 @@ La division entière ou Euclidienne est très simple à implémenter à l'aide de la 
 
 \lstset{style=customc}
 \begin{lstlisting}
-function divide(N, D)
+int divide(N, D)
 {
 	Q = 0;
-	while  N ? D 
+	while  N >= D 
 	{
   		N = N - D;
   		Q++;
 	}
-	return (Q, N)
+	return Q;			//ou N pour le reste
 }
 \end{lstlisting}
 

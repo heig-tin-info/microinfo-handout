@@ -5,6 +5,33 @@ Pour atteindre le matériel depuis un langage de plus haut niveau, il faut un cer
 \section{Programmation système et programmation applicative}
 Les règles de programmation sont différentes si on écrit du code relatif à du matériel par rapport à des applications purement logiciel. Le premier exemple, déjà traité au chapitre 4, est les interruptions. Ce sont des fonctions système que l'on trouve seulement lorsqu'on programme à bas niveau. 
 
+\begin{table}[!htbp]
+\begin{center}
+{\fontfamily{phv}\selectfont
+\begin{tabular}{|c|c|}
+\hline 
+Programmation Système & Programmation Applicative \\
+\hline  
+\hline 
+Interruptions & Pas d'interruptions \\
+\hline 
+Variables globales & Éviter les variables globales\\
+\hline
+Langages de bas niveau & Langages de haut niveau\\
+\hline
+Structuration faible & Structuration forte\\
+\hline
+\end{tabular}
+}
+\end{center}
+\caption{Comparaison des styles de programmation \label{prog}}
+\end{table}
+
+\section{Directives et variables spécifiques à la programmation système}
+
+\subsection{Variables volatiles}
+Dans le cas ou une zone de stockage, tel qu'un registre, peut être modifié par autre chose que le programme principal on doit lui attribuer le modificateur volatile. Cela permet au compilateur de savoir que cette variable peut changer même si le code n'affecte jamais cette variable. Le compilateur ne va donc pas essayer d'optimiser une variable volatile (Exemple ci-dessous). 
+
 \subsection{Directive pragma}
 La directive \#pragma est définie par le standard ISO/ANSI C. Elle permet de garder une certaine portabilité du logiciel en contrôlant de manière particulière les extensions spécifiques à un fabricant. Cette directive permet de  spécifier une adresse absolue qui désigne la position mémoire pour la déclaration suivant cette directive. La variable doit être déclarée soit \_\_no\_init ou const. 
 
@@ -15,11 +42,63 @@ __no_init volatile char PORT1;	//PORT1 est un registre du périphérique
                                 //du même nom placé à l'adresse 0x22E
 \end{lstlisting}
 
+\subsection{Fonctions intrinsèques}
+Les fonctions intrinsèques se reconnaissent par un double souligné devant (\_\_). Les fonctions intrinsèques permettent un accès direct aux instructions de bas niveau sans programmer en assembleur. Si le compilateur ne trouve pas les fonctions intrinsèques par défaut alors il faut inclure: intrinsics.h. Ces fonctions ne sont pas standard, elle dépendent du compilateur utilisé.
+
+Exemple de fonctions intrinsèques:
+\lstset{style=customc}
+\begin{lstlisting}
+__no_init					//indique de ne pas initialiser une variable
+__disable_interrupt			//désactive toutes les interruptions
+__enable_interrupt			//active toutes les interruptions
+__low_power_mode_n			//enclenche le mode low power n
+__asm()						//permet l'insertion de code assembleur
+\end{lstlisting}
 
 
 \section{Librairies d'abstraction du matériel: HAL}
 Pour rendre l'écriture de programmes plus propre on peut ajouter de la hiérarchie. Une façon de faire est de placer toutes les fonctions relatives aux périphériques dans des librairies d'abstraction de matériel ou HAL (Hardware Abstraction Library).
 
+Une librairie HAL doit permettre de masquer tout ce qui est relatif à un périphérique donné. La structure typique d'un HAL est la suivante:
+\begin{itemize}
+\item Constantes spécifiques
+\item Variables spécifiques
+\item Une fonction d'initialisation du périphérique
+\item Une fonction de mise en veille ou désactivation
+\item Des fonctions spécifiques comme lecture ou écriture
+\end{itemize}
 
+Exemples de structure HAL pour un accéléromètre (CMA3000):
+\lstset{style=customc}
+\begin{lstlisting}
+#define CTRL                    0x02
+#define MODE_400                0x04        // Measurement mode 400 Hz ODR
+
+int8_t Cma3000_xAccel;
+int8_t Cma3000_yAccel;
+int8_t Cma3000_zAccel;
+
+void Cma3000_init(void)
+{
+	...
+}
+
+void Cma3000_disable(void)
+{
+	...
+}
+
+void Cma3000_readAccel(void)
+{
+	...
+}
+
+...
+\end{lstlisting}
+
+Les interruptions relatives à un périphérique doivent être aussi traitées dans le HAL.
+
+\section{Pilotes}
+Un pilote ou driver permet la gestion d'un périphériques dans le cadre d'un système d'exploitation. C'est un HAL avec en plus les interfaces standards propre à un système d'exploitation. Il existe donc des standards pour écrire des pilotes. 
 
 

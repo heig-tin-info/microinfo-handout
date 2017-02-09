@@ -12,7 +12,7 @@ Le sondage consiste à lire l'état d'un périphériques de manière périodique pour 
 La méthode par interruptions est initiée par le périphérique qui demande "audience" au processeur. Ce dernier peut répondre a son "sujet" quand il lui plaît. Ce procédé fonctionne bien avec des périphériques qui ont des requêtes peu fréquentes tel que la souris ou le clavier.
 
 \section{Mécanisme de l'interruption}
-Pour que ça fonctionne il faut définir un protocole de traitement d'une interruption. Le protocole le plus simple est le suivant:
+Pour que ça fonctionne, il faut définir un protocole de traitement d'une interruption. Le protocole le plus simple est le suivant:
 \begin{enumerate}
 \item On enregistre la requête sous la forme d'un drapeau ou \textbf{flag} qui est levé
 \item Lorsque le processeur est libre, il exécute un programme pour traiter l'interruption qu'on appelle: \textbf{routine de service d'interruption ou Interrupt Service Routine ou encore ISR}
@@ -20,10 +20,54 @@ Pour que ça fonctionne il faut définir un protocole de traitement d'une interrup
 \end{enumerate}
 
 \section{Vecteurs d'interruption}
-Chaque périphérique possède un flag unique et il y a en général une ISR par type de périphérique. Le processeur doit donc associer chaque flag à une ISR. C'est le vecteur d'interruption qui est simplement un pointeur sur l'adresse de l'ISR en mémoire. Ce pointeur est inscrit dans une table qui se situe à un endroit bien précis de la mémoire. Le processeur va donc toujours chercher le vecteur d'interruption dans cette table par un offset de l'adresse de début qui est fixe.
+Chaque périphérique possède un flag unique et il y a en général une ISR par type de périphérique. Le processeur doit donc associer chaque flag à une ISR. C'est le vecteur d'interruption qui est simplement un pointeur sur l'adresse de l'ISR en mémoire. Ce pointeur est inscrit dans une table qui se situe à un endroit bien précis de la mémoire. Le processeur va donc toujours chercher le vecteur d'interruption dans cette table par un offset de l'adresse de début qui est fixe. Un exemple de table des vecteurs d'interruption est donné ci-dessous:
+
+\begin{table}[!htbp]
+\begin{center}
+{\fontfamily{phv}\selectfont
+\begin{tabular}{|c|c|c|}
+\hline 
+Adresse Vecteur & Nom Vecteur & Adresse ISR\\
+\hline  
+\hline 
+FFFE & GPIO\_VECTOR & 43FF\\
+\hline 
+FFFC & TIMER\_VECTOR & 27F0\\
+\hline
+FFFA & SPI\_VECTOR & 3FA4\\
+\hline
+FFF8 & USB\_VECTOR & 40EF\\
+\hline
+\end{tabular}
+}
+\end{center}
+\caption{Exemple de table de vecteurs d'interruption \label{vecteurs}}
+\end{table}
+
+Dans cette exemple la table des vecteurs est placée à l'adresse FFFF, c'est à dire en haut d'un espace mémoire de 16 bits (65536 adresses). Les deux premières colonnes sont des constantes et la troisième est remplie lors de la compilation.
 
 \section{Priorités des interruptions et masques}
 Lorsque plusieurs interruptions sont en attente, le processeur peut en exécuter certaines en priorité. Le fabriquant du processeur défini une liste de priorités par type d'interruption. Il est possible de modifier la priorité dans le programme utilisateur en utilisant des masques. Le masque est simplement une désactivation de l'interruption momentanée. Certaine interruptions critiques, tel que le reset, ne peuvent pas être masquées. On les nommes "non-maskable interrupts" ou NMI.
+
+Un exemple de masquage est donné ci-dessous où l'on doit impérativement effectuer deux associations sans être interrompu entre deux:
+
+\lstset{style=customc}
+\begin{lstlisting}
+void contrôle(void)
+{
+    int temp0, temp1;
+    for( ; ; )
+    {
+         __disable_interrupt;			//disable all interrupts
+         temp0=temp[0];
+         temp1=temp[1];
+         __enable_interrupt;			//enable all interrupts
+         if (temp0 !=temp1) alarm_on()
+    }
+}
+\end{lstlisting}
+
+Les affectations temp0 et temp1 seront donc bien effectuées l'une après l'autre donc dans un laps de temps minimum.
 
 \section{Déclaration d'une interruption en C}
 L'interruption est similaire à une fonction à part qu'on ne peut pas passer de paramètres ni en retourner. On interagi donc à l'aide de variables globales. L'autre différence est la présence d'un vecteur d'interruption pour référencer notre interruption dans la table des vecteurs. Ce lien est effectué à l'aide de la directive \# pragma qui permet de placer du code à une adresse mémoire spécifiée.
@@ -38,10 +82,10 @@ __interrupt void Timer_ISR(void)
 }
 \end{lstlisting}
 
-L'ISR ci-dessus sera activée par un timer est sa seule fonction est de commuter une LED.
+L'ISR ci-dessus sera activée par un timer et sa seule fonction est de commuter une LED. Noter bien que la syntaxe d'une interruption dépend du compilateur utilisé.
 
 \section{Interruptions externes}
-Les interruptions externes proviennent des périphériques, on les appelles aussi interruptions matérielles à l'opposé des interruptions logicielle qui proviennent du programme lui même.
+Les interruptions externes proviennent des périphériques, on les appelles aussi interruptions matérielles à l'opposé des interruptions logicielles qui proviennent du programme lui même.
 
 \subsection{Interruption depuis un GPIO}
 Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption approprié, PORT1\_VECTOR par exemple:

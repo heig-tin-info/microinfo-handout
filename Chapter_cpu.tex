@@ -48,6 +48,7 @@ Pour analyser en détail le fonctionnement du processeur soumis à une instruction
 \item Écriture du résultat (WR: Write Register ou WB: Write Back)
 \end{itemize}
 
+\newpage
 \subsection{Recherche de l'instruction}
 Dans cette phase, on doit amener l'instruction de la mémoire vers un registre d'instruction dans le séquenceur. La première chose à faire c'est de placer sur le bus d'adresses la valeur du pointeur de programme (Le pointeur de programme contient l'adresse de la ligne du programme). Cette adresse est alors dirigée sur la mémoire qui retourne la valeur qu'elle contient sur le bus de données (fig. \ref{fig:instr1}).
 
@@ -59,6 +60,7 @@ Dans cette phase, on doit amener l'instruction de la mémoire vers un registre d'
   \label{fig:instr1}
 \end{figure}
 
+\newpage
 \subsection{Décodage de l'instruction}
 Dés que l'instruction est arrivée dans le séquenceur, il peut la décoder en lisant d'abord l'opcode qui identifie l'instruction à effectuer par exemple add (fig. \ref{fig:opcode1}). Deuxièmement, il lit la méthode d'adressage utilisée pour trouver l'endroit de la source et de la destination. 
 
@@ -72,13 +74,13 @@ Dés que l'instruction est arrivée dans le séquenceur, il peut la décoder en lisa
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[angle=0, width=12cm, trim=0 80 0 80,clip]{./Figures/cpu/opcode1.pdf}
+  \includegraphics[angle=0, width=12cm, trim=0 90 0 90,clip]{./Figures/cpu/opcode1.pdf}
   \rule{35em}{0.5pt}
   \caption[opcode1]{Exemple d'instruction assembleur}
   \label{fig:opcode1}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
   \includegraphics[angle=0, width=14cm, trim=0 70 0 70,clip]{./Figures/cpu/opcode2.pdf}
   \rule{35em}{0.5pt}
@@ -86,6 +88,7 @@ Dés que l'instruction est arrivée dans le séquenceur, il peut la décoder en lisa
   \label{fig:opcode2}
 \end{figure}
 
+\newpage
 \subsection{Recherche des opérandes}
 Après décodage, le séquenceur entre en oeuvre et va chercher les opérandes suivant le mode d'adressage utilisé. Si l'adressage est direct, les registres internes au chemin de données sont activés et présentent leurs valeurs aux entrées de l'ALU. Si l'adressage est indirect, le séquenceur place la valeur contenue dans un registre sur le bus d'adresse. Ensuite la valeur en mémoire située à cette adresse est placée sur le bus de donnée pour atteindre finalement l'entrée de l'ALU.
 
@@ -108,6 +111,7 @@ A partir du moment ou les données sont présentent aux deux entrées de l'ALU, le 
   \label{fig:instr4}
 \end{figure}
 
+\newpage
 \subsection{Écriture du résultat}
 Après le calcul de l'ALU, le résultat est placé dans le registre de destination. Le registre d'état est aussi mis à jour en même temps. Ce registre nous donne les informations suivantes:
 
