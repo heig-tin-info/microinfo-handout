@@ -68,7 +68,7 @@ Dix ans après la RS-232C, Motorola invente l'interface SPI en 1979. C'est un cha
   \label{fig:tcpip}
 \end{figure}
 
-L'interface SPI utilise deux registres à décalage bouclés. Ceci permet de relire l'information transmise est ainsi vérifier que ce qui a été transmis est bien correct. Pour écrire ou lire, on utilise le même principe que pour l'UART, c-à-d écrire dans le registre d'émission ou lire le registre de réception.
+L'interface SPI utilise deux registres à décalage bouclés. Ceci permet de relire l'information transmise est ainsi vérifier que ce qui a été transmis est bien correcte. Pour écrire ou lire, on utilise le même principe que pour l'UART, c-à-d écrire dans le registre d'émission ou lire le registre de réception.
 
 Il est possible de connecter plusieurs périphériques sur une interface SPI à l'aide de signaux sortant d'un GPIO et allant sur une entrée "chip-select" CS. Il faut juste sélectionner le bon CS depuis le code.
 
@@ -98,7 +98,9 @@ L'interface série la plus récente que l'on trouve dans les microcontrôleurs est 
   \label{fig:tcpip}
 \end{figure}
 
-D'un point de vue logiciel l'interface USB s'accède grâce à un HAL ou par un pilote si il y a un système d'exploitation.
+L'interface USB est synchrone mais ne possède pas de ligne de clock. L'horloge est retrouvée à la réception grâce à une séquence d'entrainement de 8 bits. Une fois l'horloge synchronisée un packet ID (PID) est envoyé pour donner le type de message envoyé. Si le PID indique des données alors elles sont transmises. Finalement le paquet est terminé par une séquence "End of Packet" de trois bits.
+
+D'un point de vue logiciel, l'interface USB s'accède grâce à un HAL ou par un pilote si il y a un système d'exploitation.
 
 \section{Comparaisons et choix d'une interface}
 
@@ -110,13 +112,13 @@ D'un point de vue logiciel l'interface USB s'accède grâce à un HAL ou par un pil
 Interface & Noeuds & Vitesse & Async/Sync & Duplex & Utilisation\\
 \hline  
 \hline 
-RS232C & 1 & 115kHz & A & Full & Terminal\\
+RS-232C & 1 & 115kHz & A & Full & Terminal\\
 \hline 
 SPI & 1 à 5 & 100MHz & S & Full & Données\\
 \hline
 I2C & 256 & 1MHz & S & Half & Configuration\\
 \hline
-USB & 1 & 480MHz & S & Half & External\\
+USB 2.0 & 1 & 480MHz & S & Half & External\\
 \hline
 \end{tabular}
 }
@@ -124,3 +126,38 @@ USB & 1 & 480MHz & S & Half & External\\
 \caption{Comparaisons entre les différentes interfaces séries \label{serial}}
 \end{table}
 
+\section{Cas du MSP430}
+
+Le MSP430 dispose de toutes les interfaces discutées précédemment. Il s'agit donc de déterminer les registres de configuration propres à chaque interface puis de les paramétrer correctement.
+
+Exemple de configuration d'une interface série asynchrone, style RS-232C:
+
+\lstset{style=customc}
+\begin{lstlisting}
+UCA0CTL0 |= UCPEN | UCPAR;	//parity enabled, even, one stop(default), 8-bit (default), async (default)
+UCA0CTL1 |= UCSSEL_2;		//SMCLK
+UCA0BR0 = 0x09;				//115200 bauds selon table du fabriquant
+UCA0BR1 = 0x00;
+UCA0MCTL = 0x02;			//115200 bauds selon table du fabriquant		
+ 
+UCA0IE |= UCRXIE | UCTXIE;	//Interrupt enable
+	
+P2DIR |= 0x01;				//P2.0 vers sortie 	 
+ 
+#pragma vector=USCI_A0_VECTOR
+__interrupt void USCI_A0_ISR(void)
+{
+  switch(__even_in_range(UCA0IV,4))
+  {
+    case  0: 	break;
+    case  2: 	while (!(UCA0IFG & UCTXIFG));
+				UCA0TXBUF = UCA0RXBUF;
+				break;
+    case  4: 	P2OUT ^= 0x01;		// toggle P2.0 avec exclusive-OR 
+				break;
+    default: 	break;
+  }
+}
+\end{lstlisting}
+
+L'interaction avec les registres de réception ou d'émission est effectuée par interruption dans ce cas ci. Le vecteur USCI\_A0\_VECTOR contient plusieurs sources d'interruptions possibles c'est pourquoi il faut les sélectionner à l'aide d'un switch case. Le "case 2" correspond à une réception et le "case 4" à une émission. Lors d'une réception on test si l'émission n'est pas active puis on copie le message reçu sur la sortie. C'est un relai qui allume une LED lorsque le message a été relayé.

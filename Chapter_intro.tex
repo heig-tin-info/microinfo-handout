@@ -25,13 +25,13 @@ Le cours de microinformatique est un cours technologique basé sur des microproce
 
 \section{Définitions: processeur, microprocesseur, microcontrôleur et système-on-chip}
 
-Un processeur est un système qui permet l'exécution d'opérations élémentaires tel que des opérations arithmétiques (additions, soustractions, multiplication et division), des opérations logiques (OR, AND, XOR), des tests (égale à, plus petit que, etc.) et des déplacements de données.
+Un processeur est un système qui permet l'exécution d'opérations élémentaires telles que des opérations arithmétiques (additions, soustractions, multiplication et division), des opérations logiques (OR, AND, XOR), des tests (égal à, plus petit que, etc.) et des déplacements de données.
 
 Le microprocesseur est un système micro-électronique, aussi appelé circuit intégré ou plus communément "chip" ou "puce", permettant l'exécution d'opérations élémentaires. Contrairement au processeur qui est un concept, le microprocesseur est un composant que l'on place sur un circuit imprimé.
 
 Un microcontrôleur est un système micro-électronique contenant un microprocesseur et des périphériques. Les périphériques essentiels sont les minuteries (ou "timers"), les interfaces de communication série et les mémoires (données et instructions).
 
-Le système-on-chip est un ensemble, différent du microcontrôleur, qui inclut tout les composants électroniques d'un ordinateur à part les mémoires. Il se présente sous la forme d'un circuit intégré. La mémoire de données peut dans certain cas être assemblée en dessus du chip pour réduire la taille du système.
+Le système-on-chip est un ensemble, différent du microcontrôleur, qui inclut tous les composants électroniques d'un ordinateur à part les mémoires. Il se présente sous la forme d'un circuit intégré. La mémoire de données peut dans certain cas être assemblée en dessus du chip pour réduire la taille du système.
 
 
 \section{Éléments de systèmes logiques}
@@ -39,6 +39,7 @@ Le système-on-chip est un ensemble, différent du microcontrôleur, qui inclut tou
 Pour pouvoir configurer un microcontrôleur de manière efficace, nous avons besoins de quelques éléments de systèmes logiques.
 
 \subsection{Définitions}
+
 \textbf{Etat logique} : chacune des 2 valeurs que peut prendre une variable logique\\
 \textbf{Variable logique} : grandeur qui ne peut prendre que les 2 états logiques\\
 \textbf{Fonction logique} : variable logique qui dépend d'autres variables\\
@@ -65,25 +66,26 @@ A & B & S\\
 \end{tabular}
 }
 \end{center}
-\caption{Exemple de table de vérité à deux variables \label{table vérité}}
+\caption{Exemple de table de vérité à deux variables (fonction ET) \label{table vérité}}
 \end{table}
 
-La table de vérité permet de déterminer l'équation logique. Dans l'exemple ci dessus nous avons représenté la fonction $A ET B = S$. Pour construire une table de vérité on procède de la façon suivante: 
+La table de vérité permet de déterminer l'équation logique. Dans l'exemple ci dessus nous avons représenté la fonction A ET B = S. Pour construire une table de vérité on procède de la façon suivante: 
 \begin{enumerate}
 \item on attribue une colonne pour chaque variable ou entrée (A B C ...)
 \item on attribue une colonne pour chaque résultat ou sortie
-\item on liste toutes les combinaisons des variables d'entrée ($2^n$ comb.)
+\item on liste toutes les combinaisons des variables d'entrée ($2^n$ combinaisons)
 \item on calcule le résultat pour chaque ligne
 \end{enumerate}
 
 \subsection{Fonctions logiques}
-Si le nombre de variables d'entrée n'est pas trop grand, on peut faire l'inventaire exhaustif de toutes les fonctions imaginables:
+Si le nombre de variables d'entrée n'est pas trop grand, on peut faire l'inventaire exhaustif de toutes les fonctions imaginables (Table \ref{variable_logiques}).
 
 \begin{table}[!htbp]
 \begin{center}
 %\begin{tabular}{|p{.5cm}|c||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 {\fontfamily{phv}\selectfont
-\begin{tabular}{|c|c|*{16}{|c}|}
+%\begin{tabular}{|c|c|*{16}{|c}|}
+\begin{tabular}{|>{\centering}p{.6cm}|c|*{16}{|c}|}
 \hline 
 \multicolumn{2}{|c|}{Variables} & \multicolumn{16}{|c|}{Fonctions}\\
 \hline 
@@ -115,7 +117,7 @@ F7&=&A+B & \quad F8&=&\overline{F7}&=&\overline{A+B}
 \caption{Résultats possibles de fonctions à deux variables \label{variable_logiques}}
 \end{table}
 
-Dans le tableau précédent, on peut repérer trois fonctions particulières :
+Dans le tableau \ref{variable_logiques}, on peut repérer trois fonctions particulières :
 \begin{enumerate}
 \item inversion;
 \item fonction dans laquelle une seule configuration des entrées donne 1;
@@ -132,7 +134,7 @@ ET (AND) &$A\cdot B$ &A and B\\
 OU (OR) &$A+B$ &A or B\\
 \end{tabular}
 \end{center}
-ET et OU sont duals, c-à-d qu'il ont des comportements semblables, mais avec les variables inverses. On peut nommer d'autre fonctions de la table 1.2 par convenance:
+ET et OU sont duals, c-à-d qu'il ont des comportements semblables, mais avec les variables inverses. On peut nommer d'autres fonctions de la table 1.2 par convenance:
 
 \begin{center}
 \begin{tabular}{p{5cm} >{\centering}p{2cm} p{3cm}} 
@@ -199,7 +201,7 @@ $F = m_1 + m_2 + m_3 + m_6 + m_7$
 \end{center}
 
 \begin{center}
-\begin{tabular}{*{3}{|c} |c| p{1cm} p{5cm}}
+\begin{tabular}{*{3}{|c} ||c| p{1cm} p{5cm}}
 \cline{1-4} 
 A & B & C & F\\
 \cline{1-4}   
@@ -234,7 +236,7 @@ $F = M_0 \cdot M_4 \cdot M_5$
 \end{center}
 
 \begin{center}
-\begin{tabular}{*{3}{|c} |c| p{1cm} p{5cm}}
+\begin{tabular}{*{3}{|c} ||c| p{1cm} p{5cm}}
 \cline{1-4} 
 A & B & C & F\\
 \cline{1-4}   
@@ -264,9 +266,9 @@ $F = (\overline{A} + \overline{B} + \overline{C}) \cdot (A + \overline{B} + \ove
 
 Il est aisé de montrer que la somme des mintermes est égale au produit des maxtermes. Ceci montre encore une fois la dualité des opérations logiques. On constate aussi que le nombre de maxtermes est plus petit (3) que celui des mintermes (5). Il est donc plus simple d'utiliser le produit des maxtermes dans ce cas ci.
 
-Le nom mintermes vient du fait que dans une somme de produits, seulement un terme de la somme doit être à 1 pour donner un résultat de 1. Au contraire, dans un produit de sommes, il faut que toutes les sommes soient à 1 et donc on l'appelle maxtermes.
+Le nom minterme vient du fait que dans une somme de produits, seulement un terme de la somme doit être à 1 pour donner un résultat de 1. Au contraire, dans un produit de sommes, il faut que toutes les sommes soient à 1 et donc on l'appelle maxterme.
 
-La forme canonique est rarement optimale, il faut donc la simplifier si on cherche à optimiser l'implémentation de la fonction. Il existe des méthodes manuelles et des méthodes algorithmiques. On utilisera la méthode des tables de Karnaugh pour une réduction manuelle si le nombre de variables est limité. Au delà de 4 variables on a intérêt à utiliser une méthode algorithmique tel que celle de Quine-McCluskey.
+La forme canonique est rarement optimale, il faut donc la simplifier si on cherche à optimiser l'implémentation de la fonction. Il existe des méthodes manuelles et des méthodes algorithmiques. On utilisera la méthode des tables de Karnaugh pour une réduction manuelle si le nombre de variables est limité. Au delà de 4 variables on a intérêt à utiliser une méthode algorithmique telle que celle de Quine-McCluskey.
 
 \subsection{Opérateurs logiques en C}
 
