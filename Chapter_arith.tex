@@ -90,7 +90,7 @@ Dans le cas ou on désire passer d'un format de n bits à m bits avec m supérieur 
 Pour les nombre réels, on doit coder la virgule et sa position en plus du signe. Ceci complique la représentation car il faut un deuxième nombre, qui est un entier, pour représenter la position de la virgule. On choisit de préférence d'utiliser  ce nombre pour représenter un exposant plutôt qu'une position de virgule mais ça reviens au même.
 
 \begin{equation}
-X dans \, \mathbb{R} = signe \cdot m \cdot 10^{exposant}
+X dans \, \mathbb{R} = signe \cdot m \cdot 2^{exposant}
 \end{equation}
 
 Exemple de codage avec 8 bits:

@@ -39,7 +39,17 @@ Le protocole IP (Internet Protocol) est simplifié par rapport au modèle OSI (fig
 
 \section{UART (Universal Asynchronous Receiver Transmitter)}
 
-Les UART sont des sérialiseurs/désérialiseurs simples. Un UART permet d'implémenter la couche 2 du modèle OSI. 
+Les UART sont des sérialiseurs/désérialiseurs simples. Un UART permet d'implémenter la couche 2 du modèle OSI. L'UART est asynchrone ce qui veut dire qu'il ne propage pas de signal d'horloge de l'émetteur au récepteur. Il est néanmoins aisé d'ajouter une ligne d'horloge pour rendre l'UART synchrone.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[angle=90, trim = 15mm 0mm 5mm 0mm, clip, width=13cm]{./Figures/serial/UART.pdf}
+  \rule{35em}{0.5pt}
+  \caption[uart]{Principe de fonctionnement d'une UART}
+  \label{fig:tcpip}
+\end{figure}
+
+Au niveau matériel, l'UART est composé de 4 registres dont deux à décalage. Le générateur d'horloge donne la fréquence de transmission ou vitesse de transmission. Du point de vue logiciel on accède à l'UART simplement en écrivant dans le registre d'émission et en lisant le registre de réception.
 
 \subsection{RS-232C}
 Historiquement, les interfaces séries étaient très simples d'un point de vue logiciel mais par contre plus compliquées d'un point de vue matériel. C'est le cas de l'interface RS-232C développée en 1969.
@@ -50,15 +60,67 @@ La couche physique du RS-232C à néanmoins évolué depuis 1969, par contre la couc
 
 Dix ans après la RS-232C, Motorola invente l'interface SPI en 1979. C'est un changement radical, avec une communication synchrone entre les émetteurs et les récepteurs. Ce changement permet d'aller beaucoup plus vite dans la transmission.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=12cm]{./Figures/serial/SPI_8-bit_circular_transfer.pdf}
+  \rule{35em}{0.5pt}
+  \caption[spi]{Principe de fonctionnement d'une interface SPI}
+  \label{fig:tcpip}
+\end{figure}
+
+L'interface SPI utilise deux registres à décalage bouclés. Ceci permet de relire l'information transmise est ainsi vérifier que ce qui a été transmis est bien correct. Pour écrire ou lire, on utilise le même principe que pour l'UART, c-à-d écrire dans le registre d'émission ou lire le registre de réception.
+
+Il est possible de connecter plusieurs périphériques sur une interface SPI à l'aide de signaux sortant d'un GPIO et allant sur une entrée "chip-select" CS. Il faut juste sélectionner le bon CS depuis le code.
+
 \section{Interface I2C}
 
-Trois ans après la SPI, Philips invente l'interface i2C en 1982. Cette interface amène une innovation majeur qui est la réalisation d'une couche 3 logicielle permettant d'adresser 256 noeuds. On peut donc relier tous les périphériques d'une carte à l'aide d'une interface i2C.
+Trois ans après la SPI, Philips invente l'interface I2C en 1982. Cette interface amène une innovation majeur qui est la réalisation d'une couche 3 logicielle permettant d'adresser 256 noeuds. On peut donc relier tous les périphériques d'une carte à l'aide d'une interface I2C. Ils sont connectés sur deux lignes communes SDA et SCL:
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=10cm]{./Figures/serial/I2C.pdf}
+  \rule{35em}{0.5pt}
+  \caption[i2c]{Système avec un bus I2C}
+  \label{fig:tcpip}
+\end{figure}
+
+Les lignes, SDA et SCL, sont tirées vers l'alimentation positive (Vdd) à l'aide de deux résistance pull-up. Elles doivent être dimensionnées par rapport à la vitesse de transmission choisie. Pour sélectionner un périphérique en particulier, il faut connaitre son adresse I2C et la placer dans le registre d'adresse de l'interface.
 
 \section{Interface USB}
 
-L'interface série la plus récente que l'on trouve dans les microcontrôleurs est l'USB (Universial Serial Bus) développée en 1996. Cette interface à comme avantage majeur sur les autres l'utilisation d'une signalisation basse tension différentielle LVDS (Low Voltage Differential Signal). Par contre, cette interface est purement point à point c-à-d qu'elle ne relie qu'un noeud à un autre. Par ce fait, elle ne remplace pas les précédentes.
+L'interface série la plus récente que l'on trouve dans les microcontrôleurs est l'USB (Universial Serial Bus) développée en 1996. Cette interface à comme avantage majeur sur les autres l'utilisation d'une signalisation basse tension différentielle LVDS (Low Voltage Differential Signal). Par contre, cette interface est purement point à point c-à-d qu'elle ne relie qu'un noeud à un autre. De ce fait, elle ne remplace pas les précédentes.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=14cm]{./Figures/serial/USB_signal_example.pdf}
+  \rule{35em}{0.5pt}
+  \caption[usb]{Exemple de signal USB}
+  \label{fig:tcpip}
+\end{figure}
 
+D'un point de vue logiciel l'interface USB s'accède grâce à un HAL ou par un pilote si il y a un système d'exploitation.
 
+\section{Comparaisons et choix d'une interface}
 
+\begin{table}[!htbp]
+\begin{center}
+{\fontfamily{phv}\selectfont
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+Interface & Noeuds & Vitesse & Async/Sync & Duplex & Utilisation\\
+\hline  
+\hline 
+RS232C & 1 & 115kHz & A & Full & Terminal\\
+\hline 
+SPI & 1 à 5 & 100MHz & S & Full & Données\\
+\hline
+I2C & 256 & 1MHz & S & Half & Configuration\\
+\hline
+USB & 1 & 480MHz & S & Half & External\\
+\hline
+\end{tabular}
+}
+\end{center}
+\caption{Comparaisons entre les différentes interfaces séries \label{serial}}
+\end{table}
 
