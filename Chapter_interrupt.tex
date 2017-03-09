@@ -53,11 +53,9 @@ Un exemple de masquage est donné ci-dessous où l'on doit impérativement effectue
 
 \lstset{style=customc}
 \begin{lstlisting}
-void contrôle(void)
-{
+void contrôle(void) {
     int temp0, temp1;
-    for( ; ; )
-    {
+    for( ; ; ) {
          __disable_interrupt;			//disable all interrupts
          temp0=temp[0];
          temp1=temp[1];
@@ -76,9 +74,10 @@ L'interruption est similaire à une fonction à part qu'on ne peut pas passer de p
 \begin{lstlisting}
 // Timer Interrupt Service Routine
 #pragma vector = TIMER_VECTOR
-__interrupt void Timer_ISR(void)
-{
+__interrupt void Timer_ISR(void) {
+
   P1OUT ^= BIT0;                      // P1.0 = toggle (LED)
+  
 }
 \end{lstlisting}
 
@@ -94,10 +93,11 @@ Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption app
 \begin{lstlisting}
 // Port 1 interrupt service routine
 #pragma vector = PORT1_VECTOR
-__interrupt void Port_1(void)
-{
+__interrupt void Port_1(void) {
+
   P1OUT ^= BIT0;                            // P1.0 = toggle
   P1IFG &= ~BIT7;                           // P1.7 IFG cleared
+
 }
 \end{lstlisting}
 
@@ -110,34 +110,34 @@ Pour une interruption depuis un timer, il nous faut un vecteur d'interruption ap
 \begin{lstlisting}
 // Timer Interrupt Service Routine
 #pragma vector = TIMERA_VECTOR
-__interrupt void TimerA_ISR(void)
-{
+__interrupt void TimerA_ISR(void) {
+
   P1OUT ^= BIT0;                      		// P1.0 = toggle (LED)
+
 }
 \end{lstlisting}
 
 \subsection{Interruption depuis une interface série}
-Pour une interruption depuis une interface série, il nous faut un vecteur d'interruption approprié, USCI\_A0\_VECTOR par exemple:
+Pour une interruption depuis une interface série, il nous faut un vecteur d'interruption approprié, USCI\_A0\_VECTOR par exemple dans le cas du MSP430:
 
 \lstset{style=customc}
 \begin{lstlisting}
 #pragma vector=USCI_A0_VECTOR
-__interrupt void USCI_A0_ISR(void)
-{
-  switch(__even_in_range(UCA0IV,4))
-  {
+__interrupt void USCI_A0_ISR(void) {
+
+  switch(__even_in_range(UCA0IV,4)) {
     case  0: 	break;
     case  2: 	while (!(UCA0IFG & UCTXIFG));
- 		UCA0TXBUF = UCA0RXBUF;
-    		break;
-    case  4: 	P2OUT ^= 0x01;            	// toggle P2.0 avec exclusive-OR 
-		break;
+ 				UCA0TXBUF = UCA0RXBUF;
+				break;
+    case  4: 	P2OUT ^= 0x01;            // toggle P2.0 avec exclusive-OR 
+				break;
     default: 	break;
   }
 }
 \end{lstlisting}
 
-Cette interruption est plus compliquée à cause du fait que plusieurs causes peuvent provoquer l'interruption et de ce fait doivent être sélectionnée avec un switch case.
+Cette interruption est plus compliquée à cause du fait que plusieurs causes peuvent provoquer l'interruption et de ce fait doivent être sélectionnées avec un switch-case (voir Chapitre 10).
 
 \section{Latence}
 La latence est le temps total nécessaire pour traiter une requête depuis la levée du flag jusqu'au retour au programme principal. Cela tient compte de plusieurs phénomènes:

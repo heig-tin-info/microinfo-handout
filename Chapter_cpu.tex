@@ -4,7 +4,7 @@ L'unité centrale ou CPU (Central Processing Unit) et le coeur du microcontrôleur
 
 \section{Principes}
 
-Un processeur se décompose en deux unité fondamentales: i) une unité de contrôle et ii) une unité de traitement  (fig. \ref{fig:cpu1}). L'unité de contrôle décode les instructions et pilote le chemin de données qui exécute les opérations. Le pilote du chemin de données s'appelle le séquenceur, il communique avec le chemin de données à l'aide de signaux de commandes et reçois des informations sur son état.
+Un processeur se décompose en deux unités fondamentales: i) une unité de contrôle et ii) une unité de traitement  (fig. \ref{fig:cpu1}). L'unité de contrôle décode les instructions et pilote le chemin de données qui exécute les opérations. Le pilote du chemin de données s'appelle le séquenceur, il communique avec le chemin de données à l'aide de signaux de commande et reçois des informations sur son état. 
 
 \begin{figure}[htb]
   \centering
@@ -13,6 +13,8 @@ Un processeur se décompose en deux unité fondamentales: i) une unité de contrôle
   \caption[cpu1]{Principe de fonctionnement de l'unité centrale}
   \label{fig:cpu1}
 \end{figure}
+
+Le chemin de donnée et l'unité de contrôle sont reliées par deux bus, le bus de données et le bus d'adresses (fig. \ref{fig:cpu2}). Le premier défini la largeur des mots traitables par le processeur (8, 16, 32 bits), le deuxième défini la taille mémoire adressable, par exemple: 16 bits = 65536 adresses.
 
 \begin{figure}[htb]
   \centering
@@ -23,7 +25,6 @@ Un processeur se décompose en deux unité fondamentales: i) une unité de contrôle
 \end{figure}
 
 Le séquenceur est aussi responsable d'amener et de stocker des données dans la mémoire. On constate que le processeur à besoin de deux types d'information, les instructions et les données. Il y a donc deux possibilités, l'une ou l'on stock les deux informations dans une seule mémoire et l'autre ou on utilise deux mémoires séparées. Ce choix à provoqué une distinction importante en architecture des processeurs qu'on a nommé Von Neumann et Harvard.
-
 
 \subsection{Architectures de Von Neumann et Harvard}
 Cette différence de stockage des données et des instructions peut amener des avantages et des inconvénients. Si les données et les instructions sont séparées, il faut deux mémoires et deux bus d'accès. Par contre, si il y a deux mémoires, le chargement se fait en parallèle. On peut donc considérer que l'architecture de Von Neumann est plus simple mais moins performante que celle de Harvard.
@@ -36,17 +37,51 @@ Cette différence de stockage des données et des instructions peut amener des ava
   \label{fig:vn}
 \end{figure}
 
+\subsection{Pile}
+La gestion d'une pile mémoire est essentielle au fonctionnement d'un programme. Elle s'occupe de stocker temporairement l'information pour gérer:
+\begin{itemize}[label=\textbullet,font=\small]
+\item Le changement de contexte comme lors d'une interruption ou d'un appel de fonction
+\item Le stockage des paramètres de fonction
+\item Le stockage des variables locales
+\item Certaines variables lors de branchements multiples (switch-case)
+\end{itemize}
+La pile peut être de type matérielle ou logicielle, dans le premier cas elle aura un nombre limité de registres et dans le deuxième elle sera juste une zone de la mémoire RAM.
+
+\section{Registres à usages spécifiques}
+Parmi tous les registres de la machine, il y en a trois qui sont essentiels au bon fonctionnement de la machine et qui sont accessibles au programmeur.
+
+\subsection{Registre d'état}
+C'est le registre contenant l'état de la machine, appelé SR (Status Register), qui peut contenir les informations suivantes:
+\begin{itemize}
+\item Statut de la dernière opération arithmétique sur 4 bits (CVNZ)
+\item Interruptions activées ou non (1 bit)
+\item Mode low power 2-3 bits
+\item Configuration des horloges 2-3 bits
+\end{itemize}
+La longueur du registre est normalisée par rapport à la largeur du bus de données.
+
+Les bits de statut arithmétique sont utilisés pour des tests ou pour détecter des dépassements de capacité:\\
+C: Carry, c'est l'indication qu'une retenue a été générée\\
+V: oVerflow, c'est l'indication d'un dépassement lors du calcul avec des nombres signés\\
+N: Negative, c'est l'indication d'un résultat négatif\\
+Z: Zero, c'est l'indication d'un résultat nul
+
+\subsection{Pointeur de programme}
+Registre contenant l'adresse mémoire de l'instruction en cours appelé PC (Program Counter). La longueur de ce registre est celui de la largeur du bus d'adresses. Ce registre est incrémenté, après chaque instruction, d'un entier qui correspond à la longueur de l'instruction précédente.
+
+\subsection{Pointeur de pile}
+Registre contenant l'adresse mémoire du dessus de la pile appelé SP (Stack Pointer). La longueur de ce registre est celui de la largeur du bus d'adresses. Ce registre est incrémenté, après chaque empilement/désempilement, d'un entier qui correspond à la longueur de l'information stockée dans la pile.
 
 \section{Cycle des instructions}
 Pour analyser en détail le fonctionnement du processeur soumis à une instruction, on va diviser le processus en cinq parties:
 
-\begin{itemize}[label=\textbullet,font=\small]
+\begin{enumerate}
 \item Recherche de l'instruction (IF: Instruction Fetch)
 \item Décodage de l'instruction (ID: Instruction Decode)
 \item Recherche des opérandes (OF: Operand Fetch)
 \item Exécution de l'instruction (EX: EXecute)
 \item Écriture du résultat (WR: Write Register ou WB: Write Back)
-\end{itemize}
+\end{enumerate}
 
 \newpage
 \subsection{Recherche de l'instruction}
@@ -194,7 +229,7 @@ Certaines opérations sont plus longues que d'autres ce qui fait que l'horloge do
 \section{Processeur superscalaire}
 Un processeur capable d'exécuter plusieurs instructions en parallèle est dit superscalaire. Ce n'est pas un ensemble de processeurs mais un seul CPU avec plusieurs ALU qui peut aussi avoir plusieurs décodeurs/séquenceurs. On utilise aussi la terminologie anglo-saxone "dual-issue" pour un processeur qui peut exécuter deux instructions en parallèle et "multiple-issue" pour un processeur qui peut en exécuter plusieurs. Un processeur qui peut exécuter une seule instruction par cycle d'horloge est donc appelé "single-issue", c'est le cas de la plupart des micro-contrôleurs. 
 
-Un processeur qui possède plusieurs ALU mais pas plusieurs décodeurs d'instructions est dit avec pipeline superscalaire. L'ARM cortex M7, par exemple, possède cinq pipelines: deux ALU entères, un pour les opération mémoire, un pour faire des multiplications/accumulations et un pour le calcul en virgule flottante. Cela permet d'équilibrer les opérations qui ont des temps d'exécutions différents tel que le calcul en virgule flottante par rapport au calcul entier. Par exemple, une instruction flottante prend 4 étages de pipeline alors qu'une instruction entière en prend 2. Donc si on place une instruction flottante suivie par une instruction entière, on a bien deux instructions qui s'exécutent en parallèle. L'instruction entière se terminera un cycle avant l'instruction flottante.
+Un processeur qui possède plusieurs ALU mais pas plusieurs décodeurs d'instructions est dit avec pipeline superscalaire. L'ARM cortex M7, par exemple, possède cinq pipelines: deux ALU entières, un pour les opération mémoire, un pour faire des multiplications/accumulations et un pour le calcul en virgule flottante. Cela permet d'équilibrer les opérations qui ont des temps d'exécutions différents tel que le calcul en virgule flottante par rapport au calcul entier. Par exemple, une instruction flottante prend 4 étages de pipeline alors qu'une instruction entière en prend 2. Donc si on place une instruction flottante suivie par une instruction entière, on a bien deux instructions qui s'exécutent en parallèle. L'instruction entière se terminera un cycle avant l'instruction flottante.
 
 La présence de processeurs de plus en plus puissants dans les micro-contrôleurs est inévitable. Ceci est dû à plusieurs facteurs: 
 \begin{enumerate}

@@ -52,6 +52,7 @@ __no_init					//indique de ne pas initialiser une variable
 __disable_interrupt			//désactive toutes les interruptions
 __enable_interrupt			//active toutes les interruptions
 __low_power_mode_n			//enclenche le mode low power n
+__low_power_mode_off_on_exit //désactive le mode low power en sortie d'interruption
 __asm()						//permet l'insertion de code assembleur
 \end{lstlisting}
 
@@ -91,7 +92,7 @@ void Cma3000_disable(void)
 void Cma3000_readAccel(void)
 {
 	...
-}
+} 
 
 ...
 \end{lstlisting}
@@ -99,6 +100,59 @@ void Cma3000_readAccel(void)
 Les interruptions relatives à un périphérique doivent être aussi traitées dans le HAL.
 
 \section{Pilotes}
-Un pilote ou driver permet la gestion d'un périphériques dans le cadre d'un système d'exploitation. C'est un HAL avec en plus les interfaces standards propre à un système d'exploitation. Il existe donc des standards pour écrire des pilotes. 
+Un pilote ou driver permet la gestion d'un périphérique dans le cadre d'un système d'exploitation. C'est un HAL avec en plus les interfaces standards propre à un système d'exploitation. Il existe donc des standards pour écrire des pilotes. 
 
+\section{Contrôle de l'exécution}
 
+Dans le cadre d'une programmation simple (mono-tâche), le processeur effectue les instructions linéairement à sa vitesse maximale. On a donc des instants actifs, avec des instructions à exécuter, et des instants inactifs où il n'y a rien à faire. Dans le cas le plus simple, la partie inactive est une attente active ou le processeur exécute une boucle infinie genre: while(1). Ceci revient à faire le même test qui est toujours vrai et donc à gaspiller de l'énergie. Il est de ce fait plus intéressant de mettre le processeur en pause. Ceci implique qu'il faut gérer le réveil au moment requis par le système.
+
+Le cycle actif/pause peut être géré de deux manières:
+\begin{enumerate}
+\item Par interruption, une requête externe par exemple
+\item Par un timer, réveil à intervalle régulier.
+\end{enumerate}
+
+Exemple de code pour MSP430 dans le cas (1):
+\lstset{style=customc}
+\begin{lstlisting}
+void main(void) {
+	while(1) {
+		__bis_SR_register(LPM3_bits + GIE);	//Mode basse consommation LPM3 
+											//avec interruptions activées
+		...									//Code de l'application, 
+											//mode low power!
+	}
+}
+
+#pragma vector=PORT2_VECTOR
+__interrupt void Port2_ISR(void) {
+
+	...										//Code de l'interruption, 
+											//mode actif par défaut
+	__low_power_mode_off_on_exit	
+}
+\end{lstlisting}
+
+Pour bien comprendre le code ci-dessus, il faut savoir qu'une interruption est toujours exécutée en mode actif (pas low power) et que dès la sortie, le processeur retourne dans le mode d'avant l'interruption. Il faut donc utiliser la fonction intrinsèque \_\_low\_power\_mode\_off\_on\_exit pour retourner dans le programme principal en mode actif et exécuter le code de l'application. Le mécanisme qui régit cette opération est la sauvegarde du contexte qui sauve sur la pile le registre de statut SR lors de l'interruption puis le dépile lors de la sortie. Rappel: les modes basse consommation sont désignés dans le SR.
+
+Exemple de code pour MSP430 dans le cas (2):
+\lstset{style=customc}
+\begin{lstlisting}
+void main(void) {
+	while(1) {		
+		__bis_SR_register(LPM3_bits + GIE);	//Mode basse consommation LPM3 
+											//avec interruptions activées
+		...									//Code de l'application, 
+											//mode low power!
+	}
+}
+
+#pragma vector=TIMER_A0_VECTOR
+__interrupt void Timer_ISR(void) {
+
+	...										//Code de l'interruption, 
+											//mode actif par défaut
+	__low_power_mode_off_on_exit	
+}
+\end{lstlisting}
+ 

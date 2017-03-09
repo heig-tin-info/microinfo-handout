@@ -120,7 +120,7 @@ On peut simplifier la représentation des nombre réels si la virgule est fixe, c-
 }
 \end{center}
 
-Dans l'exemple ci-dessus nous avons 4 bits pour le nombre entier et 4 bits pour le nombre fractionnaire. La virgule n'est pas codée en tant que tel et le nombre complet utilise 8 bits. Seul deux constantes sont déclarées pour décrire le format en virgule fixe: la longueur de la partie entière et la longueur de la partie fractionnaire:
+Dans l'exemple ci-dessus nous avons 4 bits pour le nombre entier et 4 bits pour le nombre fractionnaire. La virgule n'est pas codée en tant que tel et le nombre complet utilise 8 bits. Seul deux constantes sont nécessaires pour décrire le format en virgule fixe: la longueur de la partie entière et la longueur de la partie fractionnaire:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -128,7 +128,6 @@ Dans l'exemple ci-dessus nous avons 4 bits pour le nombre entier et 4 bits pour 
 #define FIXEDPT_FBITS	4
 \end{lstlisting}
 
-%\newpage 
 \section{Opérateurs}
 Les opérations arithmétiques sont différentes pour chaque format de nombre mais elles peuvent toutes se ramener à un additionneur 1 bit qui se réalise facilement à l'aide d'un porte logique XOR et AND. 
 
@@ -279,23 +278,22 @@ fixedpt fixedpt_mul(fixedpt A, fixedpt B)
 Le but de ce décalage est de replacer la virgule au bon endroit dans le résultat car le nombre de bits de la partie fractionnaire vaut $2n$ et donc il faut le décaler de $n$ à droite.
 
 \paragraph{Réduction de la complexité du calcul de la multiplication}
-En faisant le calcul selon la méthode en colonnes deux problèmes se posent:
+En faisant le calcul selon la méthode en colonnes trois problèmes se posent:
 \begin{enumerate}
 \item Le nombre de produits intermédiaires est de $n$ ce qui nécessite $n$ emplacements de mémoire sous forme de registres rapides pour effectuer le calcul à la vitesse maximum. 
 \item La taille des résultats intermédiaires vaut $2n$ donc il faut des emplacements mémoire doubles.
+\item Si le multiplicateur est négatif alors il faut calculer sans le signe puis effectuer une conversion
 \end{enumerate}
-On peut résoudre ces problèmes de capacité en utilisant l'\textbf{algorithme de Booth} qui consiste à effectuer les sommes intermédiaires au fur et à mesure à la place de les sommer à la fin. Ce qui permet de réduire le nombre de registres intermédiaires à 1. Cet algorithme permet aussi de réduire la largeur des résultats. 
+On peut résoudre ces problèmes en utilisant l'\textbf{algorithme de Booth} (voir annexe \ref{ch:algebra}). 
 
 \subsection{Division}
 La division entière ou Euclidienne est très simple à implémenter à l'aide de la soustraction successive du diviseur:
 
 \lstset{style=customc}
 \begin{lstlisting}
-int divide(N, D)
-{
+int divide(N, D) {
 	Q = 0;
-	while  N >= D 
-	{
+	while  N >= D {
   		N = N - D;
   		Q++;
 	}
@@ -322,7 +320,7 @@ fixedpt_div(fixedpt A, fixedpt B)
 }
 \end{lstlisting}
 
-Comme pour la multiplication, il existe des algorithmes plus efficaces pour faire la division entière comme celle appelée SRT.
+Comme pour la multiplication, il existe des algorithmes plus efficaces pour faire la division entière comme celui appelé SRT.
 
 \section{Exercices}
 
@@ -330,7 +328,7 @@ Comme pour la multiplication, il existe des algorithmes plus efficaces pour fair
 Implémenter l'algorithme de Booth en C puis en assembleur.
 
 \paragraph{Ex 2}
-Écrire en C une fonction de division de deux nombres entiers en complément à 2 qui retourne le résultat et le reste en utilisant seulement des additions ou des soustractions.
+Écrire en C une fonction de division de deux nombres entiers en complément à 2 qui retourne le résultat en utilisant seulement des additions ou des soustractions. Attention aux signes et à la division par zéro.
 
 \paragraph{Ex 3}
 Implémenter l'algorithme SRT en C.
