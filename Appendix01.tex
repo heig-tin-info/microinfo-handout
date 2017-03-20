@@ -50,7 +50,20 @@ m=8, n=4: \quad 2^{8-1} = 2^{4-1} + b_3 2^{3} + b_4 2^{4} + b_5 2^{5} + b_6 2^{6
 \]
 
 \section{Multiplication de nombres en complément à deux}
-La multiplication en colonnes classique fonctionne en complément à 2 mais elle est différente dans le cas ou le multiplicateur est positif ou négatif. Si il est négatif, il faudra faire le complément à 2 à la fin du calcul pour retrouver le résultat correct. Cette différence de temps de calcul en fonction du signe est gênante mais peut être évitée grâce à l'algorithme de Booth (1950) \cite{booth}. L'algorithme consiste en la transformation suivante:
+La multiplication en colonnes classique fonctionne en complément à 2 mais elle nécessite une correction à la fin du calcul en fonction du signe des opérandes pour retrouver le résultat correct. Soit m et r, deux entier sur n bits:
+
+\begin{equation}
+\begin{aligned}
++m \equiv m \enspace & \enspace +r \equiv r\\
+-m \equiv 2^n-m \enspace & \enspace -r \equiv 2^n-r\\
+(+m) \times (+r) \enspace &= \enspace mr\\
+(-m) \times (+r) \enspace &= \enspace 2^{n}r - mr\\
+(+m) \times (-r) \enspace &= \enspace 2^{n}m - mr\\
+(-m) \times (-r) \enspace &= \enspace 2^{n}2^{n} - 2^{n}m - 2^{n}r + rm
+\end{aligned}
+\end{equation}
+
+Le facteur $2^{n}2^{n}$ disparait par arithmétique modulo. Il reste néanmoins une correction à effectuer qui est différente pour chaque cas. Cette différence de temps de calcul en fonction du signe est gênante mais peut être évitée grâce à l'algorithme de Booth (1950) \cite{booth}. L'algorithme consiste en la transformation suivante:
 
 \begin{equation}
 \begin{aligned}
@@ -68,6 +81,8 @@ Et comme le terme $a_{-1}$ peut être considéré nul car en dehors du nombre alors
 A \cdot B = \enspace \sum_{i=0}^{n-1} B(a_{i-1}-a_i)2^{i}
 \end{equation}
 
+On peut montrer numériquement que le résultat de la multiplication est correct indépendamment du signe de A et de B \cite{booth}.
+
 L'algorithme de Booth peut être étendu pour inclure des séquences de "1" grâce à la même propriété utilisée ci-dessus qui est que tout "1" logique peut s'écrire $a_i2^i = a_i2^{i+1}-a_i2^i$ et donc toute séquence de "1" peut s'écrire $a_i2^{i+k}-a_i2^i$ (avec k la longueur de la séquence de 1). Ceci permet de réduire le nombre de multiplications à effectuer. Prenons un exemple pour bien comprendre:
 \[
 A \cdot B = A \cdot "00111110" = A \cdot (2^5 + 2^4 + 2^3 + 2^2 + 2^1) = A \cdot 62
@@ -75,8 +90,10 @@ A \cdot B = A \cdot "00111110" = A \cdot (2^5 + 2^4 + 2^3 + 2^2 + 2^1) = A \cdot
 \[
 A \cdot B = A \cdot "00111110" = A \cdot (2^6 - 2^1) = A \cdot (64 - 2)
 \]
-On passe donc de 5 à 2 termes à calculer. \\
+On passe donc de 5 à 2 termes à calculer.
+
 La réalisation de cet algorithme est simplifiée si on parcours le multiplicateur de gauche à droite en faisant une addition du multiplicande lorsqu'on rencontre "01" (début de séquence) et une soustraction du multiplicande lorsqu'on rencontre "10" (fin de séquence) avec les décalages appropriés. On peut aussi le faire dans l'autre sens avec début à "10" et fin à "01".
+Cet algorithme peut être encore étendu en utilisant le concept du codage redondant. Par exemple pour le cas ci-dessus on considère deux bits à chaque itération. On peut aussi en considérer trois ou même quatre à chaque itération ce qui donne plus de flexibilité pour coder avantageusement le multiplicateur.
 
 \begin{thebibliography}{1}
 

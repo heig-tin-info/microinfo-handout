@@ -33,7 +33,7 @@ Structuration faible & Structuration forte\\
 Dans le cas ou une zone de stockage, tel qu'un registre, peut être modifié par autre chose que le programme principal on doit lui attribuer le modificateur volatile. Cela permet au compilateur de savoir que cette variable peut changer même si le code n'affecte jamais cette variable. Le compilateur ne va donc pas essayer d'optimiser une variable volatile (Exemple ci-dessous). 
 
 \subsection{Directive pragma}
-La directive \#pragma est définie par le standard ISO/ANSI C. Elle permet de garder une certaine portabilité du logiciel en contrôlant de manière particulière les extensions spécifiques à un fabricant. Cette directive permet de  spécifier une adresse absolue qui désigne la position mémoire pour la déclaration suivant cette directive. La variable doit être déclarée soit \_\_no\_init ou const. 
+La directive \#pragma est une commande de précompilation définie par le standard ISO/ANSI C. Elle permet de garder une certaine portabilité du logiciel en contrôlant de manière particulière les extensions spécifiques à un fabricant. Cette directive permet, par exemple, de spécifier une adresse absolue qui désigne la position mémoire pour la déclaration suivante. La variable doit être déclarée soit \_\_no\_init ou const. 
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -41,6 +41,7 @@ La directive \#pragma est définie par le standard ISO/ANSI C. Elle permet de gar
 __no_init volatile char PORT1;	//PORT1 est un registre du périphérique
                                 //du même nom placé à l'adresse 0x22E
 \end{lstlisting}
+La directive \#pragma peut prendre d'autres fonctions selon le compilateur utilisé.
 
 \subsection{Fonctions intrinsèques}
 Les fonctions intrinsèques se reconnaissent par un double souligné devant (\_\_). Les fonctions intrinsèques permettent un accès direct aux instructions de bas niveau sans programmer en assembleur. Si le compilateur ne trouve pas les fonctions intrinsèques par défaut alors il faut inclure: intrinsics.h. Ces fonctions ne sont pas standard, elle dépendent du compilateur utilisé.

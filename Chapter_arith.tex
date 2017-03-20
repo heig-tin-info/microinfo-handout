@@ -36,42 +36,61 @@ On représente les entiers positifs simplement à l'aide d'une conversion décimale
 Pour les nombres entiers négatifs nous devons faire un choix, prenons par exemple le codage avec 4 bits. Nous avons donc $2^4 = 16$ codes différents disponibles et nous devons aussi coder le zéro ce qui donne $16 - 1$ nombres disponibles. Comme c'est impaire nous aurons soit un nombre de plus du coté positif ou un nombre de plus du coté négatif. Le choix fait a été celui d'avoir un nombre négatif de plus (Table \ref{entiers négatifs}). Ce qui donne $2^{n-1}$ du côté positif pour accommoder le zéro et $2^n$ du côté négatif.
 
 \paragraph{Complément à deux}
-Il nous reste à déterminer quels codes attribuer aux nombres négatifs. En effet on peut choisir de placer les nombres négatifs à la suite des nombres positifs \textbf{ou} avant le zéro en faisant le calcul $0-1$ en binaire. Comparons les deux possibilités et notons bien les différences:
+Il nous reste à déterminer quels codes attribuer aux nombres négatifs. En effet on peut choisir de placer les nombres négatifs à la suite des nombres positifs \textbf{ou} avant le zéro en faisant le calcul $0-1$ en binaire ou encore en décalant tous les nombres. Comparons les trois possibilités et notons bien les différences:
 
 \begin{table}[!htbp]
 \begin{center}
 {\fontfamily{phv}\selectfont
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline 
-Entier & Cas 1 & Cas 2\\
+Entier & Cas 1 & Cas 2 & Cas 3\\
 \hline  
 \hline 
-0 & 0000 & 0000\\
+0 & 0000 & 0000 & 1000\\
 \hline 
-1 & 0001 & 0001\\
+1 & 0001 & 0001 & 1001\\
 \hline
-7 & 0111 & 0111\\
+7 & 0111 & 0111 & 1111\\
 \hline
--1 & 1000 & 1111\\
+-1 & 1000 & 1111 & 0111\\
 \hline
--2 & 1001 & 1110\\
+-2 & 1001 & 1110 & 0110\\
 \hline
--8 & 1111 & 1000\\
+-8 & 1111 & 1000 & 0000\\
 \hline
 \end{tabular}
 }
 \end{center}
-\caption{Deux possibilités pour coder les nombres entiers négatifs \label{entiers négatifs}}
+\caption{Trois possibilités pour coder les nombres entiers négatifs \label{entiers négatifs}}
 \end{table}
 
-On constate que le cas 1 offre une discontinuité entre -1 et 0 ce qui n'est pas arithmétique alors que le cas 2 est symétrique par rapport à zéro ce qui permet de faire l'opération $0-1$ sans erreur. On préfère donc ce dernier en pratique et on lui a donné le nom de \textbf{complément à deux}. On peut remarquer aussi que le nombre de gauche vaut "0" pour un nombre positif et "1" pour un nombre négatif, c'est pour cela qu'on l'appelle aussi bit de signe. Noter bien que si on avait choisi de coder les nombres de -7 à 8, à la place de -8 à 7, le bit de signe ne serait pas possible. Ceci est du au fait que le zéro n'a pas de signe.
+On constate que le cas 1 offre une discontinuité entre -1 et 0 ce qui rend cette notation peu intéressante d'un point de vue arithmétique. Ce n'est donc pas utilisé en pratique.
 
-Un nombre binaire en complément à deux peut se calculer par la relation:
+Les cas 2 et 3, par contre, sont symétriques par rapport à zéro ce qui permet de faire l'opération $0-1$ sans erreur. Tous les nombres sont continus ce qui est souhaitable.
+
+Le cas 3 à la particularité d'avoir le zéro décimal à un nombre différent du zéro binaire mais ce n'est pas un problème en soit. Ce cas est souvent utilisé pour coder l'exposant des nombres en virgule flottante et s'appelle \textbf{décalage par excès}. L'excès étant la valeur de décalage de l'échelle qui correspond au zéro décimal, e.g. 1000 = 8 (excès).
+
+Dans le cas 2 on peut remarquer aussi que le nombre de gauche vaut "0" pour un nombre positif et "1" pour un nombre négatif, c'est pour cela qu'on l'appelle aussi bit de signe. Noter bien que si on avait choisi de coder les nombres de -7 à 8, à la place de -8 à 7, le bit de signe ne serait pas possible. Ceci est du au fait que le zéro n'a pas de signe. En pratique et en grande majorité, on préfère ce dernier et on le nomme \textbf{complément à deux}. 
+
+Le nom \textbf{complément à deux} est une contraction de complément modulo 2. Un nombre binaire en complément à deux se calcule donc par le complément à $2^n$ du nombre non signé:
 \begin{equation}
-A_2 = 2^n - |A|
+A_{comp2} = 2^n - |A|
 \end{equation}
-Elle découle simplement du fait qu'on part du chiffre le plus élevé et on décrémente. Exemple pour A = -1 sur 4 bits, $A_2 = 2^4 - 1 = 15 = 1111$.
-Le grand mérite de la notation en complément à deux est le fait qu'on peut calculer sans se préoccuper du signe alors que si on avait choisi une autre notation il aurait fallu utiliser une condition sur le signe pour en tenir compte.
+On part donc du chiffre le plus élevé et on décrémente. Exemple pour A = -1 sur 4 bits, $A_{comp2} = 2^4 - 1 = 15 = 1111$.
+
+Le grand mérite de la notation en complément à deux est le fait qu'on peut additionner sans se préoccuper du signe alors que si on avait choisi une autre notation il aurait fallu utiliser une condition sur le signe pour en tenir compte. Pour vérifier prenons deux nombres m et r sur n bits et effectuons tous les cas de signe:
+
+\begin{equation}
+\begin{aligned}
++m \equiv m \enspace & \enspace +r \equiv r\\
+-m \equiv 2^n-m \enspace & \enspace -r \equiv 2^n-r\\
+(+m) + (+r) \enspace &= \enspace m + r\\
+(-m) + (+r) \enspace &= \enspace 2^{n} - m + r = r-m\\
+(+m) + (-r) \enspace &= \enspace m + 2^{n} - r = m-r\\
+(-m) + (-r) \enspace &= \enspace 2^{n} - m + 2^{n} - r = -m-r
+\end{aligned}
+\end{equation}
+Les $2^n$ n'affectent pas les résultats par arithmétique modulo $2^n$. On constate donc que tous les résultats sont corrects quelque soit le signe. 
 
 \paragraph{Négation d'un nombre positif}
 De la Table \ref{entiers négatifs}, on peut constater qu'il suffit d'inverser les bits du nombre positif puis d'y ajouter "1" pour obtenir la négation:
@@ -80,10 +99,10 @@ De la Table \ref{entiers négatifs}, on peut constater qu'il suffit d'inverser le
 -A = \overline{A} - 1
 \end{equation}
 
-Une démonstration algébrique est donnée en annexe.
+C'est une manière plus rapide de calculer le complément modulo 2. Une démonstration algébrique est donnée en annexe.
  
 \paragraph{Extension d'un nombre entier}
-Dans le cas ou on désire passer d'un format de n bits à m bits avec m supérieur à n, on doit remplir les cases vides m-n. Il est trivial que les cases vides d'un nombre positif doivent être des zéros, exemple, 1 sur 4 bits: 0001 et sur 8 bits: 00000001. L'extension des nombres positifs consiste donc à ajouter autant de zéros que nécessaire, mais quand est-il des nombres négatifs en complément à 2? Prenons un exemple -1 qui est 1111 sur 4 bits et si on ajoute des zéros cela donne 00001111 = 8 en complément à deux, ça ne marche pas. Pour qu'un nombre négatif reste négatif, il faut que son bit de signe soit "1", on devrait donc mettre 10001111 = -112 ce qui ne joue toujours pas. On peut trouver la réponse en faisant l'opération 0 - 1 sur 8 bits et on trouve 11111111 = -1. On constate donc que pour les nombres négatifs il faut ajouter des "1" dans les case vides. Une démonstration algébrique vous est proposée en annexe.
+Dans le cas ou on désire passer d'un format de n bits à m bits avec m supérieur à n, on doit remplir les cases vides m-n. Il est trivial que les cases vides d'un nombre positif doivent être des zéros, exemple, 1 sur 4 bits: 0001 et sur 8 bits: 00000001. L'extension des nombres positifs consiste donc à ajouter autant de zéros que nécessaire, mais quand est-il des nombres négatifs en complément à 2? Prenons un exemple -1 qui est 1111 sur 4 bits et si on ajoute des zéros cela donne 00001111 = 8 en complément à deux, ça ne marche pas. Pour qu'un nombre négatif reste négatif, il faut que son bit de signe soit "1", on devrait donc mettre 10001111 = -112 ce qui ne joue toujours pas. On peut trouver la réponse en faisant l'opération 0 - 1 sur 8 bits et on trouve 11111111 = -1. On constate donc que pour les nombres négatifs, il faut ajouter des "1" dans les case vides. Une démonstration algébrique vous est proposée en annexe.
  
 %\newpage
 \subsection{Virgule flottante}
@@ -239,7 +258,7 @@ x & 0101 & 5 \\
 
 On constate donc qu'il suffit de créer quatre produits intermédiaires qui sont juste des décalages du nombre 3 lorsque le nombre multipliant est non nul. Ensuite on fait la somme des quatre nombres avec un additionneur. Noter bien que si on décale de 4 crans vers la gauche, le nombre intermédiaire à une taille de 8 bits. Les résultats sont donc sur $2n$ bits.
 
-Le cas des nombres négatifs est juste différent au niveau de l'extension des nombres intermédiaires. En effet, dans notre multiplication ci-dessus nous avons introduit des zéros pour étendre un nombre. Prenons l'exemple suivant (-3) x 2 sur 4 bits signés:
+Le cas des nombres négatifs est différent au niveau de l'extension des nombres intermédiaires. En effet, dans notre multiplication ci-dessus nous avons introduit des zéros pour étendre un nombre. Prenons l'exemple suivant (-3) x 2 sur 4 bits signés:
 
 \begin{center}
 {\fontfamily{phv}\selectfont
@@ -257,7 +276,7 @@ x & 0010 & 2 \\
 }
 \end{center}
 
-Dans ce cas ci, nous devons étendre le nombre intermédiaire négatif avec des "1" pour obtenir la bonne solution. Le résultat reste -6 quelque soit le nombre de "1" devant le nombre (1010 = -6, 11111010 = -6).
+Dans ce cas ci, nous devons étendre le nombre intermédiaire négatif avec des "1" pour obtenir la bonne solution. Le résultat reste -6 quelque soit le nombre de "1" devant le nombre (1010 = -6, 11111010 = -6). Le changement des bits de l'extension nécessite une condition sur le signe qui rend le calcul d'un nombre signé plus long que celui d'un nombre non-signé. Il faut donc une autre technique pour un processeur qui est indépendante du signe.
 
 La multiplication de nombres en virgule fixe est légèrement différente car il faut décaler le résultat de multiplication de la taille de la partie fractionnaire vers la droite:
 
@@ -282,9 +301,9 @@ En faisant le calcul selon la méthode en colonnes trois problèmes se posent:
 \begin{enumerate}
 \item Le nombre de produits intermédiaires est de $n$ ce qui nécessite $n$ emplacements de mémoire sous forme de registres rapides pour effectuer le calcul à la vitesse maximum. 
 \item La taille des résultats intermédiaires vaut $2n$ donc il faut des emplacements mémoire doubles.
-\item Si le multiplicateur est négatif alors il faut calculer sans le signe puis effectuer une conversion
+\item Si une des opérandes est négative alors il faut calculer sans le signe puis effectuer une correction
 \end{enumerate}
-On peut résoudre ces problèmes en utilisant l'\textbf{algorithme de Booth} (voir annexe \ref{ch:algebra}). 
+Le premier problème peut se résoudre en accumulant le résultat intermédiaire au fur et à mesure. Le deuxième en ne mémorisant que les n bits de poids fort. Le dernier problème en utilisant l'\textbf{algorithme de Booth} (voir annexe \ref{ch:algebra}). 
 
 \subsection{Division}
 La division entière ou Euclidienne est très simple à implémenter à l'aide de la soustraction successive du diviseur:

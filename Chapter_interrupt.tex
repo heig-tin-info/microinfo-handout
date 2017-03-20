@@ -9,7 +9,7 @@ Le processeur exécute des programmes et en même temps il interagit avec les péri
 Le sondage consiste à lire l'état d'un périphériques de manière périodique pour savoir s'il a quelque chose à dire à l'unité centrale. S'il y a plusieurs périphériques, par exemple un clavier et une souris, on les sonde l'un après l'autre. Cette méthode est simple et marche bien pour un nombre réduit de périphériques qui ont des requêtes fréquentes comme une interface de communication. Si ils ont des requêtes peu fréquentes alors on gaspille du temps à leur redemander si quelque chose a changé.
 
 \subsection{Interruptions}
-La méthode par interruptions est initiée par le périphérique qui demande "audience" au processeur. Ce dernier peut répondre a son "sujet" quand il lui plaît. Ce procédé fonctionne bien avec des périphériques qui ont des requêtes peu fréquentes tel que la souris ou le clavier.
+La méthode par interruptions est initiée par le périphérique qui demande "audience" au processeur. Ce dernier peut répondre à son "sujet" quand il lui plaît. Ce procédé fonctionne bien avec des périphériques qui ont des requêtes peu fréquentes telles que la souris ou le clavier.
 
 \section{Mécanisme de l'interruption}
 Pour que ça fonctionne, il faut définir un protocole de traitement d'une interruption. Le protocole le plus simple est le suivant:
@@ -44,10 +44,10 @@ FFF8 & USB\_VECTOR & 40EF\\
 \caption{Exemple de table de vecteurs d'interruption \label{vecteurs}}
 \end{table}
 
-Dans cette exemple la table des vecteurs est placée à l'adresse FFFF, c'est à dire en haut d'un espace mémoire de 16 bits (65536 adresses). Les deux premières colonnes sont des constantes et la troisième est remplie lors de la compilation.
+Dans cet exemple la table des vecteurs est placée à l'adresse FFFF, c'est à dire en haut d'un espace mémoire de 16 bits (65536 adresses). Les deux premières colonnes sont des constantes et la troisième est remplie lors de la compilation.
 
 \section{Priorités des interruptions et masques}
-Lorsque plusieurs interruptions sont en attente, le processeur peut en exécuter certaines en priorité. Le fabriquant du processeur défini une liste de priorités par type d'interruption. Il est possible de modifier la priorité dans le programme utilisateur en utilisant des masques. Le masque est simplement une désactivation de l'interruption momentanée. Certaine interruptions critiques, tel que le reset, ne peuvent pas être masquées. On les nommes "non-maskable interrupts" ou NMI.
+Lorsque plusieurs interruptions sont en attente, le processeur peut en exécuter certaines en priorité. Le fabriquant du processeur définit une liste de priorités par type d'interruption. Il est possible de modifier la priorité dans le programme utilisateur en utilisant des masques. Le masque est simplement une désactivation de l'interruption momentanée. Certaines interruptions critiques, telles que le reset, ne peuvent pas être masquées. On les nomme "non-maskable interrupts" ou NMI.
 
 Un exemple de masquage est donné ci-dessous où l'on doit impérativement effectuer deux associations sans être interrompu entre deux:
 
@@ -68,7 +68,7 @@ void contrôle(void) {
 Les affectations temp0 et temp1 seront donc bien effectuées l'une après l'autre donc dans un laps de temps minimum.
 
 \section{Déclaration d'une interruption en C}
-L'interruption est similaire à une fonction à part qu'on ne peut pas passer de paramètres ni en retourner. On interagi donc à l'aide de variables globales. L'autre différence est la présence d'un vecteur d'interruption pour référencer notre interruption dans la table des vecteurs. Ce lien est effectué à l'aide de la directive \# pragma qui permet de placer du code à une adresse mémoire spécifiée.
+L'interruption est similaire à une fonction à part qu'on ne peut pas passer de paramètres ni en retourner. On interagit donc à l'aide de variables globales. L'autre différence est la présence d'un vecteur d'interruption pour référencer notre interruption dans la table des vecteurs. Ce lien peut être effectué à l'aide de la directive \# pragma qui permet de placer du code à une adresse mémoire spécifiée pour certains compilateurs.
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -84,7 +84,7 @@ __interrupt void Timer_ISR(void) {
 L'ISR ci-dessus sera activée par un timer et sa seule fonction est de commuter une LED. Noter bien que la syntaxe d'une interruption dépend du compilateur utilisé.
 
 \section{Interruptions externes}
-Les interruptions externes proviennent des périphériques, on les appelles aussi interruptions matérielles à l'opposé des interruptions logicielles qui proviennent du programme lui même.
+Les interruptions externes proviennent des périphériques, on les appelle aussi interruptions matérielles à l'opposé des interruptions logicielles qui proviennent du programme lui même.
 
 \subsection{Interruption depuis un GPIO}
 Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption approprié, PORT1\_VECTOR par exemple:
