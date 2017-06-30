@@ -79,7 +79,7 @@ Ce type de timer nécessite une horloge dont la fréquence est 1Hz, dérivée d'une 
 \subsection{WatchDog Timer}
 La "plantée" d'un programme est la plupart du temps due à un défaut dans le programme ou à un concours de circonstances qui fait que le programme est bloqué dans un boucle sans fin. Le cas le plus courant est l'attente d'un évènement qui n'arrive pas et qui n'arrivera jamais.
 Le microcontrôleur ne réagit plus. Le seul moyen est de le \textit{resetter}.
-Un timer \it chien de garde \rm resette donc le CPU, donc le programme, si celui-ci ne l'a pas remis à 0 avant.
+Un timer \textit{chien de garde} resette donc le CPU, donc le programme, si celui-ci ne l'a pas remis à 0 avant.
 Lors du développement, on désactive généralement le chien de garde. Dans le MSP430, ceci est effectué au moyen de l'instruction :
 
 \lstset{style=customc}

@@ -54,7 +54,7 @@ Le résultat de l'opération écrase l'un des opérandes.
 
 \bigskip
 Le jeu d'instruction d'un CPU peut être plus ou moins complet selon la complexité du CPU. Par exemple, celui de la famille MCS-51 (famille de microcontrôleurs Intel 8051 et 8052) comprend environ 110 instructions, alors que le MSP430 a "seulement" 27 instructions, tout en offrant des performances comparables.
-Une raison est liée au \it mode d'adressage\rm, qui définit la façon dont le CPU accède aux données qu'il s'apprête à traiter, que ce soit pour un simple transfert de données ou une opération arithmétique sophistiquée.
+Une raison est liée au \textit{mode d'adressage}, qui définit la façon dont le CPU accède aux données qu'il s'apprête à traiter, que ce soit pour un simple transfert de données ou une opération arithmétique sophistiquée.
 
 \section{Modes d'adressage}
 Selon que l'opérande d'une instruction est une constante, une variable, un pointeur ou autre, il est évident que cet opérande n'est pas identifié de la même manière.
@@ -130,14 +130,14 @@ L'adressage \textit{indexé} permet de gérer des tableaux de façon efficace. Il e
 
 \subsection{Adressage par registre}
 Comme nous le verrons dans le chapitre suivant, le coeur du CPU contient des registres à usage général et à accès rapide, permettant de minimiser le temps d'exécution de certaines instructions. Ces registres sont identifiés explicitement, par un nom symbolique (par exemple A, ACC, R0, R1, R2, etc...).
-Parfois appelé adressage \it implicite\rm ou \it inhérent\rm , le mode d'adressage par registre utilise donc explicitement le nom du registre impliqué. Par exemple:
+Parfois appelé adressage \textit{implicite} ou \textit{inhérent}, le mode d'adressage par registre utilise donc explicitement le nom du registre impliqué. Par exemple:
 \lstset{style=customc}
 \begin{lstlisting}
 MOV R1,0x40
 \end{lstlisting}
 est une instruction du jeu d'instruction MCS-51 (microcontrôleurs de la famille 8051) et qui consiste à copier le contenu de la case d'adresse 0x40 (adressage direct pour la source de la donnée) dans le registre appelé R1. Bien que R1 pourrait être identifié par son adresse, il l'est ici par son nom explicite. L'intérêt est de pouvoir représenter le code de l'instruction sur moins d'octets que si l'adresse de R1 devait être fournie.
 
-L'exemple suivant (toujours du jeu d'instruction MCS-51) utilise de l'adressage indirect par registre et de l'adressage avec un registre particulier appelé \it accumulateur\rm:
+L'exemple suivant (toujours du jeu d'instruction MCS-51) utilise de l'adressage indirect par registre et de l'adressage avec un registre particulier appelé \textit{accumulateur}:
 \lstset{style=customc}
 \begin{lstlisting}
 MOV A,@R2
@@ -231,7 +231,7 @@ Le CPU MSP430 contient 16 registres notés R0 à R15. Chacun d'entre eux peut être
 MOV.W R10,R8
 \end{lstlisting}
 permet de copier le contenu du registre R10 dans le registre R8. Le suffixe \textit{.W} spécifie que les opérandes sont des mots (de 16 bits).
-L'instruction est codée sur un mot de 16 bits et utilise le format I, comme indiqué dans la figure \ref{fig:Inst_format_1}. Du fait que l'adressage est \it par registre \rm, cette instruction n'a pas besoin d'autres informations que l'identification des registres R10 et R8.
+L'instruction est codée sur un mot de 16 bits et utilise le format I, comme indiqué dans la figure \ref{fig:Inst_format_1}. Du fait que l'adressage est \textit{par registre}, cette instruction n'a pas besoin d'autres informations que l'identification des registres R10 et R8.
 Son code est:
 \lstset{style=customc}
 \begin{lstlisting}
@@ -360,7 +360,7 @@ $0x0314E + 2*PC\_Offset = 0x31A8 $
 
 \section{Chaine de compilation}
 Le développement d'un programme pour microcontrôleur consiste à générer du code machine à partir d'un programme écrit en C ou en C++, en passant par une vue en langage \textit{assembleur}.
-En général, le processus de génération du code machine doit permettre de réutiliser du code déjà écrit, comme une librairie de fonctions que l'on aura déjà testées, validées et documentées. Une question se pose alors, qui est le calcul des adresses de début de ces fonctions. Ce calcul est réalisé lors d'une opération appelée \it édition de lien\rm.
+En général, le processus de génération du code machine doit permettre de réutiliser du code déjà écrit, comme une librairie de fonctions que l'on aura déjà testées, validées et documentées. Une question se pose alors, qui est le calcul des adresses de début de ces fonctions. Ce calcul est réalisé lors d'une opération appelée \textit{édition de lien}.
 
 la figure \ref{fig:develop_flow} illustre le processus de développement de code.
 \begin{figure}[htb]
@@ -388,4 +388,4 @@ Une fois le fichier contenant le code exécutable obtenu, il peut être transféré 
 \item possibilité d'exécuter le programme pas à pas;
 \item etc...
 \end{itemize}
-Pour cette raison, cette interface est souvent appelée \it sonde programmation et debug \rm ou \it sonde de debug \rm ou encore \it sonde JTAG\rm.
+Pour cette raison, cette interface est souvent appelée \textit{sonde programmation et debug} ou \textit{sonde de debug} ou encore \textit{sonde JTAG}.

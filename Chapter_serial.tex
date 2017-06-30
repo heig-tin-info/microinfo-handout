@@ -46,7 +46,7 @@ Les UART sont des sérialiseurs/désérialiseurs simples. Un UART permet d'implémen
   \includegraphics[angle=90, trim = 15mm 0mm 5mm 0mm, clip, width=13cm]{./Figures/serial/UART.pdf}
   \rule{35em}{0.5pt}
   \caption[uart]{Principe de fonctionnement d'une UART}
-  \label{fig:tcpip}
+  \label{fig:uart}
 \end{figure}
 
 Au niveau matériel, l'UART est composé de 4 registres dont deux à décalage. Le générateur d'horloge donne la fréquence de transmission ou vitesse de transmission. Du point de vue logiciel on accède à l'UART simplement en écrivant dans le registre d'émission et en lisant le registre de réception.
@@ -65,7 +65,7 @@ Dix ans après la RS-232C, Motorola invente l'interface SPI en 1979. C'est un cha
   \includegraphics[width=12cm]{./Figures/serial/SPI_8-bit_circular_transfer.pdf}
   \rule{35em}{0.5pt}
   \caption[spi]{Principe de fonctionnement d'une interface SPI}
-  \label{fig:tcpip}
+  \label{fig:spi}
 \end{figure}
 
 L'interface SPI utilise deux registres à décalage bouclés. Ceci permet de relire l'information transmise est ainsi vérifier que ce qui a été transmis est bien correcte. Pour écrire ou lire, on utilise le même principe que pour l'UART, c-à-d écrire dans le registre d'émission ou lire le registre de réception.
@@ -81,7 +81,7 @@ Trois ans après la SPI, Philips invente l'interface I2C en 1982. Cette interface
   \includegraphics[width=10cm]{./Figures/serial/I2C.pdf}
   \rule{35em}{0.5pt}
   \caption[i2c]{Système avec un bus I2C}
-  \label{fig:tcpip}
+  \label{fig:i2c}
 \end{figure}
 
 Les lignes, SDA et SCL, sont tirées vers l'alimentation positive (Vdd) à l'aide de deux résistance pull-up. Elles doivent être dimensionnées par rapport à la vitesse de transmission choisie. Pour sélectionner un périphérique en particulier, il faut connaitre son adresse I2C et la placer dans le registre d'adresse de l'interface.
@@ -95,7 +95,7 @@ L'interface série la plus récente que l'on trouve dans les microcontrôleurs est 
   \includegraphics[width=14cm]{./Figures/serial/USB_signal_example.pdf}
   \rule{35em}{0.5pt}
   \caption[usb]{Exemple de signal USB}
-  \label{fig:tcpip}
+  \label{fig:usb}
 \end{figure}
 
 L'interface USB est synchrone mais ne possède pas de ligne de clock. L'horloge est retrouvée à la réception grâce à une séquence d'entrainement de 8 bits. Une fois l'horloge synchronisée un packet ID (PID) est envoyé pour donner le type de message envoyé. Si le PID indique des données alors elles sont transmises. Finalement le paquet est terminé par une séquence "End of Packet" de trois bits.

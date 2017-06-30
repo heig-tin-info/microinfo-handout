@@ -1,6 +1,6 @@
 \chapter{\textsc{AD et DA}}
 
-Les Convertisseurs Analogique-Numérique (ADC pour \it Analog to Digital Converter \rm) et Numérique-Analogique (DAC pour \it Digital to Analog Converter \rm) sont des éléments importants de toute chaîne d'acquisition de donnée.\\
+Les Convertisseurs Analogique-Numérique (ADC pour \textit{Analog to Digital Converter}) et Numérique-Analogique (DAC pour \textit{Digital to Analog Converter}) sont des éléments importants de toute chaîne d'acquisition de donnée.\\
 En effet, les opérations complexes de traitement de signal sont aujourd'hui exécutées par des circuits numériques, dont les microcontrôleurs font partie. Pour être traités par un microcontrôleur, les signaux analogiques doivent donc être convertis en nombres.\\
 La figure \ref{fig:Acq_Chain} illustre une chaîne typique d'acquisition de donnée.
 
@@ -52,9 +52,9 @@ Le principe est illustré à la figure \ref{fig:ADC_SAR_Diagram}.
   \label{fig:ADC_SAR_Diagram}
 \end{figure}
 
-Un séquenceur (généralement nommé SAR pour \it Successive Approximation Register\rm), couplé à un convertisseur Digital-Analogique (DAC) génère une tension analogique, qui est comparée au signal à convertir.
+Un séquenceur (généralement nommé SAR pour \textit{Successive Approximation Register}), couplé à un convertisseur Digital-Analogique (DAC) génère une tension analogique, qui est comparée au signal à convertir.
 Le résultat de cette comparaison est alors introduit dans le SAR, qui va le prendre en compte, pour la suite du processus de dichotomie, jusqu'à complétion. La figure \ref{fig:ADC_SAR} illustre la chronologie du processus de conversion, dans le cas d'un ADC 4-bits.\\
-Dans cet exemple, le DAC est capable de générer 16 tensions notées $x.FS$ (FS signifie \it Full Scale\rm), avec $0 \leqslant x \leqslant 15$. Les valeurs minimale et maximale de ces tensions sont appelées \it tensions de référence\rm.\\
+Dans cet exemple, le DAC est capable de générer 16 tensions notées $x.FS$ (FS signifie \textit{Full Scale}), avec $0 \leqslant x \leqslant 15$. Les valeurs minimale et maximale de ces tensions sont appelées \textit{tensions de référence}.\\
 Le test du MSB détermine si $V_{in}$ est supérieur ou inférieur à $\scriptstyle {}^1\!/\!_2.FS$. Dans l'exemple, dès lors que $V_{in} \leqslant \scriptstyle {}^1\!/\!_2.FS$, le MSB vaut 1. Pour tester le bit de poids inférieur (MSB-1), le séquenceur commande le DAC pour qu'il génère $\scriptstyle {}^3\!/\!_4.FS$. Cette fois,  $V_{in} \geqslant \scriptstyle {}^3\!/\!_4.FS$, donc (MSB-1) = 0; ceci signifie qu'il ne fallait pas ajouter $\scriptstyle {}^1\!/\!_4.FS$ à 
 $\scriptstyle {}^1\!/\!_2.FS$ mais $\scriptstyle {}^1\!/\!_8.FS$.\\
 Le processus continue ainsi jusqu'à l'obtention du LSB, au rythme d'un bit par étape.
@@ -70,7 +70,7 @@ Le processus continue ainsi jusqu'à l'obtention du LSB, au rythme d'un bit par é
 Le convertisseur réalise donc sa conversion en positionnant en premier le bit de poids fort (MSB) et en descendant progressivement jusqu'au LSB.
 Ces convertisseurs ont des résolutions d'une douzaine de bits environ, mais peuvent atteindre 16 bits au moyen de technologies spéciales.\\
 
-Il est important de noter que la tension d'entrée doit être mémorisée pendant toute la durée du processus de conversion. Ceci est effectué au moyen d'un circuit auxiliaire appelé "Echantillonneur-Bloqueur" (\it Sample and Hold\rm). Le terme "Echantillonneur" fait référence à l'instant auquel la tension est saisie; "Bloqueur" fait référence à sa mémorisation. 
+Il est important de noter que la tension d'entrée doit être mémorisée pendant toute la durée du processus de conversion. Ceci est effectué au moyen d'un circuit auxiliaire appelé "Echantillonneur-Bloqueur" (\textit{Sample and Hold}). Le terme "Echantillonneur" fait référence à l'instant auquel la tension est saisie; "Bloqueur" fait référence à sa mémorisation. 
 
 Le convertisseur DAC peut être construit au moyen de:
 \begin{itemize}[label=\textbullet,font=\small]
@@ -136,20 +136,20 @@ Le processus de conversion commence par l'échantillonnage du signal d'entrée, pu
   \label{fig:ADC12SHP1}
 \end{figure}
 
-Le signal SAMPCON (\it Sampling Control\rm) joue un rôle particulier car son flanc montant détermine le début de la saisie du signal d'entrée, qui dure tant que $SAMPCON = 1$. La conversion à proprement parler démarre au flanc descendant de  SAMPCON et dure 13 périodes du signal ADC12CLK pour une conversion sur 12 bits.
-La durée du signal SAMPCON doit être réglable pour pouvoir ajuster le temps d'échantillonnage à la résistance interne de la source d'où provient $V_{in}$. En effet, l'entrée de l'échantillonneur-bloqueur (le \it Sample and Hold\rm) est une capacité; sa charge est soumise à une constante de temps qui dépend de la résistance de la source.\\
+Le signal SAMPCON (\textit{Sampling Control}) joue un rôle particulier car son flanc montant détermine le début de la saisie du signal d'entrée, qui dure tant que $SAMPCON = 1$. La conversion à proprement parler démarre au flanc descendant de  SAMPCON et dure 13 périodes du signal ADC12CLK pour une conversion sur 12 bits.
+La durée du signal SAMPCON doit être réglable pour pouvoir ajuster le temps d'échantillonnage à la résistance interne de la source d'où provient $V_{in}$. En effet, l'entrée de l'échantillonneur-bloqueur (le \textit{Sample and Hold}) est une capacité; sa charge est soumise à une constante de temps qui dépend de la résistance de la source.\\
 
 \subsection{Sélection de l'horloge de conversion}
 L'horloge de conversion ADC12CLK rythme le processus de conversion par approximations successives. Elle détermine donc le temps alloué au calcul de chaque bit, du MSB au LSB.\\
 
-Lorsque l'utilisateur souhaite se simplifier la vie (ADC12SHP = 1), elle détermine aussi la durée de l'échantillonnage, via un timer interne à l'ADC\footnote{La durée d'échantillonnage peut aussi être contrôlée par le programme. Dans ce cas (ADC12SHP = 0) le signal SHI contrôle directement la durée d'échantillonnage et la conversion. SHI est alors généré par le programme ou par un des timers à usage général}. Ce timer, noté \it Sample Timer\rm  sur la figure \ref{fig:ADC_Schema} peut générer une durée d'échantillonnage comprise entre 4 et 1024 cycles du signal ADC12CLK.
+Lorsque l'utilisateur souhaite se simplifier la vie (ADC12SHP = 1), elle détermine aussi la durée de l'échantillonnage, via un timer interne à l'ADC\footnote{La durée d'échantillonnage peut aussi être contrôlée par le programme. Dans ce cas (ADC12SHP = 0) le signal SHI contrôle directement la durée d'échantillonnage et la conversion. SHI est alors généré par le programme ou par un des timers à usage général}. Ce timer, noté \textit{Sample Timer}  sur la figure \ref{fig:ADC_Schema} peut générer une durée d'échantillonnage comprise entre 4 et 1024 cycles du signal ADC12CLK.
 
-Les sources d'horloge usuelles (ACLK, SMCLK et MCLK) sèeuvent être utilisées. Par défaut, un autre signal est disponible, noté ADC12OSC, et dont la fréquence est d'environ 5 MHz.
+Les sources d'horloge usuelles (ACLK, SMCLK et MCLK) peuvent être utilisées. Par défaut, un autre signal est disponible, noté ADC12OSC, et dont la fréquence est d'environ 5 MHz.
 
 \subsection{Lancement d'une conversion}
 Plusieurs méthodes sont envisageables:
 \begin{itemize}[label=\textbullet,font=\small]
-\item lancement par logiciel, en activant le bit ADC12SC (\it Start Conversion\rm)
+\item lancement par logiciel, en activant le bit ADC12SC (\textit{Start Conversion})
 \item lancement automatique par un timer
 \end{itemize}
 
