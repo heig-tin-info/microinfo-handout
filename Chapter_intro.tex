@@ -8,42 +8,42 @@
 
 %----------------------------------------------------------------------------------------
 
-La microinformatique est le sous-domaine de l'informatique proche du matériel. Elle s'exprime à l'aide de langages dit de bas niveau tels que l'assembleur et le C. On utilise la microinformatique dans les systèmes embarqués ou dans les ordinateurs lorsque l'on a des contraintes de performances, de coût ou de consommation.
+La microinformatique est le sous-domaine de l'informatique proche du matÃ©riel. Elle s'exprime Ã  l'aide de langages dit de bas niveau tels que l'assembleur et le C. On utilise la microinformatique dans les systÃ¨mes embarquÃ©s ou dans les ordinateurs lorsque l'on a des contraintes de performances, de coÃ»t ou de consommation.
 
-\section{Place du cours MicroInfo dans le cursus de l'ingénieur}
+\section{Place du cours MicroInfo dans le cursus de l'ingÃ©nieur}
 
-Le cours de microinformatique est un cours technologique basé sur des microprocesseurs qui sont le composant principal des microcontrôleurs.  Il se situe parmi les autres branches du génie électrique dans la partie de mise en oeuvre (fig. \ref{fig:Branches}).
+Le cours de microinformatique est un cours technologique basÃ© sur des microprocesseurs qui sont le composant principal des microcontrÃ´leurs.  Il se situe parmi les autres branches du gÃ©nie Ã©lectrique dans la partie de mise en oeuvre (fig. \ref{fig:Branches}).
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=90, width=14cm]{./Figures/Branches.pdf}
   \rule{35em}{0.5pt}
-  \caption[Situation]{Situation du cours MicroInfo dans le cursus de l'ingénieur}
+  \caption[Situation]{Situation du cours MicroInfo dans le cursus de l'ingÃ©nieur}
   \label{fig:Branches}
 \end{figure}
 
 
-\section{Définitions: processeur, microprocesseur, microcontrôleur et système-on-chip}
+\section{DÃ©finitions: processeur, microprocesseur, microcontrÃ´leur et systÃ¨me-on-chip}
 
-Un processeur est un système qui permet l'exécution d'opérations élémentaires telles que des opérations arithmétiques (additions, soustractions, multiplication et division), des opérations logiques (OR, AND, XOR), des tests (égal à, plus petit que, etc.) et des déplacements de données.
+Un processeur est un systÃ¨me qui permet l'exÃ©cution d'opÃ©rations Ã©lÃ©mentaires telles que des opÃ©rations arithmÃ©tiques (additions, soustractions, multiplication et division), des opÃ©rations logiques (OR, AND, XOR), des tests (Ã©gal Ã , plus petit que, etc.) et des dÃ©placements de donnÃ©es.
 
-Le microprocesseur est un système micro-électronique, aussi appelé circuit intégré ou plus communément "chip" ou "puce", permettant l'exécution d'opérations élémentaires. Contrairement au processeur qui est un concept, le microprocesseur est un composant que l'on place sur un circuit imprimé.
+Le microprocesseur est un systÃ¨me micro-Ã©lectronique, aussi appelÃ© circuit intÃ©grÃ© ou plus communÃ©ment "chip" ou "puce", permettant l'exÃ©cution d'opÃ©rations Ã©lÃ©mentaires. Contrairement au processeur qui est un concept, le microprocesseur est un composant que l'on place sur un circuit imprimÃ©.
 
-Un microcontrôleur est un système micro-électronique contenant un microprocesseur et des périphériques. Les périphériques essentiels sont les minuteries (ou "timers"), les interfaces de communication série et les mémoires (données et instructions).
+Un microcontrÃ´leur est un systÃ¨me micro-Ã©lectronique contenant un microprocesseur et des pÃ©riphÃ©riques. Les pÃ©riphÃ©riques essentiels sont les minuteries (ou "timers"), les interfaces de communication sÃ©rie et les mÃ©moires (donnÃ©es et instructions).
 
-Le système-on-chip est un ensemble, différent du microcontrôleur, qui inclut tous les composants électroniques d'un ordinateur à part les mémoires. Il se présente sous la forme d'un circuit intégré. La mémoire de données peut dans certain cas être assemblée en dessus du chip pour réduire la taille du système.
+Le systÃ¨me-on-chip est un ensemble, diffÃ©rent du microcontrÃ´leur, qui inclut tous les composants Ã©lectroniques d'un ordinateur Ã  part les mÃ©moires. Il se prÃ©sente sous la forme d'un circuit intÃ©grÃ©. La mÃ©moire de donnÃ©es peut dans certain cas Ãªtre assemblÃ©e en dessus du chip pour rÃ©duire la taille du systÃ¨me.
 
 
-\section{Éléments de systèmes logiques}
+\section{Ã‰lÃ©ments de systÃ¨mes logiques}
 
-Pour pouvoir configurer un microcontrôleur de manière efficace, nous avons besoins de quelques éléments de systèmes logiques.
+Pour pouvoir configurer un microcontrÃ´leur de maniÃ¨re efficace, nous avons besoins de quelques Ã©lÃ©ments de systÃ¨mes logiques.
 
-\subsection{Définitions}
+\subsection{DÃ©finitions}
 
 \textbf{Etat logique} : chacune des 2 valeurs que peut prendre une variable logique\\
-\textbf{Variable logique} : grandeur qui ne peut prendre que les 2 états logiques\\
-\textbf{Fonction logique} : variable logique qui dépend d'autres variables\\
-\textbf{Table de vérité}: Liste des valeurs de sortie en fonction des combinaisons des entrées
+\textbf{Variable logique} : grandeur qui ne peut prendre que les 2 Ã©tats logiques\\
+\textbf{Fonction logique} : variable logique qui dÃ©pend d'autres variables\\
+\textbf{Table de vÃ©ritÃ©}: Liste des valeurs de sortie en fonction des combinaisons des entrÃ©es
 
 \begin{table}[!htbp]
 \begin{center}
@@ -66,19 +66,19 @@ A & B & S\\
 \end{tabular}
 }
 \end{center}
-\caption{Exemple de table de vérité à deux variables (fonction ET) \label{table vérité}}
+\caption{Exemple de table de vÃ©ritÃ© Ã  deux variables (fonction ET) \label{table vÃ©ritÃ©}}
 \end{table}
 
-La table de vérité permet de déterminer l'équation logique. Dans l'exemple ci dessus nous avons représenté la fonction A ET B = S. Pour construire une table de vérité on procède de la façon suivante: 
+La table de vÃ©ritÃ© permet de dÃ©terminer l'Ã©quation logique. Dans l'exemple ci dessus nous avons reprÃ©sentÃ© la fonction A ET B = S. Pour construire une table de vÃ©ritÃ© on procÃ¨de de la faÃ§on suivante: 
 \begin{enumerate}
-\item on attribue une colonne pour chaque variable ou entrée (A B C ...)
-\item on attribue une colonne pour chaque résultat ou sortie
-\item on liste toutes les combinaisons des variables d'entrée ($2^n$ combinaisons)
-\item on calcule le résultat pour chaque ligne
+\item on attribue une colonne pour chaque variable ou entrÃ©e (A B C ...)
+\item on attribue une colonne pour chaque rÃ©sultat ou sortie
+\item on liste toutes les combinaisons des variables d'entrÃ©e ($2^n$ combinaisons)
+\item on calcule le rÃ©sultat pour chaque ligne
 \end{enumerate}
 
 \subsection{Fonctions logiques}
-Si le nombre de variables d'entrée n'est pas trop grand, on peut faire l'inventaire exhaustif de toutes les fonctions imaginables (Table \ref{variable_logiques}).
+Si le nombre de variables d'entrÃ©e n'est pas trop grand, on peut faire l'inventaire exhaustif de toutes les fonctions imaginables (Table \ref{variable_logiques}).
 
 \begin{table}[!htbp]
 \begin{center}
@@ -114,19 +114,19 @@ F7&=&A+B & \quad F8&=&\overline{F7}&=&\overline{A+B}
 \end{array}$
 \end{center}
 
-\caption{Résultats possibles de fonctions à deux variables \label{variable_logiques}}
+\caption{RÃ©sultats possibles de fonctions Ã  deux variables \label{variable_logiques}}
 \end{table}
 
-Dans le tableau \ref{variable_logiques}, on peut repérer trois fonctions particulières :
+Dans le tableau \ref{variable_logiques}, on peut repÃ©rer trois fonctions particuliÃ¨res :
 \begin{enumerate}
 \item inversion;
-\item fonction dans laquelle une seule configuration des entrées donne 1;
-\item fonction dans laquelle une seule configuration des entrées donne 0.
+\item fonction dans laquelle une seule configuration des entrÃ©es donne 1;
+\item fonction dans laquelle une seule configuration des entrÃ©es donne 0.
 \end{enumerate}
 
-\subsection{Opérateurs élémentaires}
+\subsection{OpÃ©rateurs Ã©lÃ©mentaires}
 
-Il y a trois fonctions de base qui permettent de créer toutes les autres fonctions logiques:
+Il y a trois fonctions de base qui permettent de crÃ©er toutes les autres fonctions logiques:
 \begin{center}
 \begin{tabular}{p{5cm} >{\centering}p{2cm} p{3cm}} 
 NON (NOT) &$\overline{A}$ &not A\\
@@ -134,7 +134,7 @@ ET (AND) &$A\cdot B$ &A and B\\
 OU (OR) &$A+B$ &A or B\\
 \end{tabular}
 \end{center}
-ET et OU sont duals, c-à-d qu'il ont des comportements semblables, mais avec les variables inverses. On peut nommer d'autres fonctions de la table 1.2 par convenance:
+ET et OU sont duals, c-Ã -d qu'il ont des comportements semblables, mais avec les variables inverses. On peut nommer d'autres fonctions de la table 1.2 par convenance:
 
 \begin{center}
 \begin{tabular}{p{5cm} >{\centering}p{2cm} p{3cm}} 
@@ -145,20 +145,20 @@ NON OU exclusif (XNOR) &$\overline{A \oplus B}$ &not(A xor B)\\
 \end{tabular}
 \end{center}
 
-Ces quatre fonctions supplémentaires peuvent toutes s'exprimer en fonction des trois fonctions de base. Pour les fonctions de plus de 2 variables on peut se ramener à une fonction de 2 variables par substitution. Ceci pour montrer que toute fonction logique peut se ramener aux trois fonctions de base.
+Ces quatre fonctions supplÃ©mentaires peuvent toutes s'exprimer en fonction des trois fonctions de base. Pour les fonctions de plus de 2 variables on peut se ramener Ã  une fonction de 2 variables par substitution. Ceci pour montrer que toute fonction logique peut se ramener aux trois fonctions de base.
 
-\subsection{Postulats de l'algèbre de Boole}
-De l'hypothèse que l'inverse d'une variable ne peut jamais avoir la même valeur que la variable, on trouve:
+\subsection{Postulats de l'algÃ¨bre de Boole}
+De l'hypothÃ¨se que l'inverse d'une variable ne peut jamais avoir la mÃªme valeur que la variable, on trouve:
 \begin{equation}
 \begin{array}{c}
 A + \overline{A} = 1 \\
 A \cdot \overline{A} = 0
 \end{array}
 \end{equation}
-Ce sont les postulats de l'algèbre de Boole.
+Ce sont les postulats de l'algÃ¨bre de Boole.
 
-\subsection{Théorèmes}
-Grâce aux postulats nous pouvons poser une liste de théorèmes qui vont nous permettre de simplifier des équations logiques:
+\subsection{ThÃ©orÃ¨mes}
+GrÃ¢ce aux postulats nous pouvons poser une liste de thÃ©orÃ¨mes qui vont nous permettre de simplifier des Ã©quations logiques:
 
 \begin{center}
 \begin{tabular}{p{1cm} p{8cm} p{5cm}} 
@@ -167,35 +167,35 @@ Grâce aux postulats nous pouvons poser une liste de théorèmes qui vont nous perm
 3&$A \cdot 0=0$ &\\
 4&$A + 1=1$ &\\
 5&$A \cdot 1=A$ &\\
-6&$A + A=A$ &idempotence de l'opérateur OU\\
-7&$A \cdot A=A$ &idempotence de l'opérateur ET\\
-8&$A + B = B + A$ &commutativité\\
-9&$A \cdot B=B \cdot A$ &commutativité\\
-10&$A +(B + C) = (A + B)+ C = A+B+C$ &associativité\\
-11&$A \cdot (B \cdot C)= (A \cdot B) \cdot C = A\cdot B\cdot C$ &associativité\\
-12&$A + B \cdot C= (A + B) \cdot (A + C)$ &distributivité\\
-13&$A \cdot (B + C)= (A \cdot B) + (A \cdot C)$ &distributivité\\
+6&$A + A=A$ &idempotence de l'opÃ©rateur OU\\
+7&$A \cdot A=A$ &idempotence de l'opÃ©rateur ET\\
+8&$A + B = B + A$ &commutativitÃ©\\
+9&$A \cdot B=B \cdot A$ &commutativitÃ©\\
+10&$A +(B + C) = (A + B)+ C = A+B+C$ &associativitÃ©\\
+11&$A \cdot (B \cdot C)= (A \cdot B) \cdot C = A\cdot B\cdot C$ &associativitÃ©\\
+12&$A + B \cdot C= (A + B) \cdot (A + C)$ &distributivitÃ©\\
+13&$A \cdot (B + C)= (A \cdot B) + (A \cdot C)$ &distributivitÃ©\\
 14&$A \cdot B + \overline{A} \cdot B = B$ &absorption\\
-15&$\overline{A + B} = \overline{A} \cdot \overline{B}$ &Théorème de De Morgan\\
-16&$\overline{A \cdot B} = \overline{A} + \overline{B}$ &Théorème de De Morgan\\
-17&$(A \cdot B) + (\overline{A} \cdot C) + (B \cdot C) = (A \cdot B) + (\overline{A} \cdot C)$ &Théorème du Consensus\\
-18&$(A + B) \cdot (\overline{A} + C) \cdot (B + C) = (A + B) \cdot (\overline{A} + C)$ &Théorème du Consensus\\
+15&$\overline{A + B} = \overline{A} \cdot \overline{B}$ &ThÃ©orÃ¨me de De Morgan\\
+16&$\overline{A \cdot B} = \overline{A} + \overline{B}$ &ThÃ©orÃ¨me de De Morgan\\
+17&$(A \cdot B) + (\overline{A} \cdot C) + (B \cdot C) = (A \cdot B) + (\overline{A} \cdot C)$ &ThÃ©orÃ¨me du Consensus\\
+18&$(A + B) \cdot (\overline{A} + C) \cdot (B + C) = (A + B) \cdot (\overline{A} + C)$ &ThÃ©orÃ¨me du Consensus\\
 \end{tabular}
 \end{center}
 
 \subsection{Ecriture canonique}
 
-Définitions:
+DÃ©finitions:
 \begin{itemize}[label=\textbullet,font=\small]
-\item mintermes: les lignes de la table de vérité qui donnent 1 comme résultat par fonction ET
-\item maxtermes: les lignes de la table de vérité qui donnent 0 comme résultat par fonction OU
+\item mintermes: les lignes de la table de vÃ©ritÃ© qui donnent 1 comme rÃ©sultat par fonction ET
+\item maxtermes: les lignes de la table de vÃ©ritÃ© qui donnent 0 comme rÃ©sultat par fonction OU
 \end{itemize}
 
-Par convention, on note $m_{x}$ le minterme tel que x est le nombre décimal égal au code binaire formé par les variables. Par exemple, $m_{5}$ est le minterme correspondant à la configuration [101] des variables d'entrée.
-Par convention, on note $M_{x}$ le maxterme tel que x est le nombre décimal égal au code binaire formé par les variables. Par exemple, $M_{2}$ est le maxterme correspondant à la configuration [10] des variables d'entrée.
-Une conséquence importante est que les mintermes dépendent de l'ordre dans lequel les variables sont considérées.
+Par convention, on note $m_{x}$ le minterme tel que x est le nombre dÃ©cimal Ã©gal au code binaire formÃ© par les variables. Par exemple, $m_{5}$ est le minterme correspondant Ã  la configuration [101] des variables d'entrÃ©e.
+Par convention, on note $M_{x}$ le maxterme tel que x est le nombre dÃ©cimal Ã©gal au code binaire formÃ© par les variables. Par exemple, $M_{2}$ est le maxterme correspondant Ã  la configuration [10] des variables d'entrÃ©e.
+Une consÃ©quence importante est que les mintermes dÃ©pendent de l'ordre dans lequel les variables sont considÃ©rÃ©es.
 
-Pour déterminer la forme canonique d'une fonction logique dont on connait la table de vérité on peut faire la somme des mintermes:
+Pour dÃ©terminer la forme canonique d'une fonction logique dont on connait la table de vÃ©ritÃ© on peut faire la somme des mintermes:
 \begin{center}
 $F = m_1 + m_2 + m_3 + m_6 + m_7$
 \end{center}
@@ -230,7 +230,7 @@ $F = \overline{A} \cdot \overline{B} \cdot C + \overline{A} \cdot B \cdot \overl
 A \cdot B \cdot \overline{C} + A \cdot B \cdot C$
 \end{center}
 
-On peut aussi utiliser l'opération duale qui est le produit des maxtermes:
+On peut aussi utiliser l'opÃ©ration duale qui est le produit des maxtermes:
 \begin{center}
 $F = M_0 \cdot M_4 \cdot M_5$
 \end{center}
@@ -264,80 +264,80 @@ A & B & C & F\\
 $F = (\overline{A} + \overline{B} + \overline{C}) \cdot (A + \overline{B} + \overline{C}) \cdot (A + \overline{B} + C)$
 \end{center}
 
-Il est aisé de montrer que la somme des mintermes est égale au produit des maxtermes. Ceci montre encore une fois la dualité des opérations logiques. On constate aussi que le nombre de maxtermes est plus petit (3) que celui des mintermes (5). Il est donc plus simple d'utiliser le produit des maxtermes dans ce cas ci.
+Il est aisÃ© de montrer que la somme des mintermes est Ã©gale au produit des maxtermes. Ceci montre encore une fois la dualitÃ© des opÃ©rations logiques. On constate aussi que le nombre de maxtermes est plus petit (3) que celui des mintermes (5). Il est donc plus simple d'utiliser le produit des maxtermes dans ce cas ci.
 
-Le nom minterme vient du fait que dans une somme de produits, seulement un terme de la somme doit être à 1 pour donner un résultat de 1. Au contraire, dans un produit de sommes, il faut que toutes les sommes soient à 1 et donc on l'appelle maxterme.
+Le nom minterme vient du fait que dans une somme de produits, seulement un terme de la somme doit Ãªtre Ã  1 pour donner un rÃ©sultat de 1. Au contraire, dans un produit de sommes, il faut que toutes les sommes soient Ã  1 et donc on l'appelle maxterme.
 
-La forme canonique est rarement optimale, il faut donc la simplifier si on cherche à optimiser l'implémentation de la fonction. Il existe des méthodes manuelles et des méthodes algorithmiques. On utilisera la méthode des tables de Karnaugh pour une réduction manuelle si le nombre de variables est limité. Au delà de 4 variables on a intérêt à utiliser une méthode algorithmique telle que celle de Quine-McCluskey.
+La forme canonique est rarement optimale, il faut donc la simplifier si on cherche Ã  optimiser l'implÃ©mentation de la fonction. Il existe des mÃ©thodes manuelles et des mÃ©thodes algorithmiques. On utilisera la mÃ©thode des tables de Karnaugh pour une rÃ©duction manuelle si le nombre de variables est limitÃ©. Au delÃ  de 4 variables on a intÃ©rÃªt Ã  utiliser une mÃ©thode algorithmique telle que celle de Quine-McCluskey.
 
-\subsection{Opérateurs logiques en C}
+\subsection{OpÃ©rateurs logiques en C}
 
-La programmation des microcontrôleurs s'effectue principalement en C (2016). Nous avons donc besoin de savoir comment les opérations logiques sont représentées dans ce langage. En C, on différentie la logique sur 1 bit appelée "bit à bit" de celle sur un mot complet (8-16-32 bits). En effet, les deux types produisent des résultats différents car le FAUX sur un mot est bien '00000000' par exemple mais le VRAI comprend toutes les autres valeurs.
+La programmation des microcontrÃ´leurs s'effectue principalement en C (2016). Nous avons donc besoin de savoir comment les opÃ©rations logiques sont reprÃ©sentÃ©es dans ce langage. En C, on diffÃ©rentie la logique sur 1 bit appelÃ©e "bit Ã  bit" de celle sur un mot complet (8-16-32 bits). En effet, les deux types produisent des rÃ©sultats diffÃ©rents car le FAUX sur un mot est bien '00000000' par exemple mais le VRAI comprend toutes les autres valeurs.
 
 
 \begin{table}[!htbp]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
-Opérateur & Signification & Notation C & Utilisation typique\\
+OpÃ©rateur & Signification & Notation C & Utilisation typique\\
 \hline
-AND & ET & \& & Forçage à 0 d'un bit dans un registre\\
-OR & OU & | & Forçage à 1 d'un bit dans un registre\\
+AND & ET & \& & ForÃ§age Ã  0 d'un bit dans un registre\\
+OR & OU & | & ForÃ§age Ã  1 d'un bit dans un registre\\
 XOR & OU exclusif & \^{} & Inversion d'un bit dans un registre\\
 NOT & inversion & $\sim$ & Inversion de tous les bits d'un registre\\
 \hline
 \end{tabular}
 \end{center}
-\caption{Opérateurs logiques bit à bit en C}
+\caption{OpÃ©rateurs logiques bit Ã  bit en C}
 \end{table}
 
 Exemple: 
 \lstset{style=customc}
 \begin{lstlisting}
 char REG;
-REG &= 0x7F; //force à 0 le bit no 7
+REG &= 0x7F; //force Ã  0 le bit no 7
 \end{lstlisting}
 
 \begin{table}[!htbp]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
-Opérateur & Signification & Notation C & Utilisation typique\\
+OpÃ©rateur & Signification & Notation C & Utilisation typique\\
 \hline
 AND & ET & \&\& & Test logique\\
 OR & OU & || & Test logique\\
-NOT & négation & ! & Test logique\\
- & équivalence & == & Test logique\\
+NOT & nÃ©gation & ! & Test logique\\
+ & Ã©quivalence & == & Test logique\\
 \hline
 \end{tabular}
 \end{center}
-\caption{Opérateurs logiques booléens en C}
+\caption{OpÃ©rateurs logiques boolÃ©ens en C}
 \end{table}
 
 Exemple: 
 \lstset{style=customc}
 \begin{lstlisting}
 if (REG == 0x0F)
-	printf("REG est égal à 0x0F\n");
+	printf("REG est Ã©gal Ã  0x0F\n");
 \end{lstlisting}
 
-Les opérateurs bit à bit s'utilisent souvent pour la configuration de registres dans les microcontrôleurs, exemple:
+Les opÃ©rateurs bit Ã  bit s'utilisent souvent pour la configuration de registres dans les microcontrÃ´leurs, exemple:
 
 \lstset{style=customc}
 \begin{lstlisting}
 REG = P1IN & (BIT5 | BIT2);
 \end{lstlisting}
 
-Les opérateurs booléens quand à eux s'utilisent surtout dans la simplification d'expressions, exemple:
+Les opÃ©rateurs boolÃ©ens quand Ã  eux s'utilisent surtout dans la simplification d'expressions, exemple:
 
 \lstset{style=customc}
 \begin{lstlisting}
-if (!(!x && !y)) est équivalent à if (x || y)
+if (!(!x && !y)) est Ã©quivalent Ã  if (x || y)
 \end{lstlisting}
 
 %\begin{thebibliography}{1}
 %
-%\bibitem[1]{decoulon}Frédéric de Coulon, \emph{Théorie et traitement des signaux}, Presses polytechniques romandes, 1990
+%\bibitem[1]{decoulon}FrÃ©dÃ©ric de Coulon, \emph{ThÃ©orie et traitement des signaux}, Presses polytechniques romandes, 1990
 %
 %\bibitem[2]{proakis}John G. Proakis, Dimitris G. Manolakis: \emph{Digital Signal Processing}, Pearson Prentice Hall, 2007
 %
