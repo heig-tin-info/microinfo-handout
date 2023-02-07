@@ -1,21 +1,21 @@
 \chapter{\textsc{Programmation en C}}
-Pour atteindre le matériel depuis un langage de plus haut niveau, il faut un certain nombre d'instructions et de règles pour pouvoir rester dans un ensemble cohérent.
+Pour atteindre le matÃ©riel depuis un langage de plus haut niveau, il faut un certain nombre d'instructions et de rÃ¨gles pour pouvoir rester dans un ensemble cohÃ©rent.
 
 
-\section{Programmation système et programmation applicative}
-Les règles de programmation sont différentes si on écrit du code relatif à du matériel par rapport à des applications purement logiciel. Le premier exemple, déjà traité au chapitre 4, est les interruptions. Ce sont des fonctions système que l'on trouve seulement lorsqu'on programme à bas niveau. 
+\section{Programmation systÃ¨me et programmation applicative}
+Les rÃ¨gles de programmation sont diffÃ©rentes si on Ã©crit du code relatif Ã  du matÃ©riel par rapport Ã  des applications purement logiciel. Le premier exemple, dÃ©jÃ  traitÃ© au chapitre 4, est les interruptions. Ce sont des fonctions systÃ¨me que l'on trouve seulement lorsqu'on programme Ã  bas niveau. 
 
 \begin{table}[!htbp]
 \begin{center}
 {\fontfamily{phv}\selectfont
 \begin{tabular}{|c|c|}
 \hline 
-Programmation Système & Programmation Applicative \\
+Programmation SystÃ¨me & Programmation Applicative \\
 \hline  
 \hline 
 Interruptions & Pas d'interruptions \\
 \hline 
-Variables globales & Éviter les variables globales\\
+Variables globales & Ã‰viter les variables globales\\
 \hline
 Langages de bas niveau & Langages de haut niveau\\
 \hline
@@ -27,50 +27,50 @@ Structuration faible & Structuration forte\\
 \caption{Comparaison des styles de programmation \label{prog}}
 \end{table}
 
-\section{Directives et variables spécifiques à la programmation système}
+\section{Directives et variables spÃ©cifiques Ã  la programmation systÃ¨me}
 
 \subsection{Variables volatiles}
-Dans le cas ou une zone de stockage, tel qu'un registre, peut être modifié par autre chose que le programme principal on doit lui attribuer le modificateur volatile. Cela permet au compilateur de savoir que cette variable peut changer même si le code n'affecte jamais cette variable. Le compilateur ne va donc pas essayer d'optimiser une variable volatile (Exemple ci-dessous). 
+Dans le cas ou une zone de stockage, tel qu'un registre, peut Ãªtre modifiÃ© par autre chose que le programme principal on doit lui attribuer le modificateur volatile. Cela permet au compilateur de savoir que cette variable peut changer mÃªme si le code n'affecte jamais cette variable. Le compilateur ne va donc pas essayer d'optimiser une variable volatile (Exemple ci-dessous). 
 
 \subsection{Directive pragma}
-La directive \#pragma est une commande de précompilation définie par le standard ISO/ANSI C. Elle permet de garder une certaine portabilité du logiciel en contrôlant de manière particulière les extensions spécifiques à un fabricant. Cette directive permet, par exemple, de spécifier une adresse absolue qui désigne la position mémoire pour la déclaration suivante. La variable doit être déclarée soit \_\_no\_init ou const. 
+La directive \#pragma est une commande de prÃ©compilation dÃ©finie par le standard ISO/ANSI C. Elle permet de garder une certaine portabilitÃ© du logiciel en contrÃ´lant de maniÃ¨re particuliÃ¨re les extensions spÃ©cifiques Ã  un fabricant. Cette directive permet, par exemple, de spÃ©cifier une adresse absolue qui dÃ©signe la position mÃ©moire pour la dÃ©claration suivante. La variable doit Ãªtre dÃ©clarÃ©e soit \_\_no\_init ou const. 
 
 \lstset{style=customc}
 \begin{lstlisting}
 #pragma location=0x22E
-__no_init volatile char PORT1;	//PORT1 est un registre du périphérique
-                                //du même nom placé à l'adresse 0x22E
+__no_init volatile char PORT1;	//PORT1 est un registre du pÃ©riphÃ©rique
+                                //du mÃªme nom placÃ© Ã  l'adresse 0x22E
 \end{lstlisting}
-La directive \#pragma peut prendre d'autres fonctions selon le compilateur utilisé.
+La directive \#pragma peut prendre d'autres fonctions selon le compilateur utilisÃ©.
 
-\subsection{Fonctions intrinsèques}
-Les fonctions intrinsèques se reconnaissent par un double souligné devant (\_\_). Les fonctions intrinsèques permettent un accès direct aux instructions de bas niveau sans programmer en assembleur. Si le compilateur ne trouve pas les fonctions intrinsèques par défaut alors il faut inclure: intrinsics.h. Ces fonctions ne sont pas standard, elle dépendent du compilateur utilisé.
+\subsection{Fonctions intrinsÃ¨ques}
+Les fonctions intrinsÃ¨ques se reconnaissent par un double soulignÃ© devant (\_\_). Les fonctions intrinsÃ¨ques permettent un accÃ¨s direct aux instructions de bas niveau sans programmer en assembleur. Si le compilateur ne trouve pas les fonctions intrinsÃ¨ques par dÃ©faut alors il faut inclure: intrinsics.h. Ces fonctions ne sont pas standard, elle dÃ©pendent du compilateur utilisÃ©.
 
-Exemple de fonctions intrinsèques:
+Exemple de fonctions intrinsÃ¨ques:
 \lstset{style=customc}
 \begin{lstlisting}
 __no_init					//indique de ne pas initialiser une variable
-__disable_interrupt			//désactive toutes les interruptions
+__disable_interrupt			//dÃ©sactive toutes les interruptions
 __enable_interrupt			//active toutes les interruptions
 __low_power_mode_n			//enclenche le mode low power n
-__low_power_mode_off_on_exit //désactive le mode low power en sortie d'interruption
+__low_power_mode_off_on_exit //dÃ©sactive le mode low power en sortie d'interruption
 __asm()						//permet l'insertion de code assembleur
 \end{lstlisting}
 
 
-\section{Librairies d'abstraction du matériel: HAL}
-Pour rendre l'écriture de programmes plus propre on peut ajouter de la hiérarchie. Une façon de faire est de placer toutes les fonctions relatives aux périphériques dans des librairies d'abstraction de matériel ou HAL (Hardware Abstraction Library).
+\section{Librairies d'abstraction du matÃ©riel: HAL}
+Pour rendre l'Ã©criture de programmes plus propre on peut ajouter de la hiÃ©rarchie. Une faÃ§on de faire est de placer toutes les fonctions relatives aux pÃ©riphÃ©riques dans des librairies d'abstraction de matÃ©riel ou HAL (Hardware Abstraction Library).
 
-Une librairie HAL doit permettre de masquer tout ce qui est relatif à un périphérique donné. La structure typique d'un HAL est la suivante:
+Une librairie HAL doit permettre de masquer tout ce qui est relatif Ã  un pÃ©riphÃ©rique donnÃ©. La structure typique d'un HAL est la suivante:
 \begin{itemize}
-\item Constantes spécifiques
-\item Variables spécifiques
-\item Une fonction d'initialisation du périphérique
-\item Une fonction de mise en veille ou désactivation
-\item Des fonctions spécifiques comme lecture ou écriture
+\item Constantes spÃ©cifiques
+\item Variables spÃ©cifiques
+\item Une fonction d'initialisation du pÃ©riphÃ©rique
+\item Une fonction de mise en veille ou dÃ©sactivation
+\item Des fonctions spÃ©cifiques comme lecture ou Ã©criture
 \end{itemize}
 
-Exemples de structure HAL pour un accéléromètre (CMA3000):
+Exemples de structure HAL pour un accÃ©lÃ©romÃ¨tre (CMA3000):
 \lstset{style=customc}
 \begin{lstlisting}
 #define CTRL                    0x02
@@ -98,19 +98,19 @@ void Cma3000_readAccel(void)
 ...
 \end{lstlisting}
 
-Les interruptions relatives à un périphérique doivent être aussi traitées dans le HAL.
+Les interruptions relatives Ã  un pÃ©riphÃ©rique doivent Ãªtre aussi traitÃ©es dans le HAL.
 
 \section{Pilotes}
-Un pilote ou driver permet la gestion d'un périphérique dans le cadre d'un système d'exploitation. C'est un HAL avec en plus les interfaces standards propre à un système d'exploitation. Il existe donc des standards pour écrire des pilotes. 
+Un pilote ou driver permet la gestion d'un pÃ©riphÃ©rique dans le cadre d'un systÃ¨me d'exploitation. C'est un HAL avec en plus les interfaces standards propre Ã  un systÃ¨me d'exploitation. Il existe donc des standards pour Ã©crire des pilotes. 
 
-\section{Contrôle de l'exécution}
+\section{ContrÃ´le de l'exÃ©cution}
 
-Dans le cadre d'une programmation simple (mono-tâche), le processeur effectue les instructions linéairement à sa vitesse maximale. On a donc des instants actifs, avec des instructions à exécuter, et des instants inactifs où il n'y a rien à faire. Dans le cas le plus simple, la partie inactive est une attente active ou le processeur exécute une boucle infinie genre: while(1). Ceci revient à faire le même test qui est toujours vrai et donc à gaspiller de l'énergie. Il est de ce fait plus intéressant de mettre le processeur en pause. Ceci implique qu'il faut gérer le réveil au moment requis par le système.
+Dans le cadre d'une programmation simple (mono-tÃ¢che), le processeur effectue les instructions linÃ©airement Ã  sa vitesse maximale. On a donc des instants actifs, avec des instructions Ã  exÃ©cuter, et des instants inactifs oÃ¹ il n'y a rien Ã  faire. Dans le cas le plus simple, la partie inactive est une attente active ou le processeur exÃ©cute une boucle infinie genre: while(1). Ceci revient Ã  faire le mÃªme test qui est toujours vrai et donc Ã  gaspiller de l'Ã©nergie. Il est de ce fait plus intÃ©ressant de mettre le processeur en pause. Ceci implique qu'il faut gÃ©rer le rÃ©veil au moment requis par le systÃ¨me.
 
-Le cycle actif/pause peut être géré de deux manières:
+Le cycle actif/pause peut Ãªtre gÃ©rÃ© de deux maniÃ¨res:
 \begin{enumerate}
-\item Par interruption, une requête externe par exemple
-\item Par un timer, réveil à intervalle régulier.
+\item Par interruption, une requÃªte externe par exemple
+\item Par un timer, rÃ©veil Ã  intervalle rÃ©gulier.
 \end{enumerate}
 
 Exemple de code pour MSP430 dans le cas (1):
@@ -119,7 +119,7 @@ Exemple de code pour MSP430 dans le cas (1):
 void main(void) {
 	while(1) {
 		__bis_SR_register(LPM3_bits + GIE);	//Mode basse consommation LPM3 
-											//avec interruptions activées
+											//avec interruptions activÃ©es
 		...									//Code de l'application, 
 											//mode low power!
 	}
@@ -129,12 +129,12 @@ void main(void) {
 __interrupt void Port2_ISR(void) {
 
 	...										//Code de l'interruption, 
-											//mode actif par défaut
+											//mode actif par dÃ©faut
 	__low_power_mode_off_on_exit	
 }
 \end{lstlisting}
 
-Pour bien comprendre le code ci-dessus, il faut savoir qu'une interruption est toujours exécutée en mode actif (pas low power) et que dès la sortie, le processeur retourne dans le mode d'avant l'interruption. Il faut donc utiliser la fonction intrinsèque \_\_low\_power\_mode\_off\_on\_exit pour retourner dans le programme principal en mode actif et exécuter le code de l'application. Le mécanisme qui régit cette opération est la sauvegarde du contexte qui sauve sur la pile le registre de statut SR lors de l'interruption puis le dépile lors de la sortie. Rappel: les modes basse consommation sont désignés dans le SR.
+Pour bien comprendre le code ci-dessus, il faut savoir qu'une interruption est toujours exÃ©cutÃ©e en mode actif (pas low power) et que dÃ¨s la sortie, le processeur retourne dans le mode d'avant l'interruption. Il faut donc utiliser la fonction intrinsÃ¨que \_\_low\_power\_mode\_off\_on\_exit pour retourner dans le programme principal en mode actif et exÃ©cuter le code de l'application. Le mÃ©canisme qui rÃ©git cette opÃ©ration est la sauvegarde du contexte qui sauve sur la pile le registre de statut SR lors de l'interruption puis le dÃ©pile lors de la sortie. Rappel: les modes basse consommation sont dÃ©signÃ©s dans le SR.
 
 Exemple de code pour MSP430 dans le cas (2):
 \lstset{style=customc}
@@ -142,7 +142,7 @@ Exemple de code pour MSP430 dans le cas (2):
 void main(void) {
 	while(1) {		
 		__bis_SR_register(LPM3_bits + GIE);	//Mode basse consommation LPM3 
-											//avec interruptions activées
+											//avec interruptions activÃ©es
 		...									//Code de l'application, 
 											//mode low power!
 	}
@@ -152,7 +152,7 @@ void main(void) {
 __interrupt void Timer_ISR(void) {
 
 	...										//Code de l'interruption, 
-											//mode actif par défaut
+											//mode actif par dÃ©faut
 	__low_power_mode_off_on_exit	
 }
 \end{lstlisting}

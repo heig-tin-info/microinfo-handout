@@ -1,15 +1,15 @@
-\chapter{\textsc{Numération et arithmétique des ordinateurs}}
-La représentation des nombres, ainsi que l'arithmétique, est très critique pour une utilisation optimale par un processeur. Historiquement on a cherché des méthodes qui minimisent le nombre d'opérations à effectuer pour réduire la taille du matériel. Bien qu'aujourd'hui ce ne soit plus si critique, c'est toujours important pour maximiser la vitesse et minimiser la consommation des processeurs.
+\chapter{\textsc{NumÃ©ration et arithmÃ©tique des ordinateurs}}
+La reprÃ©sentation des nombres, ainsi que l'arithmÃ©tique, est trÃ¨s critique pour une utilisation optimale par un processeur. Historiquement on a cherchÃ© des mÃ©thodes qui minimisent le nombre d'opÃ©rations Ã  effectuer pour rÃ©duire la taille du matÃ©riel. Bien qu'aujourd'hui ce ne soit plus si critique, c'est toujours important pour maximiser la vitesse et minimiser la consommation des processeurs.
 
-\section{Codage binaire et hexadécimal}
-Il est utile de rappeler le codage des nombres entiers positifs en base 2 et 16 avant de progresser vers les nombres négatifs et les nombres fractionnaires:
+\section{Codage binaire et hexadÃ©cimal}
+Il est utile de rappeler le codage des nombres entiers positifs en base 2 et 16 avant de progresser vers les nombres nÃ©gatifs et les nombres fractionnaires:
 
 \begin{table}[!htbp]
 \begin{center}
 {\fontfamily{phv}\selectfont
 \begin{tabular}{|c|c|c||c|c|c|}
 \hline 
-Entier & Binaire & Hexadécimal & Entier & Binaire & Hexadécimal\\
+Entier & Binaire & HexadÃ©cimal & Entier & Binaire & HexadÃ©cimal\\
 \hline  
 0 & 0000 & 0 & 8 & 1000 & 8\\
 1 & 0001 & 1 & 9 & 1001 & 9\\
@@ -23,20 +23,20 @@ Entier & Binaire & Hexadécimal & Entier & Binaire & Hexadécimal\\
 \end{tabular}
 }
 \end{center}
-\caption{Codage binaire et hexadécimal des entiers positifs sur 4 bits \label{binaire hexa}}
+\caption{Codage binaire et hexadÃ©cimal des entiers positifs sur 4 bits \label{binaire hexa}}
 \end{table}
 
 %\newpage 
-\section{Représentation des nombres}
-Les circuits logiques, composants des processeurs, ne fonctionnent qu'en binaire. Il faut donc convertir tous les nombres usuels, pour pouvoir les utiliser. Il est aisé d'attribuer un code binaire à un nombre donné. Par exemple 000 pour le zéro et 001 pour le 1. Mais ceci devient un problème lorsqu'on ajoute le signe moins et la virgule qui ne sont pas des chiffres.
+\section{ReprÃ©sentation des nombres}
+Les circuits logiques, composants des processeurs, ne fonctionnent qu'en binaire. Il faut donc convertir tous les nombres usuels, pour pouvoir les utiliser. Il est aisÃ© d'attribuer un code binaire Ã  un nombre donnÃ©. Par exemple 000 pour le zÃ©ro et 001 pour le 1. Mais ceci devient un problÃ¨me lorsqu'on ajoute le signe moins et la virgule qui ne sont pas des chiffres.
 
 \subsection{Entiers} 
-On représente les entiers positifs simplement à l'aide d'une conversion décimale-binaire directe (Table \ref{binaire hexa}).
+On reprÃ©sente les entiers positifs simplement Ã  l'aide d'une conversion dÃ©cimale-binaire directe (Table \ref{binaire hexa}).
 
-Pour les nombres entiers négatifs nous devons faire un choix, prenons par exemple le codage avec 4 bits. Nous avons donc $2^4 = 16$ codes différents disponibles et nous devons aussi coder le zéro ce qui donne $16 - 1$ nombres disponibles. Comme c'est impaire nous aurons soit un nombre de plus du coté positif ou un nombre de plus du coté négatif. Le choix fait a été celui d'avoir un nombre négatif de plus (Table \ref{entiers négatifs}). Ce qui donne $2^{n-1}$ du côté positif pour accommoder le zéro et $2^n$ du côté négatif.
+Pour les nombres entiers nÃ©gatifs nous devons faire un choix, prenons par exemple le codage avec 4 bits. Nous avons donc $2^4 = 16$ codes diffÃ©rents disponibles et nous devons aussi coder le zÃ©ro ce qui donne $16 - 1$ nombres disponibles. Comme c'est impaire nous aurons soit un nombre de plus du cotÃ© positif ou un nombre de plus du cotÃ© nÃ©gatif. Le choix fait a Ã©tÃ© celui d'avoir un nombre nÃ©gatif de plus (Table \ref{entiers nÃ©gatifs}). Ce qui donne $2^{n-1}$ du cÃ´tÃ© positif pour accommoder le zÃ©ro et $2^n$ du cÃ´tÃ© nÃ©gatif.
 
-\paragraph{Complément à deux}
-Il nous reste à déterminer quels codes attribuer aux nombres négatifs. En effet on peut choisir de placer les nombres négatifs à la suite des nombres positifs \textbf{ou} avant le zéro en faisant le calcul $0-1$ en binaire ou encore en décalant tous les nombres. Comparons les trois possibilités et notons bien les différences:
+\paragraph{ComplÃ©ment Ã  deux}
+Il nous reste Ã  dÃ©terminer quels codes attribuer aux nombres nÃ©gatifs. En effet on peut choisir de placer les nombres nÃ©gatifs Ã  la suite des nombres positifs \textbf{ou} avant le zÃ©ro en faisant le calcul $0-1$ en binaire ou encore en dÃ©calant tous les nombres. Comparons les trois possibilitÃ©s et notons bien les diffÃ©rences:
 
 \begin{table}[!htbp]
 \begin{center}
@@ -61,24 +61,24 @@ Entier & Cas 1 & Cas 2 & Cas 3\\
 \end{tabular}
 }
 \end{center}
-\caption{Trois possibilités pour coder les nombres entiers négatifs \label{entiers négatifs}}
+\caption{Trois possibilitÃ©s pour coder les nombres entiers nÃ©gatifs \label{entiers nÃ©gatifs}}
 \end{table}
 
-On constate que le cas 1 offre une discontinuité entre -1 et 0 ce qui rend cette notation peu intéressante d'un point de vue arithmétique. Ce n'est donc pas utilisé en pratique.
+On constate que le cas 1 offre une discontinuitÃ© entre -1 et 0 ce qui rend cette notation peu intÃ©ressante d'un point de vue arithmÃ©tique. Ce n'est donc pas utilisÃ© en pratique.
 
-Les cas 2 et 3, par contre, sont symétriques par rapport à zéro ce qui permet de faire l'opération $0-1$ sans erreur. Tous les nombres sont continus ce qui est souhaitable.
+Les cas 2 et 3, par contre, sont symÃ©triques par rapport Ã  zÃ©ro ce qui permet de faire l'opÃ©ration $0-1$ sans erreur. Tous les nombres sont continus ce qui est souhaitable.
 
-Le cas 3 à la particularité d'avoir le zéro décimal à un nombre différent du zéro binaire mais ce n'est pas un problème en soit. Ce cas est souvent utilisé pour coder l'exposant des nombres en virgule flottante et s'appelle \textbf{décalage par excès}. L'excès étant la valeur de décalage de l'échelle qui correspond au zéro décimal, e.g. 1000 = 8 (excès).
+Le cas 3 Ã  la particularitÃ© d'avoir le zÃ©ro dÃ©cimal Ã  un nombre diffÃ©rent du zÃ©ro binaire mais ce n'est pas un problÃ¨me en soit. Ce cas est souvent utilisÃ© pour coder l'exposant des nombres en virgule flottante et s'appelle \textbf{dÃ©calage par excÃ¨s}. L'excÃ¨s Ã©tant la valeur de dÃ©calage de l'Ã©chelle qui correspond au zÃ©ro dÃ©cimal, e.g. 1000 = 8 (excÃ¨s).
 
-Dans le cas 2 on peut remarquer aussi que le nombre de gauche vaut "0" pour un nombre positif et "1" pour un nombre négatif, c'est pour cela qu'on l'appelle aussi bit de signe. Noter bien que si on avait choisi de coder les nombres de -7 à 8, à la place de -8 à 7, le bit de signe ne serait pas possible. Ceci est du au fait que le zéro n'a pas de signe. En pratique et en grande majorité, on préfère ce dernier et on le nomme \textbf{complément à deux}. 
+Dans le cas 2 on peut remarquer aussi que le nombre de gauche vaut "0" pour un nombre positif et "1" pour un nombre nÃ©gatif, c'est pour cela qu'on l'appelle aussi bit de signe. Noter bien que si on avait choisi de coder les nombres de -7 Ã  8, Ã  la place de -8 Ã  7, le bit de signe ne serait pas possible. Ceci est du au fait que le zÃ©ro n'a pas de signe. En pratique et en grande majoritÃ©, on prÃ©fÃ¨re ce dernier et on le nomme \textbf{complÃ©ment Ã  deux}. 
 
-Le nom \textbf{complément à deux} est une contraction de complément modulo 2. Un nombre binaire en complément à deux se calcule donc par le complément à $2^n$ du nombre non signé:
+Le nom \textbf{complÃ©ment Ã  deux} est une contraction de complÃ©ment modulo 2. Un nombre binaire en complÃ©ment Ã  deux se calcule donc par le complÃ©ment Ã  $2^n$ du nombre non signÃ©:
 \begin{equation}
 A_{comp2} = 2^n - |A|
 \end{equation}
-On part donc du chiffre le plus élevé et on décrémente. Exemple pour A = -1 sur 4 bits, $A_{comp2} = 2^4 - 1 = 15 = 1111$.
+On part donc du chiffre le plus Ã©levÃ© et on dÃ©crÃ©mente. Exemple pour A = -1 sur 4 bits, $A_{comp2} = 2^4 - 1 = 15 = 1111$.
 
-Le grand mérite de la notation en complément à deux est le fait qu'on peut additionner sans se préoccuper du signe alors que si on avait choisi une autre notation il aurait fallu utiliser une condition sur le signe pour en tenir compte. Pour vérifier prenons deux nombres m et r sur n bits et effectuons tous les cas de signe:
+Le grand mÃ©rite de la notation en complÃ©ment Ã  deux est le fait qu'on peut additionner sans se prÃ©occuper du signe alors que si on avait choisi une autre notation il aurait fallu utiliser une condition sur le signe pour en tenir compte. Pour vÃ©rifier prenons deux nombres m et r sur n bits et effectuons tous les cas de signe:
 
 \begin{equation}
 \begin{aligned}
@@ -90,23 +90,23 @@ Le grand mérite de la notation en complément à deux est le fait qu'on peut addit
 (-m) + (-r) \enspace &= \enspace 2^{n} - m + 2^{n} - r = -m-r
 \end{aligned}
 \end{equation}
-Les $2^n$ n'affectent pas les résultats par arithmétique modulo $2^n$. On constate donc que tous les résultats sont corrects quelque soit le signe. 
+Les $2^n$ n'affectent pas les rÃ©sultats par arithmÃ©tique modulo $2^n$. On constate donc que tous les rÃ©sultats sont corrects quelque soit le signe. 
 
-\paragraph{Négation d'un nombre positif}
-De la Table \ref{entiers négatifs}, on peut constater qu'il suffit d'inverser les bits du nombre positif puis d'y ajouter "1" pour obtenir la négation:
+\paragraph{NÃ©gation d'un nombre positif}
+De la Table \ref{entiers nÃ©gatifs}, on peut constater qu'il suffit d'inverser les bits du nombre positif puis d'y ajouter "1" pour obtenir la nÃ©gation:
 
 \begin{equation}
 -A = \overline{A} - 1
 \end{equation}
 
-C'est une manière plus rapide de calculer le complément modulo 2. Une démonstration algébrique est donnée en annexe.
+C'est une maniÃ¨re plus rapide de calculer le complÃ©ment modulo 2. Une dÃ©monstration algÃ©brique est donnÃ©e en annexe.
  
 \paragraph{Extension d'un nombre entier}
-Dans le cas ou on désire passer d'un format de n bits à m bits avec m supérieur à n, on doit remplir les cases vides m-n. Il est trivial que les cases vides d'un nombre positif doivent être des zéros, exemple, 1 sur 4 bits: 0001 et sur 8 bits: 00000001. L'extension des nombres positifs consiste donc à ajouter autant de zéros que nécessaire, mais quand est-il des nombres négatifs en complément à 2? Prenons un exemple -1 qui est 1111 sur 4 bits et si on ajoute des zéros cela donne 00001111 = 8 en complément à deux, ça ne marche pas. Pour qu'un nombre négatif reste négatif, il faut que son bit de signe soit "1", on devrait donc mettre 10001111 = -112 ce qui ne joue toujours pas. On peut trouver la réponse en faisant l'opération 0 - 1 sur 8 bits et on trouve 11111111 = -1. On constate donc que pour les nombres négatifs, il faut ajouter des "1" dans les case vides. Une démonstration algébrique vous est proposée en annexe.
+Dans le cas ou on dÃ©sire passer d'un format de n bits Ã  m bits avec m supÃ©rieur Ã  n, on doit remplir les cases vides m-n. Il est trivial que les cases vides d'un nombre positif doivent Ãªtre des zÃ©ros, exemple, 1 sur 4 bits: 0001 et sur 8 bits: 00000001. L'extension des nombres positifs consiste donc Ã  ajouter autant de zÃ©ros que nÃ©cessaire, mais quand est-il des nombres nÃ©gatifs en complÃ©ment Ã  2? Prenons un exemple -1 qui est 1111 sur 4 bits et si on ajoute des zÃ©ros cela donne 00001111 = 8 en complÃ©ment Ã  deux, Ã§a ne marche pas. Pour qu'un nombre nÃ©gatif reste nÃ©gatif, il faut que son bit de signe soit "1", on devrait donc mettre 10001111 = -112 ce qui ne joue toujours pas. On peut trouver la rÃ©ponse en faisant l'opÃ©ration 0 - 1 sur 8 bits et on trouve 11111111 = -1. On constate donc que pour les nombres nÃ©gatifs, il faut ajouter des "1" dans les case vides. Une dÃ©monstration algÃ©brique vous est proposÃ©e en annexe.
  
 %\newpage
 \subsection{Virgule flottante}
-Pour les nombre réels, on doit coder la virgule et sa position en plus du signe. Ceci complique la représentation car il faut un deuxième nombre, qui est un entier, pour représenter la position de la virgule. On choisit de préférence d'utiliser  ce nombre pour représenter un exposant plutôt qu'une position de virgule mais ça reviens au même.
+Pour les nombre rÃ©els, on doit coder la virgule et sa position en plus du signe. Ceci complique la reprÃ©sentation car il faut un deuxiÃ¨me nombre, qui est un entier, pour reprÃ©senter la position de la virgule. On choisit de prÃ©fÃ©rence d'utiliser  ce nombre pour reprÃ©senter un exposant plutÃ´t qu'une position de virgule mais Ã§a reviens au mÃªme.
 
 \begin{equation}
 X dans \, \mathbb{R} = signe \cdot m \cdot 2^{exposant}
@@ -123,11 +123,11 @@ signe & m3 & m2 & m1 & m0 & e2 & e1 & e0 \\
 }
 \end{center}
 
-Noter bien que l'exposant peut être positif ou négatif d'où la nécessité de choisir un format pour l'exposant comme le complément à deux ou le décalage par excès (le décalage consiste simplement à soustraire $2^{n-1}$ pour retrouver une moitié négative).
+Noter bien que l'exposant peut Ãªtre positif ou nÃ©gatif d'oÃ¹ la nÃ©cessitÃ© de choisir un format pour l'exposant comme le complÃ©ment Ã  deux ou le dÃ©calage par excÃ¨s (le dÃ©calage consiste simplement Ã  soustraire $2^{n-1}$ pour retrouver une moitiÃ© nÃ©gative).
 
 %\newpage 
 \subsection{Virgule fixe}
-On peut simplifier la représentation des nombre réels si la virgule est fixe, c-à-d si l'exposant ne change pas. Ceci est très utilisé dans les processeurs qui ne possèdent pas d'unité de calcul en virgule flottante.
+On peut simplifier la reprÃ©sentation des nombre rÃ©els si la virgule est fixe, c-Ã -d si l'exposant ne change pas. Ceci est trÃ¨s utilisÃ© dans les processeurs qui ne possÃ¨dent pas d'unitÃ© de calcul en virgule flottante.
 
 \begin{center}
 {\fontfamily{phv}\selectfont
@@ -139,7 +139,7 @@ On peut simplifier la représentation des nombre réels si la virgule est fixe, c-
 }
 \end{center}
 
-Dans l'exemple ci-dessus nous avons 4 bits pour le nombre entier et 4 bits pour le nombre fractionnaire. La virgule n'est pas codée en tant que tel et le nombre complet utilise 8 bits. Seul deux constantes sont nécessaires pour décrire le format en virgule fixe: la longueur de la partie entière et la longueur de la partie fractionnaire:
+Dans l'exemple ci-dessus nous avons 4 bits pour le nombre entier et 4 bits pour le nombre fractionnaire. La virgule n'est pas codÃ©e en tant que tel et le nombre complet utilise 8 bits. Seul deux constantes sont nÃ©cessaires pour dÃ©crire le format en virgule fixe: la longueur de la partie entiÃ¨re et la longueur de la partie fractionnaire:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -147,8 +147,8 @@ Dans l'exemple ci-dessus nous avons 4 bits pour le nombre entier et 4 bits pour 
 #define FIXEDPT_FBITS	4
 \end{lstlisting}
 
-\section{Opérateurs}
-Les opérations arithmétiques sont différentes pour chaque format de nombre mais elles peuvent toutes se ramener à un additionneur 1 bit qui se réalise facilement à l'aide d'un porte logique XOR et AND. 
+\section{OpÃ©rateurs}
+Les opÃ©rations arithmÃ©tiques sont diffÃ©rentes pour chaque format de nombre mais elles peuvent toutes se ramener Ã  un additionneur 1 bit qui se rÃ©alise facilement Ã  l'aide d'un porte logique XOR et AND. 
 
 \begin{table}[!htbp]
 \begin{center}
@@ -169,21 +169,21 @@ A & B & A + B & Retenue\\
 \end{tabular}
 }
 \end{center}
-\caption{Table de vérité de l'additionneur 1 bit \label{add 1 bit}}
+\caption{Table de vÃ©ritÃ© de l'additionneur 1 bit \label{add 1 bit}}
 \end{table}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=5cm]{./Figures/arith/Half-adder.pdf}
   \rule{35em}{0.5pt}
-  \caption[half_adder]{Réalisation de l'additionneur 1 bit (sans entrée de retenue)}
+  \caption[half_adder]{RÃ©alisation de l'additionneur 1 bit (sans entrÃ©e de retenue)}
   \label{fig:half_adder}
 \end{figure}
 
-Le circuit complet d'un additionneur 1 bit doit encore sommer une retenue éventuelle en entrée donc en réalité il additionne 3 bits. Exactement de la même manière que lorsqu'on calcule en colonnes à la main.
+Le circuit complet d'un additionneur 1 bit doit encore sommer une retenue Ã©ventuelle en entrÃ©e donc en rÃ©alitÃ© il additionne 3 bits. Exactement de la mÃªme maniÃ¨re que lorsqu'on calcule en colonnes Ã  la main.
 
 \subsection{Addition}
-Additionner deux nombres entiers positifs est évident mais attention aux débordements! Par exemple: 4 + 4 = 8, sur 4 bits (n=4) en complément à deux, nous n'avons pas de code pour le 8. Pour comprendre ce qu'il se passe, effectuons l'addition en binaire:
+Additionner deux nombres entiers positifs est Ã©vident mais attention aux dÃ©bordements! Par exemple: 4 + 4 = 8, sur 4 bits (n=4) en complÃ©ment Ã  deux, nous n'avons pas de code pour le 8. Pour comprendre ce qu'il se passe, effectuons l'addition en binaire:
 
 \begin{center}
 {\fontfamily{phv}\selectfont
@@ -196,9 +196,9 @@ Additionner deux nombres entiers positifs est évident mais attention aux déborde
 }
 \end{center}
 
-Selon ce calcul, nous avons donc un résultat de -8 à la place de +8. Il faut donc un mécanisme pour nous avertir quand un débordement se produit (voir chapitre 8).
+Selon ce calcul, nous avons donc un rÃ©sultat de -8 Ã  la place de +8. Il faut donc un mÃ©canisme pour nous avertir quand un dÃ©bordement se produit (voir chapitre 8).
 
-Nous avons un problème similaire lors de l'addition de deux nombres entiers négatifs, par exemple: -4 + (-5) = -9. Si nous faisons le calcul en représentation en complément à deux sur 4 bits:
+Nous avons un problÃ¨me similaire lors de l'addition de deux nombres entiers nÃ©gatifs, par exemple: -4 + (-5) = -9. Si nous faisons le calcul en reprÃ©sentation en complÃ©ment Ã  deux sur 4 bits:
 
 \begin{center}
 {\fontfamily{phv}\selectfont
@@ -211,7 +211,7 @@ Nous avons un problème similaire lors de l'addition de deux nombres entiers néga
 }
 \end{center}
 
-On peut constater que le débordement conduit à retourner au nombre le plus élevé de l'autre côté de la gamme. En binaire, le calcul s'effectue, débordement ou pas, et le processeur continue comme si de rien n'était. On appelle ceci, l'arithmétique modulo $2^n$. L'opération modulo, par exemple en langage C, retourne le reste de la division entière d'un nombre. Cette opération s'effectue automatiquement à l'aide d'une addition en arithmétique modulo, par exemple en représentation 4 bits non-signée: (8 + 9) modulo 16 = 1. Pour bien comprendre effectuons l'addition en binaire:
+On peut constater que le dÃ©bordement conduit Ã  retourner au nombre le plus Ã©levÃ© de l'autre cÃ´tÃ© de la gamme. En binaire, le calcul s'effectue, dÃ©bordement ou pas, et le processeur continue comme si de rien n'Ã©tait. On appelle ceci, l'arithmÃ©tique modulo $2^n$. L'opÃ©ration modulo, par exemple en langage C, retourne le reste de la division entiÃ¨re d'un nombre. Cette opÃ©ration s'effectue automatiquement Ã  l'aide d'une addition en arithmÃ©tique modulo, par exemple en reprÃ©sentation 4 bits non-signÃ©e: (8 + 9) modulo 16 = 1. Pour bien comprendre effectuons l'addition en binaire:
  
 \begin{center}
 {\fontfamily{phv}\selectfont
@@ -224,21 +224,21 @@ On peut constater que le débordement conduit à retourner au nombre le plus élevé
 }
 \end{center}
 
-Le résultat de l'addition est bien celui du reste de la division entière par 16.
+Le rÃ©sultat de l'addition est bien celui du reste de la division entiÃ¨re par 16.
 
-L'addition en virgule fixe reste la même que l'addition pour les entiers mais l'addition en virgule flottante est très différente car il faut ajuster l'exposant.
+L'addition en virgule fixe reste la mÃªme que l'addition pour les entiers mais l'addition en virgule flottante est trÃ¨s diffÃ©rente car il faut ajuster l'exposant.
 
 \subsection{Soustraction}
-La soustraction peut se décomposer en un changement de signe et une addition ce qui permet de se ramener aux cas ci-dessus. 
+La soustraction peut se dÃ©composer en un changement de signe et une addition ce qui permet de se ramener aux cas ci-dessus. 
 
 \begin{equation}
 A - B = A + (-B)
 \end{equation}
 
-De plus un seul composant matériel, l'additionneur, est nécessaire pour les deux opérations. La négation ne nécessite qu'une inversion et l'ajout de "1" qui s'effectue aussi à l'aide du même additionneur.
+De plus un seul composant matÃ©riel, l'additionneur, est nÃ©cessaire pour les deux opÃ©rations. La nÃ©gation ne nÃ©cessite qu'une inversion et l'ajout de "1" qui s'effectue aussi Ã  l'aide du mÃªme additionneur.
 
 \subsection{Multiplication}
-On peut décomposer une multiplication en sommes de produits qui se ramène d'un point de vue matériel à des additions et des décalages. Prenons un exemple 3 x 5 sur 4 bits (n=4) non signé:
+On peut dÃ©composer une multiplication en sommes de produits qui se ramÃ¨ne d'un point de vue matÃ©riel Ã  des additions et des dÃ©calages. Prenons un exemple 3 x 5 sur 4 bits (n=4) non signÃ©:
 
 \begin{center}
 {\fontfamily{phv}\selectfont
@@ -256,9 +256,9 @@ x & 0101 & 5 \\
 }
 \end{center}
 
-On constate donc qu'il suffit de créer quatre produits intermédiaires qui sont juste des décalages du nombre 3 lorsque le nombre multipliant est non nul. Ensuite on fait la somme des quatre nombres avec un additionneur. Noter bien que si on décale de 4 crans vers la gauche, le nombre intermédiaire à une taille de 8 bits. Les résultats sont donc sur $2n$ bits.
+On constate donc qu'il suffit de crÃ©er quatre produits intermÃ©diaires qui sont juste des dÃ©calages du nombre 3 lorsque le nombre multipliant est non nul. Ensuite on fait la somme des quatre nombres avec un additionneur. Noter bien que si on dÃ©cale de 4 crans vers la gauche, le nombre intermÃ©diaire Ã  une taille de 8 bits. Les rÃ©sultats sont donc sur $2n$ bits.
 
-Le cas des nombres négatifs est différent au niveau de l'extension des nombres intermédiaires. En effet, dans notre multiplication ci-dessus nous avons introduit des zéros pour étendre un nombre. Prenons l'exemple suivant (-3) x 2 sur 4 bits signés:
+Le cas des nombres nÃ©gatifs est diffÃ©rent au niveau de l'extension des nombres intermÃ©diaires. En effet, dans notre multiplication ci-dessus nous avons introduit des zÃ©ros pour Ã©tendre un nombre. Prenons l'exemple suivant (-3) x 2 sur 4 bits signÃ©s:
 
 \begin{center}
 {\fontfamily{phv}\selectfont
@@ -276,9 +276,9 @@ x & 0010 & 2 \\
 }
 \end{center}
 
-Dans ce cas ci, nous devons étendre le nombre intermédiaire négatif avec des "1" pour obtenir la bonne solution. Le résultat reste -6 quelque soit le nombre de "1" devant le nombre (1010 = -6, 11111010 = -6). Le changement des bits de l'extension nécessite une condition sur le signe qui rend le calcul d'un nombre signé plus long que celui d'un nombre non-signé. Il faut donc une autre technique pour un processeur qui est indépendante du signe.
+Dans ce cas ci, nous devons Ã©tendre le nombre intermÃ©diaire nÃ©gatif avec des "1" pour obtenir la bonne solution. Le rÃ©sultat reste -6 quelque soit le nombre de "1" devant le nombre (1010 = -6, 11111010 = -6). Le changement des bits de l'extension nÃ©cessite une condition sur le signe qui rend le calcul d'un nombre signÃ© plus long que celui d'un nombre non-signÃ©. Il faut donc une autre technique pour un processeur qui est indÃ©pendante du signe.
 
-La multiplication de nombres en virgule fixe est légèrement différente car il faut décaler le résultat de multiplication de la taille de la partie fractionnaire vers la droite:
+La multiplication de nombres en virgule fixe est lÃ©gÃ¨rement diffÃ©rente car il faut dÃ©caler le rÃ©sultat de multiplication de la taille de la partie fractionnaire vers la droite:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -294,19 +294,19 @@ fixedpt fixedpt_mul(fixedpt A, fixedpt B)
 }
 \end{lstlisting}
 
-Le but de ce décalage est de replacer la virgule au bon endroit dans le résultat car le nombre de bits de la partie fractionnaire vaut $2n$ et donc il faut le décaler de $n$ à droite.
+Le but de ce dÃ©calage est de replacer la virgule au bon endroit dans le rÃ©sultat car le nombre de bits de la partie fractionnaire vaut $2n$ et donc il faut le dÃ©caler de $n$ Ã  droite.
 
-\paragraph{Réduction de la complexité du calcul de la multiplication}
-En faisant le calcul selon la méthode en colonnes trois problèmes se posent:
+\paragraph{RÃ©duction de la complexitÃ© du calcul de la multiplication}
+En faisant le calcul selon la mÃ©thode en colonnes trois problÃ¨mes se posent:
 \begin{enumerate}
-\item Le nombre de produits intermédiaires est de $n$ ce qui nécessite $n$ emplacements de mémoire sous forme de registres rapides pour effectuer le calcul à la vitesse maximum. 
-\item La taille des résultats intermédiaires vaut $2n$ donc il faut des emplacements mémoire doubles.
-\item Si une des opérandes est négative alors il faut calculer sans le signe puis effectuer une correction
+\item Le nombre de produits intermÃ©diaires est de $n$ ce qui nÃ©cessite $n$ emplacements de mÃ©moire sous forme de registres rapides pour effectuer le calcul Ã  la vitesse maximum. 
+\item La taille des rÃ©sultats intermÃ©diaires vaut $2n$ donc il faut des emplacements mÃ©moire doubles.
+\item Si une des opÃ©randes est nÃ©gative alors il faut calculer sans le signe puis effectuer une correction
 \end{enumerate}
-Le premier problème peut se résoudre en accumulant le résultat intermédiaire au fur et à mesure. Le deuxième en ne mémorisant que les n bits de poids fort. Le dernier problème en utilisant l'\textbf{algorithme de Booth} (voir annexe \ref{ch:algebra}). 
+Le premier problÃ¨me peut se rÃ©soudre en accumulant le rÃ©sultat intermÃ©diaire au fur et Ã  mesure. Le deuxiÃ¨me en ne mÃ©morisant que les n bits de poids fort. Le dernier problÃ¨me en utilisant l'\textbf{algorithme de Booth} (voir annexe \ref{ch:algebra}). 
 
 \subsection{Division}
-La division entière ou Euclidienne est très simple à implémenter à l'aide de la soustraction successive du diviseur:
+La division entiÃ¨re ou Euclidienne est trÃ¨s simple Ã  implÃ©menter Ã  l'aide de la soustraction successive du diviseur:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -320,9 +320,9 @@ int divide(N, D) {
 }
 \end{lstlisting}
 
-La division entière peut donc s'effectuer avec un additionneur, une négation et un test. Le temps d'exécution est par contre relativement long si N>>D.
+La division entiÃ¨re peut donc s'effectuer avec un additionneur, une nÃ©gation et un test. Le temps d'exÃ©cution est par contre relativement long si N>>D.
 
-Pour le cas de la virgule fixe, il faut décaler le multiplicande vers la gauche avant division:
+Pour le cas de la virgule fixe, il faut dÃ©caler le multiplicande vers la gauche avant division:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -339,17 +339,17 @@ fixedpt_div(fixedpt A, fixedpt B)
 }
 \end{lstlisting}
 
-Comme pour la multiplication, il existe des algorithmes plus efficaces pour faire la division entière comme celui appelé SRT.
+Comme pour la multiplication, il existe des algorithmes plus efficaces pour faire la division entiÃ¨re comme celui appelÃ© SRT.
 
 \section{Exercices}
 
 \paragraph{Ex 1}
-Implémenter l'algorithme de Booth en C puis en assembleur.
+ImplÃ©menter l'algorithme de Booth en C puis en assembleur.
 
 \paragraph{Ex 2}
-Écrire en C une fonction de division de deux nombres entiers en complément à 2 qui retourne le résultat en utilisant seulement des additions ou des soustractions. Attention aux signes et à la division par zéro.
+Ã‰crire en C une fonction de division de deux nombres entiers en complÃ©ment Ã  2 qui retourne le rÃ©sultat en utilisant seulement des additions ou des soustractions. Attention aux signes et Ã  la division par zÃ©ro.
 
 \paragraph{Ex 3}
-Implémenter l'algorithme SRT en C.
+ImplÃ©menter l'algorithme SRT en C.
 
 

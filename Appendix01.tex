@@ -1,7 +1,7 @@
-\chapter{\textsc{Démonstrations algébriques}}
+\chapter{\textsc{DÃ©monstrations algÃ©briques}}
 \label{ch:algebra}
 
-De manière générale, on peut écrire un nombre entier non-signé sous la forme suivante:
+De maniÃ¨re gÃ©nÃ©rale, on peut Ã©crire un nombre entier non-signÃ© sous la forme suivante:
 \begin{equation}
 \begin{aligned}
 A_{10} &= \sum_{i=0}^{n-1} a_{i}2^{i} = a_{n-1}2^{n-1} + a_{n-2}2^{n-2} +...+ a_{1}2^{1} + a_{0}2^{0} \\
@@ -10,7 +10,7 @@ et &:   A_{10} \in [0...2^{n} - 1]
 \end{aligned}
 \end{equation}
 
-Un nombre entier signé, en complément à deux, peut être écrit sous cette forme:
+Un nombre entier signÃ©, en complÃ©ment Ã  deux, peut Ãªtre Ã©crit sous cette forme:
 \begin{equation}
 A_{10} = -a_{n-1}2^{n-1} + \sum_{i=0}^{n-2} a_{i}2^{i} = -a_{n-1}2^{n-1} + a_{n-2}2^{n-2} +...+ a_{1}2^{1} + a_{0}2^{0}
 \end{equation}
@@ -23,14 +23,14 @@ A_{10} = -a_{n-1}2^{n-1} + \sum_{i=0}^{n-2} a_{i}2^{i} = -a_{n-1}2^{n-1} + a_{n-
 \end{aligned}
 \end{equation}
 
-\section{Extension d'un nombre signé}
+\section{Extension d'un nombre signÃ©}
 
-On cherche à trouver les bits $b_i$ qui permettent d'étendre un nombre négatif ($a_{n-1}=1$) en complément à deux de n bits à m bits:
+On cherche Ã  trouver les bits $b_i$ qui permettent d'Ã©tendre un nombre nÃ©gatif ($a_{n-1}=1$) en complÃ©ment Ã  deux de n bits Ã  m bits:
 \[ a_{n-1} a_{n-2} ... a_{0} \Rightarrow b_{m-1} b_{m-2} ... b_{n-1} a_{n-2} ... a_{0} \]
 
 Exemple:
 \[m =8, n=4: a_3 a_2 a_1 a_0 = b_7 b_6 b_5 b_4 b_3 a_2 a_1 a_0 \]
-Avec $a_3$ le bit de signe original et $b_7$ le bit de signe du nombre étendu. $a_3$ se déplace donc en première position $b_7$ pour conserver le bit de signe. Comme ils valent 1 on les simplifies et la notation peut s'écrire de manière générale:
+Avec $a_3$ le bit de signe original et $b_7$ le bit de signe du nombre Ã©tendu. $a_3$ se dÃ©place donc en premiÃ¨re position $b_7$ pour conserver le bit de signe. Comme ils valent 1 on les simplifies et la notation peut s'Ã©crire de maniÃ¨re gÃ©nÃ©rale:
 
 \begin{equation}
 \begin{aligned}
@@ -40,7 +40,7 @@ Avec $a_3$ le bit de signe original et $b_7$ le bit de signe du nombre étendu. $
 \end{aligned}
 \end{equation}
 
-Cette égalité est toujours vraie si est seulement si les $b_i$ sont égaux à 1 et quelque soit m, n (m > n). Exemples:
+Cette Ã©galitÃ© est toujours vraie si est seulement si les $b_i$ sont Ã©gaux Ã  1 et quelque soit m, n (m > n). Exemples:
 \[
 m=4, n=2: \quad 2^{4-1} = 2^{2-1} + b_1 2^{1} + b_2 2^{2} \Leftrightarrow 8 = 2 + 1 \cdot 2 + 1 \cdot 4
 \]
@@ -49,8 +49,8 @@ m=4, n=2: \quad 2^{4-1} = 2^{2-1} + b_1 2^{1} + b_2 2^{2} \Leftrightarrow 8 = 2 
 m=8, n=4: \quad 2^{8-1} = 2^{4-1} + b_3 2^{3} + b_4 2^{4} + b_5 2^{5} + b_6 2^{6}\Leftrightarrow 128 = 8 + 1 \cdot 8 + 1 \cdot 16 + 1 \cdot 32 + 1 \cdot 64
 \]
 
-\section{Multiplication de nombres en complément à deux}
-La multiplication en colonnes classique fonctionne en complément à 2 mais elle nécessite une correction à la fin du calcul en fonction du signe des opérandes pour retrouver le résultat correct. Soit m et r, deux entier sur n bits:
+\section{Multiplication de nombres en complÃ©ment Ã  deux}
+La multiplication en colonnes classique fonctionne en complÃ©ment Ã  2 mais elle nÃ©cessite une correction Ã  la fin du calcul en fonction du signe des opÃ©randes pour retrouver le rÃ©sultat correct. Soit m et r, deux entier sur n bits:
 
 \begin{equation}
 \begin{aligned}
@@ -63,7 +63,7 @@ La multiplication en colonnes classique fonctionne en complément à 2 mais elle n
 \end{aligned}
 \end{equation}
 
-Le facteur $2^{n}2^{n}$ disparait par arithmétique modulo. Il reste néanmoins une correction à effectuer qui est différente pour chaque cas. Cette différence de temps de calcul en fonction du signe est gênante mais peut être évitée grâce à l'algorithme de Booth (1950) \cite{booth}. L'algorithme consiste en la transformation suivante:
+Le facteur $2^{n}2^{n}$ disparait par arithmÃ©tique modulo. Il reste nÃ©anmoins une correction Ã  effectuer qui est diffÃ©rente pour chaque cas. Cette diffÃ©rence de temps de calcul en fonction du signe est gÃªnante mais peut Ãªtre Ã©vitÃ©e grÃ¢ce Ã  l'algorithme de Booth (1950) \cite{booth}. L'algorithme consiste en la transformation suivante:
 
 \begin{equation}
 \begin{aligned}
@@ -75,25 +75,25 @@ A \cdot B &= \enspace B \Bigg( \underbrace{ -a_{n-1}2^{n-1} + \sum_{i=0}^{n-2} a
 \end{aligned}
 \end{equation}
 
-Et comme le terme $a_{-1}$ peut être considéré nul car en dehors du nombre alors:
+Et comme le terme $a_{-1}$ peut Ãªtre considÃ©rÃ© nul car en dehors du nombre alors:
 
 \begin{equation}
 A \cdot B = \enspace \sum_{i=0}^{n-1} B(a_{i-1}-a_i)2^{i}
 \end{equation}
 
-On peut montrer numériquement que le résultat de la multiplication est correct indépendamment du signe de A et de B \cite{booth}.
+On peut montrer numÃ©riquement que le rÃ©sultat de la multiplication est correct indÃ©pendamment du signe de A et de B \cite{booth}.
 
-L'algorithme de Booth peut être étendu pour inclure des séquences de "1" grâce à la même propriété utilisée ci-dessus qui est que tout "1" logique peut s'écrire $a_i2^i = a_i2^{i+1}-a_i2^i$ et donc toute séquence de "1" peut s'écrire $a_i2^{i+k}-a_i2^i$ (avec k la longueur de la séquence de 1). Ceci permet de réduire le nombre de multiplications à effectuer. Prenons un exemple pour bien comprendre:
+L'algorithme de Booth peut Ãªtre Ã©tendu pour inclure des sÃ©quences de "1" grÃ¢ce Ã  la mÃªme propriÃ©tÃ© utilisÃ©e ci-dessus qui est que tout "1" logique peut s'Ã©crire $a_i2^i = a_i2^{i+1}-a_i2^i$ et donc toute sÃ©quence de "1" peut s'Ã©crire $a_i2^{i+k}-a_i2^i$ (avec k la longueur de la sÃ©quence de 1). Ceci permet de rÃ©duire le nombre de multiplications Ã  effectuer. Prenons un exemple pour bien comprendre:
 \[
 A \cdot B = A \cdot "00111110" = A \cdot (2^5 + 2^4 + 2^3 + 2^2 + 2^1) = A \cdot 62
 \]
 \[
 A \cdot B = A \cdot "00111110" = A \cdot (2^6 - 2^1) = A \cdot (64 - 2)
 \]
-On passe donc de 5 à 2 termes à calculer.
+On passe donc de 5 Ã  2 termes Ã  calculer.
 
-La réalisation de cet algorithme est simplifiée si on parcours le multiplicateur de gauche à droite en faisant une addition du multiplicande lorsqu'on rencontre "01" (début de séquence) et une soustraction du multiplicande lorsqu'on rencontre "10" (fin de séquence) avec les décalages appropriés. On peut aussi le faire dans l'autre sens avec début à "10" et fin à "01".
-Cet algorithme peut être encore étendu en utilisant le concept du codage redondant. Par exemple pour le cas ci-dessus on considère deux bits à chaque itération. On peut aussi en considérer trois ou même quatre à chaque itération ce qui donne plus de flexibilité pour coder avantageusement le multiplicateur.
+La rÃ©alisation de cet algorithme est simplifiÃ©e si on parcours le multiplicateur de gauche Ã  droite en faisant une addition du multiplicande lorsqu'on rencontre "01" (dÃ©but de sÃ©quence) et une soustraction du multiplicande lorsqu'on rencontre "10" (fin de sÃ©quence) avec les dÃ©calages appropriÃ©s. On peut aussi le faire dans l'autre sens avec dÃ©but Ã  "10" et fin Ã  "01".
+Cet algorithme peut Ãªtre encore Ã©tendu en utilisant le concept du codage redondant. Par exemple pour le cas ci-dessus on considÃ¨re deux bits Ã  chaque itÃ©ration. On peut aussi en considÃ©rer trois ou mÃªme quatre Ã  chaque itÃ©ration ce qui donne plus de flexibilitÃ© pour coder avantageusement le multiplicateur.
 
 \begin{thebibliography}{1}
 

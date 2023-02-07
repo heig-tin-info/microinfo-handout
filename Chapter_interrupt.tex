@@ -1,26 +1,26 @@
 \chapter{\textsc{Interruptions}}
 
-Les interruptions sont une méthode pour gérer l'exécution de tâches simultanées. Elles se ramènent à la notion de parallélisme dans les processeurs d'ordinateurs. La problématique provient du fait qu'un processeur exécute une tâche à la fois et qu'il est fréquent que plusieurs événements apparaissent simultanément comme par exemple lorsqu'on appuie sur une touche et que le processeur effectue un calcul. 
+Les interruptions sont une mÃ©thode pour gÃ©rer l'exÃ©cution de tÃ¢ches simultanÃ©es. Elles se ramÃ¨nent Ã  la notion de parallÃ©lisme dans les processeurs d'ordinateurs. La problÃ©matique provient du fait qu'un processeur exÃ©cute une tÃ¢che Ã  la fois et qu'il est frÃ©quent que plusieurs Ã©vÃ©nements apparaissent simultanÃ©ment comme par exemple lorsqu'on appuie sur une touche et que le processeur effectue un calcul. 
 
-\section{Interaction entre le processeur et les périphériques}
-Le processeur exécute des programmes et en même temps il interagit avec les périphériques. Il existe deux possibilités pour effectuer toutes les tâches, le sondage et les interruptions.
+\section{Interaction entre le processeur et les pÃ©riphÃ©riques}
+Le processeur exÃ©cute des programmes et en mÃªme temps il interagit avec les pÃ©riphÃ©riques. Il existe deux possibilitÃ©s pour effectuer toutes les tÃ¢ches, le sondage et les interruptions.
 
 \subsection{Sondage}
-Le sondage consiste à lire l'état d'un périphériques de manière périodique pour savoir s'il a quelque chose à dire à l'unité centrale. S'il y a plusieurs périphériques, par exemple un clavier et une souris, on les sonde l'un après l'autre. Cette méthode est simple et marche bien pour un nombre réduit de périphériques qui ont des requêtes fréquentes comme une interface de communication. Si ils ont des requêtes peu fréquentes alors on gaspille du temps à leur redemander si quelque chose a changé.
+Le sondage consiste Ã  lire l'Ã©tat d'un pÃ©riphÃ©riques de maniÃ¨re pÃ©riodique pour savoir s'il a quelque chose Ã  dire Ã  l'unitÃ© centrale. S'il y a plusieurs pÃ©riphÃ©riques, par exemple un clavier et une souris, on les sonde l'un aprÃ¨s l'autre. Cette mÃ©thode est simple et marche bien pour un nombre rÃ©duit de pÃ©riphÃ©riques qui ont des requÃªtes frÃ©quentes comme une interface de communication. Si ils ont des requÃªtes peu frÃ©quentes alors on gaspille du temps Ã  leur redemander si quelque chose a changÃ©.
 
 \subsection{Interruptions}
-La méthode par interruptions est initiée par le périphérique qui demande "audience" au processeur. Ce dernier peut répondre à son "sujet" quand il lui plaît. Ce procédé fonctionne bien avec des périphériques qui ont des requêtes peu fréquentes telles que la souris ou le clavier.
+La mÃ©thode par interruptions est initiÃ©e par le pÃ©riphÃ©rique qui demande "audience" au processeur. Ce dernier peut rÃ©pondre Ã  son "sujet" quand il lui plaÃ®t. Ce procÃ©dÃ© fonctionne bien avec des pÃ©riphÃ©riques qui ont des requÃªtes peu frÃ©quentes telles que la souris ou le clavier.
 
-\section{Mécanisme de l'interruption}
-Pour que ça fonctionne, il faut définir un protocole de traitement d'une interruption. Le protocole le plus simple est le suivant:
+\section{MÃ©canisme de l'interruption}
+Pour que Ã§a fonctionne, il faut dÃ©finir un protocole de traitement d'une interruption. Le protocole le plus simple est le suivant:
 \begin{enumerate}
-\item On enregistre la requête sous la forme d'un drapeau ou \textbf{flag} qui est levé
-\item Lorsque le processeur est libre, il exécute un programme pour traiter l'interruption qu'on appelle: \textbf{routine de service d'interruption ou Interrupt Service Routine ou encore ISR}
-\item Après l'exécution de l'ISR, le flag est baissé et le processeur retourne à ce qu'il faisait avant.
+\item On enregistre la requÃªte sous la forme d'un drapeau ou \textbf{flag} qui est levÃ©
+\item Lorsque le processeur est libre, il exÃ©cute un programme pour traiter l'interruption qu'on appelle: \textbf{routine de service d'interruption ou Interrupt Service Routine ou encore ISR}
+\item AprÃ¨s l'exÃ©cution de l'ISR, le flag est baissÃ© et le processeur retourne Ã  ce qu'il faisait avant.
 \end{enumerate}
 
 \section{Vecteurs d'interruption}
-Chaque périphérique possède un flag unique et il y a en général une ISR par type de périphérique. Le processeur doit donc associer chaque flag à une ISR. C'est le vecteur d'interruption qui est simplement un pointeur sur l'adresse de l'ISR en mémoire. Ce pointeur est inscrit dans une table qui se situe à un endroit bien précis de la mémoire. Le processeur va donc toujours chercher le vecteur d'interruption dans cette table par un offset de l'adresse de début qui est fixe. Un exemple de table des vecteurs d'interruption est donné ci-dessous:
+Chaque pÃ©riphÃ©rique possÃ¨de un flag unique et il y a en gÃ©nÃ©ral une ISR par type de pÃ©riphÃ©rique. Le processeur doit donc associer chaque flag Ã  une ISR. C'est le vecteur d'interruption qui est simplement un pointeur sur l'adresse de l'ISR en mÃ©moire. Ce pointeur est inscrit dans une table qui se situe Ã  un endroit bien prÃ©cis de la mÃ©moire. Le processeur va donc toujours chercher le vecteur d'interruption dans cette table par un offset de l'adresse de dÃ©but qui est fixe. Un exemple de table des vecteurs d'interruption est donnÃ© ci-dessous:
 
 \begin{table}[!htbp]
 \begin{center}
@@ -44,16 +44,16 @@ FFF8 & USB\_VECTOR & 40EF\\
 \caption{Exemple de table de vecteurs d'interruption \label{vecteurs}}
 \end{table}
 
-Dans cet exemple la table des vecteurs est placée à l'adresse FFFF, c'est à dire en haut d'un espace mémoire de 16 bits (65536 adresses). Les deux premières colonnes sont des constantes et la troisième est remplie lors de la compilation.
+Dans cet exemple la table des vecteurs est placÃ©e Ã  l'adresse FFFF, c'est Ã  dire en haut d'un espace mÃ©moire de 16 bits (65536 adresses). Les deux premiÃ¨res colonnes sont des constantes et la troisiÃ¨me est remplie lors de la compilation.
 
-\section{Priorités des interruptions et masques}
-Lorsque plusieurs interruptions sont en attente, le processeur peut en exécuter certaines en priorité. Le fabriquant du processeur définit une liste de priorités par type d'interruption. Il est possible de modifier la priorité dans le programme utilisateur en utilisant des masques. Le masque est simplement une désactivation de l'interruption momentanée. Certaines interruptions critiques, telles que le reset, ne peuvent pas être masquées. On les nomme "non-maskable interrupts" ou NMI.
+\section{PrioritÃ©s des interruptions et masques}
+Lorsque plusieurs interruptions sont en attente, le processeur peut en exÃ©cuter certaines en prioritÃ©. Le fabriquant du processeur dÃ©finit une liste de prioritÃ©s par type d'interruption. Il est possible de modifier la prioritÃ© dans le programme utilisateur en utilisant des masques. Le masque est simplement une dÃ©sactivation de l'interruption momentanÃ©e. Certaines interruptions critiques, telles que le reset, ne peuvent pas Ãªtre masquÃ©es. On les nomme "non-maskable interrupts" ou NMI.
 
-Un exemple de masquage est donné ci-dessous où l'on doit impérativement effectuer deux associations sans être interrompu entre deux:
+Un exemple de masquage est donnÃ© ci-dessous oÃ¹ l'on doit impÃ©rativement effectuer deux associations sans Ãªtre interrompu entre deux:
 
 \lstset{style=customc}
 \begin{lstlisting}
-void contrôle(void) {
+void contrÃ´le(void) {
     int temp0, temp1;
     for( ; ; ) {
          __disable_interrupt;			//disable all interrupts
@@ -65,10 +65,10 @@ void contrôle(void) {
 }
 \end{lstlisting}
 
-Les affectations temp0 et temp1 seront donc bien effectuées l'une après l'autre donc dans un laps de temps minimum.
+Les affectations temp0 et temp1 seront donc bien effectuÃ©es l'une aprÃ¨s l'autre donc dans un laps de temps minimum.
 
-\section{Déclaration d'une interruption en C}
-L'interruption est similaire à une fonction à part qu'on ne peut pas passer de paramètres ni en retourner. On interagit donc à l'aide de variables globales. L'autre différence est la présence d'un vecteur d'interruption pour référencer notre interruption dans la table des vecteurs. Ce lien peut être effectué à l'aide de la directive \# pragma qui permet de placer du code à une adresse mémoire spécifiée pour certains compilateurs.
+\section{DÃ©claration d'une interruption en C}
+L'interruption est similaire Ã  une fonction Ã  part qu'on ne peut pas passer de paramÃ¨tres ni en retourner. On interagit donc Ã  l'aide de variables globales. L'autre diffÃ©rence est la prÃ©sence d'un vecteur d'interruption pour rÃ©fÃ©rencer notre interruption dans la table des vecteurs. Ce lien peut Ãªtre effectuÃ© Ã  l'aide de la directive \# pragma qui permet de placer du code Ã  une adresse mÃ©moire spÃ©cifiÃ©e pour certains compilateurs.
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -81,13 +81,13 @@ __interrupt void Timer_ISR(void) {
 }
 \end{lstlisting}
 
-L'ISR ci-dessus sera activée par un timer et sa seule fonction est de commuter une LED. Noter bien que la syntaxe d'une interruption dépend du compilateur utilisé.
+L'ISR ci-dessus sera activÃ©e par un timer et sa seule fonction est de commuter une LED. Noter bien que la syntaxe d'une interruption dÃ©pend du compilateur utilisÃ©.
 
 \section{Interruptions externes}
-Les interruptions externes proviennent des périphériques, on les appelle aussi interruptions matérielles à l'opposé des interruptions logicielles qui proviennent du programme lui même.
+Les interruptions externes proviennent des pÃ©riphÃ©riques, on les appelle aussi interruptions matÃ©rielles Ã  l'opposÃ© des interruptions logicielles qui proviennent du programme lui mÃªme.
 
 \subsection{Interruption depuis un GPIO}
-Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption approprié, PORT1\_VECTOR par exemple:
+Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption appropriÃ©, PORT1\_VECTOR par exemple:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -101,10 +101,10 @@ __interrupt void Port_1(void) {
 }
 \end{lstlisting}
 
-On constate que le flag est remis à zéro avant de sortir de l'interruption.
+On constate que le flag est remis Ã  zÃ©ro avant de sortir de l'interruption.
 
 \subsection{Interruption depuis un timer}
-Pour une interruption depuis un timer, il nous faut un vecteur d'interruption approprié, TIMERA\_VECTOR par exemple:
+Pour une interruption depuis un timer, il nous faut un vecteur d'interruption appropriÃ©, TIMERA\_VECTOR par exemple:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -117,8 +117,8 @@ __interrupt void TimerA_ISR(void) {
 }
 \end{lstlisting}
 
-\subsection{Interruption depuis une interface série}
-Pour une interruption depuis une interface série, il nous faut un vecteur d'interruption approprié, USCI\_A0\_VECTOR par exemple dans le cas du MSP430:
+\subsection{Interruption depuis une interface sÃ©rie}
+Pour une interruption depuis une interface sÃ©rie, il nous faut un vecteur d'interruption appropriÃ©, USCI\_A0\_VECTOR par exemple dans le cas du MSP430:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -137,17 +137,17 @@ __interrupt void USCI_A0_ISR(void) {
 }
 \end{lstlisting}
 
-Cette interruption est plus compliquée à cause du fait que plusieurs causes peuvent provoquer l'interruption et de ce fait doivent être sélectionnées avec un switch-case (voir Chapitre 10).
+Cette interruption est plus compliquÃ©e Ã  cause du fait que plusieurs causes peuvent provoquer l'interruption et de ce fait doivent Ãªtre sÃ©lectionnÃ©es avec un switch-case (voir Chapitre 10).
 
 \section{Latence}
-La latence est le temps total nécessaire pour traiter une requête depuis la levée du flag jusqu'au retour au programme principal. Cela tient compte de plusieurs phénomènes:
+La latence est le temps total nÃ©cessaire pour traiter une requÃªte depuis la levÃ©e du flag jusqu'au retour au programme principal. Cela tient compte de plusieurs phÃ©nomÃ¨nes:
 
 \begin{itemize}
-\item Attente du feu vert du contrôleur d'interruption
+\item Attente du feu vert du contrÃ´leur d'interruption
 \item Mise en pause du programme principal (vidage du pipeline)
-\item Saut à l'adresse de l'ISR (Sauvegarde du contexte)
-\item Exécution de l'ISR
-\item Retour à l'adresse du programme principal (Restauration du contexte)
+\item Saut Ã  l'adresse de l'ISR (Sauvegarde du contexte)
+\item ExÃ©cution de l'ISR
+\item Retour Ã  l'adresse du programme principal (Restauration du contexte)
 \end{itemize}
 
-Comme on peut le constater, l'exécution d'une interruption peut être assez longue dépendamment des circonstances. Il faut donc faire attention à ne pas surcharger le processeur avec des interruptions.
+Comme on peut le constater, l'exÃ©cution d'une interruption peut Ãªtre assez longue dÃ©pendamment des circonstances. Il faut donc faire attention Ã  ne pas surcharger le processeur avec des interruptions.

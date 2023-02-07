@@ -1,33 +1,33 @@
-\chapter{\textsc{UnitÈ centrale}}
+\chapter{\textsc{Unit√© centrale}}
 
-L'unitÈ centrale ou CPU (Central Processing Unit) et le coeur du microcontrÙleur. Elle effectue des opÈrations ÈlÈmentaires sur des donnÈes ou sur des adresses. A l'intÈrieur du cpu on trouve une unitÈ arithmÈtique et logique qu'on nomme ALU (Aritmetic and Logic Unit). c'est elle qui effectue les opÈrations de base tel que addition, multiplication, dÈcalages et fonctions logiques. Pour qu'elle fonctionne optimalement, il faut l'alimenter avec des donnÈes de maniËre continue. Par la suite, on va dÈtailler ce processus.
+L'unit√© centrale ou CPU (Central Processing Unit) et le coeur du microcontr√¥leur. Elle effectue des op√©rations √©l√©mentaires sur des donn√©es ou sur des adresses. A l'int√©rieur du cpu on trouve une unit√© arithm√©tique et logique qu'on nomme ALU (Aritmetic and Logic Unit). c'est elle qui effectue les op√©rations de base tel que addition, multiplication, d√©calages et fonctions logiques. Pour qu'elle fonctionne optimalement, il faut l'alimenter avec des donn√©es de mani√®re continue. Par la suite, on va d√©tailler ce processus.
 
 \section{Principes}
 
-Un processeur se dÈcompose en deux unitÈs fondamentales: i) une unitÈ de contrÙle et ii) une unitÈ de traitement  (fig. \ref{fig:cpu1}). L'unitÈ de contrÙle dÈcode les instructions et pilote le chemin de donnÈes qui exÈcute les opÈrations. Le pilote du chemin de donnÈes s'appelle le sÈquenceur, il communique avec le chemin de donnÈes ‡ l'aide de signaux de commande et reÁois des informations sur son Ètat. 
+Un processeur se d√©compose en deux unit√©s fondamentales: i) une unit√© de contr√¥le et ii) une unit√© de traitement  (fig. \ref{fig:cpu1}). L'unit√© de contr√¥le d√©code les instructions et pilote le chemin de donn√©es qui ex√©cute les op√©rations. Le pilote du chemin de donn√©es s'appelle le s√©quenceur, il communique avec le chemin de donn√©es √† l'aide de signaux de commande et re√ßois des informations sur son √©tat. 
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=270, width=10cm,trim=100 1 100 1,clip]{./Figures/cpu/cpu1.pdf}
   \rule{35em}{0.5pt}
-  \caption[cpu1]{Principe de fonctionnement de l'unitÈ centrale}
+  \caption[cpu1]{Principe de fonctionnement de l'unit√© centrale}
   \label{fig:cpu1}
 \end{figure}
 
-Le chemin de donnÈe et l'unitÈ de contrÙle sont reliÈes par deux bus, le bus de donnÈes et le bus d'adresses (fig. \ref{fig:cpu2}). Le premier dÈfini la largeur des mots traitables par le processeur (8, 16, 32 bits), le deuxiËme dÈfini la taille mÈmoire adressable, par exemple: 16 bits = 65536 adresses.
+Le chemin de donn√©e et l'unit√© de contr√¥le sont reli√©es par deux bus, le bus de donn√©es et le bus d'adresses (fig. \ref{fig:cpu2}). Le premier d√©fini la largeur des mots traitables par le processeur (8, 16, 32 bits), le deuxi√®me d√©fini la taille m√©moire adressable, par exemple: 16 bits = 65536 adresses.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=15cm, trim=0 20 0 30,clip]{./Figures/cpu/cpu2.pdf}
   \rule{35em}{0.5pt}
-  \caption[cpu2]{Exemple d'unitÈ centrale}
+  \caption[cpu2]{Exemple d'unit√© centrale}
   \label{fig:cpu2}
 \end{figure}
 
-Le sÈquenceur est aussi responsable d'amener et de stocker des donnÈes dans la mÈmoire. On constate que le processeur ‡ besoin de deux types d'information, les instructions et les donnÈes. Il y a donc deux possibilitÈs, l'une ou l'on stock les deux informations dans une seule mÈmoire et l'autre ou on utilise deux mÈmoires sÈparÈes. Ce choix ‡ provoquÈ une distinction importante en architecture des processeurs qu'on a nommÈ Von Neumann et Harvard.
+Le s√©quenceur est aussi responsable d'amener et de stocker des donn√©es dans la m√©moire. On constate que le processeur √† besoin de deux types d'information, les instructions et les donn√©es. Il y a donc deux possibilit√©s, l'une ou l'on stock les deux informations dans une seule m√©moire et l'autre ou on utilise deux m√©moires s√©par√©es. Ce choix √† provoqu√© une distinction importante en architecture des processeurs qu'on a nomm√© Von Neumann et Harvard.
 
 \subsection{Architectures de Von Neumann et Harvard}
-Cette diffÈrence de stockage des donnÈes et des instructions peut amener des avantages et des inconvÈnients. Si les donnÈes et les instructions sont sÈparÈes, il faut deux mÈmoires et deux bus d'accËs. Par contre, si il y a deux mÈmoires, le chargement se fait en parallËle. On peut donc considÈrer que l'architecture de Von Neumann est plus simple mais moins performante que celle de Harvard.
+Cette diff√©rence de stockage des donn√©es et des instructions peut amener des avantages et des inconv√©nients. Si les donn√©es et les instructions sont s√©par√©es, il faut deux m√©moires et deux bus d'acc√®s. Par contre, si il y a deux m√©moires, le chargement se fait en parall√®le. On peut donc consid√©rer que l'architecture de Von Neumann est plus simple mais moins performante que celle de Harvard.
 
 \begin{figure}[htb]
   \centering
@@ -38,54 +38,54 @@ Cette diffÈrence de stockage des donnÈes et des instructions peut amener des ava
 \end{figure}
 
 \subsection{Pile}
-La gestion d'une pile mÈmoire est essentielle au fonctionnement d'un programme. Elle s'occupe de stocker temporairement l'information pour gÈrer:
+La gestion d'une pile m√©moire est essentielle au fonctionnement d'un programme. Elle s'occupe de stocker temporairement l'information pour g√©rer:
 \begin{itemize}[label=\textbullet,font=\small]
 \item Le changement de contexte comme lors d'une interruption ou d'un appel de fonction
-\item Le stockage des paramËtres de fonction
+\item Le stockage des param√®tres de fonction
 \item Le stockage des variables locales
 \item Certaines variables lors de branchements multiples (switch-case)
 \end{itemize}
-La pile peut Ítre de type matÈrielle ou logicielle, dans le premier cas elle aura un nombre limitÈ de registres et dans le deuxiËme elle sera juste une zone de la mÈmoire RAM.
+La pile peut √™tre de type mat√©rielle ou logicielle, dans le premier cas elle aura un nombre limit√© de registres et dans le deuxi√®me elle sera juste une zone de la m√©moire RAM.
 
-\section{Registres ‡ usages spÈcifiques}
+\section{Registres √† usages sp√©cifiques}
 Parmi tous les registres de la machine, il y en a trois qui sont essentiels au bon fonctionnement de la machine et qui sont accessibles au programmeur.
 
-\subsection{Registre d'Ètat}
-C'est le registre contenant l'Ètat de la machine, appelÈ SR (Status Register), qui peut contenir les informations suivantes:
+\subsection{Registre d'√©tat}
+C'est le registre contenant l'√©tat de la machine, appel√© SR (Status Register), qui peut contenir les informations suivantes:
 \begin{itemize}
-\item Statut de la derniËre opÈration arithmÈtique sur 4 bits (CVNZ)
-\item Interruptions activÈes ou non (1 bit)
+\item Statut de la derni√®re op√©ration arithm√©tique sur 4 bits (CVNZ)
+\item Interruptions activ√©es ou non (1 bit)
 \item Mode low power 2-3 bits
 \item Configuration des horloges 2-3 bits
 \end{itemize}
-La longueur du registre est normalisÈe par rapport ‡ la largeur du bus de donnÈes.
+La longueur du registre est normalis√©e par rapport √† la largeur du bus de donn√©es.
 
-Les bits de statut arithmÈtique sont utilisÈs pour des tests ou pour dÈtecter des dÈpassements de capacitÈ:\\
-C: Carry, c'est l'indication qu'une retenue a ÈtÈ gÈnÈrÈe\\
-V: oVerflow, c'est l'indication d'un dÈpassement lors du calcul avec des nombres signÈs\\
-N: Negative, c'est l'indication d'un rÈsultat nÈgatif\\
-Z: Zero, c'est l'indication d'un rÈsultat nul
+Les bits de statut arithm√©tique sont utilis√©s pour des tests ou pour d√©tecter des d√©passements de capacit√©:\\
+C: Carry, c'est l'indication qu'une retenue a √©t√© g√©n√©r√©e\\
+V: oVerflow, c'est l'indication d'un d√©passement lors du calcul avec des nombres sign√©s\\
+N: Negative, c'est l'indication d'un r√©sultat n√©gatif\\
+Z: Zero, c'est l'indication d'un r√©sultat nul
 
 \subsection{Pointeur de programme}
-Registre contenant l'adresse mÈmoire de l'instruction en cours appelÈ PC (Program Counter). La longueur de ce registre est celui de la largeur du bus d'adresses. Ce registre est incrÈmentÈ, aprËs chaque instruction, d'un entier qui correspond ‡ la longueur de l'instruction prÈcÈdente.
+Registre contenant l'adresse m√©moire de l'instruction en cours appel√© PC (Program Counter). La longueur de ce registre est celui de la largeur du bus d'adresses. Ce registre est incr√©ment√©, apr√®s chaque instruction, d'un entier qui correspond √† la longueur de l'instruction pr√©c√©dente.
 
 \subsection{Pointeur de pile}
-Registre contenant l'adresse mÈmoire du dessus de la pile appelÈ SP (Stack Pointer). La longueur de ce registre est celui de la largeur du bus d'adresses. Ce registre est incrÈmentÈ, aprËs chaque empilement/dÈsempilement, d'un entier qui correspond ‡ la longueur de l'information stockÈe dans la pile.
+Registre contenant l'adresse m√©moire du dessus de la pile appel√© SP (Stack Pointer). La longueur de ce registre est celui de la largeur du bus d'adresses. Ce registre est incr√©ment√©, apr√®s chaque empilement/d√©sempilement, d'un entier qui correspond √† la longueur de l'information stock√©e dans la pile.
 
 \section{Cycle des instructions}
-Pour analyser en dÈtail le fonctionnement du processeur soumis ‡ une instruction, on va diviser le processus en cinq parties:
+Pour analyser en d√©tail le fonctionnement du processeur soumis √† une instruction, on va diviser le processus en cinq parties:
 
 \begin{enumerate}
 \item Recherche de l'instruction (IF: Instruction Fetch)
-\item DÈcodage de l'instruction (ID: Instruction Decode)
-\item Recherche des opÈrandes (OF: Operand Fetch)
-\item ExÈcution de l'instruction (EX: EXecute)
-\item …criture du rÈsultat (WR: Write Register ou WB: Write Back)
+\item D√©codage de l'instruction (ID: Instruction Decode)
+\item Recherche des op√©randes (OF: Operand Fetch)
+\item Ex√©cution de l'instruction (EX: EXecute)
+\item √âcriture du r√©sultat (WR: Write Register ou WB: Write Back)
 \end{enumerate}
 
 \newpage
 \subsection{Recherche de l'instruction}
-Dans cette phase, on doit amener l'instruction de la mÈmoire vers un registre d'instruction dans le sÈquenceur. La premiËre chose ‡ faire c'est de placer sur le bus d'adresses la valeur du pointeur de programme (Le pointeur de programme contient l'adresse de la ligne du programme). Cette adresse est alors dirigÈe sur la mÈmoire qui retourne la valeur qu'elle contient sur le bus de donnÈes (fig. \ref{fig:instr1}).
+Dans cette phase, on doit amener l'instruction de la m√©moire vers un registre d'instruction dans le s√©quenceur. La premi√®re chose √† faire c'est de placer sur le bus d'adresses la valeur du pointeur de programme (Le pointeur de programme contient l'adresse de la ligne du programme). Cette adresse est alors dirig√©e sur la m√©moire qui retourne la valeur qu'elle contient sur le bus de donn√©es (fig. \ref{fig:instr1}).
 
 \begin{figure}[htb]
   \centering
@@ -96,14 +96,14 @@ Dans cette phase, on doit amener l'instruction de la mÈmoire vers un registre d'
 \end{figure}
 
 \newpage
-\subsection{DÈcodage de l'instruction}
-DÈs que l'instruction est arrivÈe dans le sÈquenceur, il peut la dÈcoder en lisant d'abord l'opcode qui identifie l'instruction ‡ effectuer par exemple add (fig. \ref{fig:opcode1}). DeuxiËmement, il lit la mÈthode d'adressage utilisÈe pour trouver l'endroit de la source et de la destination. 
+\subsection{D√©codage de l'instruction}
+D√©s que l'instruction est arriv√©e dans le s√©quenceur, il peut la d√©coder en lisant d'abord l'opcode qui identifie l'instruction √† effectuer par exemple add (fig. \ref{fig:opcode1}). Deuxi√®mement, il lit la m√©thode d'adressage utilis√©e pour trouver l'endroit de la source et de la destination. 
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction2.pdf}
   \rule{35em}{0.5pt}
-  \caption[instr2]{DÈcodage de l'instruction}
+  \caption[instr2]{D√©codage de l'instruction}
   \label{fig:instr2}
 \end{figure}
 
@@ -124,58 +124,58 @@ DÈs que l'instruction est arrivÈe dans le sÈquenceur, il peut la dÈcoder en lisa
 \end{figure}
 
 \newpage
-\subsection{Recherche des opÈrandes}
-AprËs dÈcodage, le sÈquenceur entre en oeuvre et va chercher les opÈrandes suivant le mode d'adressage utilisÈ. Si l'adressage est direct, les registres internes au chemin de donnÈes sont activÈs et prÈsentent leurs valeurs aux entrÈes de l'ALU. Si l'adressage est indirect, le sÈquenceur place la valeur contenue dans un registre sur le bus d'adresse. Ensuite la valeur en mÈmoire situÈe ‡ cette adresse est placÈe sur le bus de donnÈe pour atteindre finalement l'entrÈe de l'ALU.
+\subsection{Recherche des op√©randes}
+Apr√®s d√©codage, le s√©quenceur entre en oeuvre et va chercher les op√©randes suivant le mode d'adressage utilis√©. Si l'adressage est direct, les registres internes au chemin de donn√©es sont activ√©s et pr√©sentent leurs valeurs aux entr√©es de l'ALU. Si l'adressage est indirect, le s√©quenceur place la valeur contenue dans un registre sur le bus d'adresse. Ensuite la valeur en m√©moire situ√©e √† cette adresse est plac√©e sur le bus de donn√©e pour atteindre finalement l'entr√©e de l'ALU.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction3.pdf}
   \rule{35em}{0.5pt}
-  \caption[instr3]{Recherche des opÈrandes}
+  \caption[instr3]{Recherche des op√©randes}
   \label{fig:instr3}
 \end{figure}
  
-\subsection{ExÈcution de l'instruction}
-A partir du moment ou les donnÈes sont prÈsentent aux deux entrÈes de l'ALU, le sÈquenceur commande l'exÈcution de l'opÈration. Suivant la complexitÈ de l'opÈration, l'exÈcution se dÈcomposera en plusieurs sous opÈrations.
+\subsection{Ex√©cution de l'instruction}
+A partir du moment ou les donn√©es sont pr√©sentent aux deux entr√©es de l'ALU, le s√©quenceur commande l'ex√©cution de l'op√©ration. Suivant la complexit√© de l'op√©ration, l'ex√©cution se d√©composera en plusieurs sous op√©rations.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction4.pdf}
   \rule{35em}{0.5pt}
-  \caption[instr4]{ExÈcution de l'instruction}
+  \caption[instr4]{Ex√©cution de l'instruction}
   \label{fig:instr4}
 \end{figure}
 
 \newpage
-\subsection{…criture du rÈsultat}
-AprËs le calcul de l'ALU, le rÈsultat est placÈ dans le registre de destination. Le registre d'Ètat est aussi mis ‡ jour en mÍme temps. Ce registre nous donne les informations suivantes:
+\subsection{√âcriture du r√©sultat}
+Apr√®s le calcul de l'ALU, le r√©sultat est plac√© dans le registre de destination. Le registre d'√©tat est aussi mis √† jour en m√™me temps. Ce registre nous donne les informations suivantes:
 
 \begin{itemize}[label=\textbullet,font=\small]
 \item Indication d'une retenue: C (pour Carry)
-\item Indication d'un dÈpassement: V (pour oVerflow)
-\item Indication d'un rÈsultat nÈgatif: N (pour Negative)
-\item Indication d'un rÈsultat nul: Z (pour Zero)
+\item Indication d'un d√©passement: V (pour oVerflow)
+\item Indication d'un r√©sultat n√©gatif: N (pour Negative)
+\item Indication d'un r√©sultat nul: Z (pour Zero)
 \end{itemize}
 
-Gr‚ce ‡ ces informations, nous pouvons programmer en utilisant des conditions. Par exemple, pour tester lorsque qu'une boucle for arrive ‡ zÈro.
+Gr√¢ce √† ces informations, nous pouvons programmer en utilisant des conditions. Par exemple, pour tester lorsque qu'une boucle for arrive √† z√©ro.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=15cm, trim=0 30 0 30,clip]{./Figures/cpu/instruction5.pdf}
   \rule{35em}{0.5pt}
-  \caption[instr5]{…criture du rÈsultat}
+  \caption[instr5]{√âcriture du r√©sultat}
   \label{fig:instr5}
 \end{figure}
 
 \newpage
-\section{SÈquenceur des instructions}
-Le sÈquenceur est un composants clÈ qui ‡ pour but de gÈrer le bon fonctionnement du processeur. Il prend en compte les temps d'exÈcutions de chaque sous composants. On peut le rÈaliser de deux maniËres diffÈrentes: i) cablÈ (fig. \ref{fig:sc}), c-‡-d par des fonctions logique sÈquentielles ou ii) microprogrammÈ (fig. \ref{fig:sm}), qui signifie qu'il peut Ítre reconfigurÈ.
+\section{S√©quenceur des instructions}
+Le s√©quenceur est un composants cl√© qui √† pour but de g√©rer le bon fonctionnement du processeur. Il prend en compte les temps d'ex√©cutions de chaque sous composants. On peut le r√©aliser de deux mani√®res diff√©rentes: i) cabl√© (fig. \ref{fig:sc}), c-√†-d par des fonctions logique s√©quentielles ou ii) microprogramm√© (fig. \ref{fig:sm}), qui signifie qu'il peut √™tre reconfigur√©.
  
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=12cm]{./Figures/cpu/Sequenceur1.pdf}
   \rule{35em}{0.5pt}
-  \caption[sc]{SÈquenceur c‚blÈ}
+  \caption[sc]{S√©quenceur c√¢bl√©}
   \label{fig:sc}
 \end{figure}
 
@@ -183,7 +183,7 @@ Le sÈquenceur est un composants clÈ qui ‡ pour but de gÈrer le bon fonctionnemen
   \centering
   \includegraphics[angle=0, width=12cm, trim=0 40 0 40,clip]{./Figures/cpu/Sequenceur2.pdf}
   \rule{35em}{0.5pt}
-  \caption[sm]{SÈquenceur microprogrammÈ}
+  \caption[sm]{S√©quenceur microprogramm√©}
   \label{fig:sm}
 \end{figure}
 
@@ -204,9 +204,9 @@ Le sÈquenceur est un composants clÈ qui ‡ pour but de gÈrer le bon fonctionnemen
 \end{figure}
  
 \section{Pipeline du cycle des instructions}
-Les cinq Ètapes citÈes auparavant doivent Ítre exÈcutÈes ‡ la suite ce qui donne un cycle minimum de cinq coup d'horloges pour exÈcuter une instruction (fig. \ref{fig:flux2}). On dÈsire donc commencer une nouvelle instruction dÈs que possible c-‡-d dÈs qu'un Ètape est terminÈe ((fig. \ref{fig:flux4})).
+Les cinq √©tapes cit√©es auparavant doivent √™tre ex√©cut√©es √† la suite ce qui donne un cycle minimum de cinq coup d'horloges pour ex√©cuter une instruction (fig. \ref{fig:flux2}). On d√©sire donc commencer une nouvelle instruction d√©s que possible c-√†-d d√©s qu'un √©tape est termin√©e ((fig. \ref{fig:flux4})).
 
-Pour se faire, on intercale des registres entre les diffÈrentes phases du processus ((fig. \ref{fig:flux3})). Ceci permet d'isoler chaque phase et ainsi de permettre la rÈutilisation des phases ‡ chaque cycle d'horloge du processeur.
+Pour se faire, on intercale des registres entre les diff√©rentes phases du processus ((fig. \ref{fig:flux3})). Ceci permet d'isoler chaque phase et ainsi de permettre la r√©utilisation des phases √† chaque cycle d'horloge du processeur.
 
 \begin{figure}[htb]
   \centering
@@ -224,21 +224,21 @@ Pour se faire, on intercale des registres entre les diffÈrentes phases du proces
   \label{fig:flux4}
 \end{figure}
 
-Certaines opÈrations sont plus longues que d'autres ce qui fait que l'horloge doit Ítre ajustÈe pour l'Ètape la plus lente. Pour Èviter de devoir ralentir l'horloge du cpu on peut ajouter des niveaux de pipeline pour accÈlÈrer le processeur. Par exemple un multiplieur prendra plus de temps qu'un additionneur, il est donc judicieux de rÈaliser le multiplieur avec plusieurs Ètages de pipeline. 
+Certaines op√©rations sont plus longues que d'autres ce qui fait que l'horloge doit √™tre ajust√©e pour l'√©tape la plus lente. Pour √©viter de devoir ralentir l'horloge du cpu on peut ajouter des niveaux de pipeline pour acc√©l√©rer le processeur. Par exemple un multiplieur prendra plus de temps qu'un additionneur, il est donc judicieux de r√©aliser le multiplieur avec plusieurs √©tages de pipeline. 
 
 \section{Processeur superscalaire}
-Un processeur capable d'exÈcuter plusieurs instructions en parallËle est dit superscalaire. Ce n'est pas un ensemble de processeurs mais un seul CPU avec plusieurs ALU qui peut aussi avoir plusieurs dÈcodeurs/sÈquenceurs. On utilise aussi la terminologie anglo-saxone "dual-issue" pour un processeur qui peut exÈcuter deux instructions en parallËle et "multiple-issue" pour un processeur qui peut en exÈcuter plusieurs. Un processeur qui peut exÈcuter une seule instruction par cycle d'horloge est donc appelÈ "single-issue", c'est le cas de la plupart des micro-contrÙleurs. 
+Un processeur capable d'ex√©cuter plusieurs instructions en parall√®le est dit superscalaire. Ce n'est pas un ensemble de processeurs mais un seul CPU avec plusieurs ALU qui peut aussi avoir plusieurs d√©codeurs/s√©quenceurs. On utilise aussi la terminologie anglo-saxone "dual-issue" pour un processeur qui peut ex√©cuter deux instructions en parall√®le et "multiple-issue" pour un processeur qui peut en ex√©cuter plusieurs. Un processeur qui peut ex√©cuter une seule instruction par cycle d'horloge est donc appel√© "single-issue", c'est le cas de la plupart des micro-contr√¥leurs. 
 
-Un processeur qui possËde plusieurs ALU mais pas plusieurs dÈcodeurs d'instructions est dit avec pipeline superscalaire. L'ARM cortex M7, par exemple, possËde cinq pipelines: deux ALU entiËres, un pour les opÈration mÈmoire, un pour faire des multiplications/accumulations et un pour le calcul en virgule flottante. Cela permet d'Èquilibrer les opÈrations qui ont des temps d'exÈcutions diffÈrents tel que le calcul en virgule flottante par rapport au calcul entier. Par exemple, une instruction flottante prend 4 Ètages de pipeline alors qu'une instruction entiËre en prend 2. Donc si on place une instruction flottante suivie par une instruction entiËre, on a bien deux instructions qui s'exÈcutent en parallËle. L'instruction entiËre se terminera un cycle avant l'instruction flottante.
+Un processeur qui poss√®de plusieurs ALU mais pas plusieurs d√©codeurs d'instructions est dit avec pipeline superscalaire. L'ARM cortex M7, par exemple, poss√®de cinq pipelines: deux ALU enti√®res, un pour les op√©ration m√©moire, un pour faire des multiplications/accumulations et un pour le calcul en virgule flottante. Cela permet d'√©quilibrer les op√©rations qui ont des temps d'ex√©cutions diff√©rents tel que le calcul en virgule flottante par rapport au calcul entier. Par exemple, une instruction flottante prend 4 √©tages de pipeline alors qu'une instruction enti√®re en prend 2. Donc si on place une instruction flottante suivie par une instruction enti√®re, on a bien deux instructions qui s'ex√©cutent en parall√®le. L'instruction enti√®re se terminera un cycle avant l'instruction flottante.
 
-La prÈsence de processeurs de plus en plus puissants dans les micro-contrÙleurs est inÈvitable. Ceci est d˚ ‡ plusieurs facteurs: 
+La pr√©sence de processeurs de plus en plus puissants dans les micro-contr√¥leurs est in√©vitable. Ceci est d√ª √† plusieurs facteurs: 
 \begin{enumerate}
-\item La densitÈ d'intÈgration des technologies CMOS => plus de transistors disponibles
-\item La rÈduction de la consommation dynamique liÈe aux circuits plus petits
-\item La vitesse et complexitÈ des interfaces de communications, par exemple l'USB
-\item La complexitÈ des pÈriphÈriques disponibles, par exemple les afficheurs
+\item La densit√© d'int√©gration des technologies CMOS => plus de transistors disponibles
+\item La r√©duction de la consommation dynamique li√©e aux circuits plus petits
+\item La vitesse et complexit√© des interfaces de communications, par exemple l'USB
+\item La complexit√© des p√©riph√©riques disponibles, par exemple les afficheurs
 \end{enumerate}
 
-On peut donc s'attendre ‡ trouver des microcontroleurs qui s'approchent des fonctionnalitÈs d'un ordinateur de base.
+On peut donc s'attendre √† trouver des microcontroleurs qui s'approchent des fonctionnalit√©s d'un ordinateur de base.
 
 

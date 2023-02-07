@@ -1,33 +1,33 @@
-\chapter{\textsc{Interfaces séries}}
+\chapter{\textsc{Interfaces sÃ©ries}}
 
-Les interfaces parallèles ne sont quasiment plus utilisées aujourd'hui à cause du nombre de broches nécessaires et des performances électriques demandées. L'interface série n'utilise que 2 ou 3 broches et bénéficie de meilleur performances. Elles demandent, par contre, plus de matériel et de logiciel pour effectuer la sérialisation et dé-sérialisation.
+Les interfaces parallÃ¨les ne sont quasiment plus utilisÃ©es aujourd'hui Ã  cause du nombre de broches nÃ©cessaires et des performances Ã©lectriques demandÃ©es. L'interface sÃ©rie n'utilise que 2 ou 3 broches et bÃ©nÃ©ficie de meilleur performances. Elles demandent, par contre, plus de matÃ©riel et de logiciel pour effectuer la sÃ©rialisation et dÃ©-sÃ©rialisation.
 
 
 \section{Notion de pile protocolaire}
-Il est utile d'inscrire les interfaces séries au sein des notions de la téléinformatique comme celle de la pile protocolaire. Cette pile permet de découper toutes les opérations nécessaires en couches. Chaque couche à une fonction bien précise et est développée indépendamment des autres. 
+Il est utile d'inscrire les interfaces sÃ©ries au sein des notions de la tÃ©lÃ©informatique comme celle de la pile protocolaire. Cette pile permet de dÃ©couper toutes les opÃ©rations nÃ©cessaires en couches. Chaque couche Ã  une fonction bien prÃ©cise et est dÃ©veloppÃ©e indÃ©pendamment des autres. 
 
-\subsection{Modèle OSI (Open Systems Interconnection)}
-Le modèle OSI est un modèle théorique d'une pile de communication avec sept couches (fig. \ref{fig:osi}). 
+\subsection{ModÃ¨le OSI (Open Systems Interconnection)}
+Le modÃ¨le OSI est un modÃ¨le thÃ©orique d'une pile de communication avec sept couches (fig. \ref{fig:osi}). 
 
 \begin{figure}[htb]
   \centering
   \includegraphics[angle=0, width=10cm]{./Figures/serial/modelOSI.pdf}
   \rule{35em}{0.5pt}
-  \caption[osi]{Modèle OSI}
+  \caption[osi]{ModÃ¨le OSI}
   \label{fig:osi}
 \end{figure}
 
-Les couches qui sont nécessaires à l'établissement d'une communication sont les couches 1 à 4. Les autres sont des couches liées aux services et aux applications.
+Les couches qui sont nÃ©cessaires Ã  l'Ã©tablissement d'une communication sont les couches 1 Ã  4. Les autres sont des couches liÃ©es aux services et aux applications.
 
 \begin{enumerate}
-\item Couche physique: Traite les aspects électriques de la ligne série
-\item Couche paquet: Encapsule les données avec des bits de contrôle e.g. pour la détection d'erreurs
-\item Couche réseau: Indique la destination (s'il y a plus que deux noeuds sur le réseau)
-\item Couche transport: Découpe les données en paquets et gère la retransmission en cas d'erreurs
+\item Couche physique: Traite les aspects Ã©lectriques de la ligne sÃ©rie
+\item Couche paquet: Encapsule les donnÃ©es avec des bits de contrÃ´le e.g. pour la dÃ©tection d'erreurs
+\item Couche rÃ©seau: Indique la destination (s'il y a plus que deux noeuds sur le rÃ©seau)
+\item Couche transport: DÃ©coupe les donnÃ©es en paquets et gÃ¨re la retransmission en cas d'erreurs
 \end{enumerate}
 
 \subsection{Pile protocolaire IP}
-Le protocole IP (Internet Protocol) est simplifié par rapport au modèle OSI (fig. \ref{fig:tcpip}). Il ne contient que quatre couches ce qui parait plus simple mais en pratique n'est pas idéal car il groupe plusieurs fonctions dans une seule couche.
+Le protocole IP (Internet Protocol) est simplifiÃ© par rapport au modÃ¨le OSI (fig. \ref{fig:tcpip}). Il ne contient que quatre couches ce qui parait plus simple mais en pratique n'est pas idÃ©al car il groupe plusieurs fonctions dans une seule couche.
 
 \begin{figure}[htb]
   \centering
@@ -39,7 +39,7 @@ Le protocole IP (Internet Protocol) est simplifié par rapport au modèle OSI (fig
 
 \section{UART (Universal Asynchronous Receiver Transmitter)}
 
-Les UART sont des sérialiseurs/désérialiseurs simples. Un UART permet d'implémenter la couche 2 du modèle OSI. L'UART est asynchrone ce qui veut dire qu'il ne propage pas de signal d'horloge de l'émetteur au récepteur. Il est néanmoins aisé d'ajouter une ligne d'horloge pour rendre l'UART synchrone.
+Les UART sont des sÃ©rialiseurs/dÃ©sÃ©rialiseurs simples. Un UART permet d'implÃ©menter la couche 2 du modÃ¨le OSI. L'UART est asynchrone ce qui veut dire qu'il ne propage pas de signal d'horloge de l'Ã©metteur au rÃ©cepteur. Il est nÃ©anmoins aisÃ© d'ajouter une ligne d'horloge pour rendre l'UART synchrone.
 
 \begin{figure}[htb]
   \centering
@@ -49,16 +49,16 @@ Les UART sont des sérialiseurs/désérialiseurs simples. Un UART permet d'implémen
   \label{fig:uart}
 \end{figure}
 
-Au niveau matériel, l'UART est composé de 4 registres dont deux à décalage. Le générateur d'horloge donne la fréquence de transmission ou vitesse de transmission. Du point de vue logiciel on accède à l'UART simplement en écrivant dans le registre d'émission et en lisant le registre de réception.
+Au niveau matÃ©riel, l'UART est composÃ© de 4 registres dont deux Ã  dÃ©calage. Le gÃ©nÃ©rateur d'horloge donne la frÃ©quence de transmission ou vitesse de transmission. Du point de vue logiciel on accÃ¨de Ã  l'UART simplement en Ã©crivant dans le registre d'Ã©mission et en lisant le registre de rÃ©ception.
 
 \subsection{RS-232C}
-Historiquement, les interfaces séries étaient très simples d'un point de vue logiciel mais par contre plus compliquées d'un point de vue matériel. C'est le cas de l'interface RS-232C développée en 1969.
+Historiquement, les interfaces sÃ©ries Ã©taient trÃ¨s simples d'un point de vue logiciel mais par contre plus compliquÃ©es d'un point de vue matÃ©riel. C'est le cas de l'interface RS-232C dÃ©veloppÃ©e en 1969.
 
-La couche physique du RS-232C à néanmoins évolué depuis 1969, par contre la couche 2 est toujours la même. On peut réaliser cette couche 2 avec un UART.
+La couche physique du RS-232C Ã  nÃ©anmoins Ã©voluÃ© depuis 1969, par contre la couche 2 est toujours la mÃªme. On peut rÃ©aliser cette couche 2 avec un UART.
 
 \section{Interface SPI}
 
-Dix ans après la RS-232C, Motorola invente l'interface SPI en 1979. C'est un changement radical, avec une communication synchrone entre les émetteurs et les récepteurs. Ce changement permet d'aller beaucoup plus vite dans la transmission.
+Dix ans aprÃ¨s la RS-232C, Motorola invente l'interface SPI en 1979. C'est un changement radical, avec une communication synchrone entre les Ã©metteurs et les rÃ©cepteurs. Ce changement permet d'aller beaucoup plus vite dans la transmission.
 
 \begin{figure}[htb]
   \centering
@@ -68,27 +68,27 @@ Dix ans après la RS-232C, Motorola invente l'interface SPI en 1979. C'est un cha
   \label{fig:spi}
 \end{figure}
 
-L'interface SPI utilise deux registres à décalage bouclés. Ceci permet de relire l'information transmise est ainsi vérifier que ce qui a été transmis est bien correcte. Pour écrire ou lire, on utilise le même principe que pour l'UART, c-à-d écrire dans le registre d'émission ou lire le registre de réception.
+L'interface SPI utilise deux registres Ã  dÃ©calage bouclÃ©s. Ceci permet de relire l'information transmise est ainsi vÃ©rifier que ce qui a Ã©tÃ© transmis est bien correcte. Pour Ã©crire ou lire, on utilise le mÃªme principe que pour l'UART, c-Ã -d Ã©crire dans le registre d'Ã©mission ou lire le registre de rÃ©ception.
 
-Il est possible de connecter plusieurs périphériques sur une interface SPI à l'aide de signaux sortant d'un GPIO et allant sur une entrée "chip-select" CS. Il faut juste sélectionner le bon CS depuis le code.
+Il est possible de connecter plusieurs pÃ©riphÃ©riques sur une interface SPI Ã  l'aide de signaux sortant d'un GPIO et allant sur une entrÃ©e "chip-select" CS. Il faut juste sÃ©lectionner le bon CS depuis le code.
 
 \section{Interface I2C}
 
-Trois ans après la SPI, Philips invente l'interface I2C en 1982. Cette interface amène une innovation majeur qui est la réalisation d'une couche 3 logicielle permettant d'adresser 256 noeuds. On peut donc relier tous les périphériques d'une carte à l'aide d'une interface I2C. Ils sont connectés sur deux lignes communes SDA et SCL:
+Trois ans aprÃ¨s la SPI, Philips invente l'interface I2C en 1982. Cette interface amÃ¨ne une innovation majeur qui est la rÃ©alisation d'une couche 3 logicielle permettant d'adresser 256 noeuds. On peut donc relier tous les pÃ©riphÃ©riques d'une carte Ã  l'aide d'une interface I2C. Ils sont connectÃ©s sur deux lignes communes SDA et SCL:
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=10cm]{./Figures/serial/I2C.pdf}
   \rule{35em}{0.5pt}
-  \caption[i2c]{Système avec un bus I2C}
+  \caption[i2c]{SystÃ¨me avec un bus I2C}
   \label{fig:i2c}
 \end{figure}
 
-Les lignes, SDA et SCL, sont tirées vers l'alimentation positive (Vdd) à l'aide de deux résistance pull-up. Elles doivent être dimensionnées par rapport à la vitesse de transmission choisie. Pour sélectionner un périphérique en particulier, il faut connaitre son adresse I2C et la placer dans le registre d'adresse de l'interface.
+Les lignes, SDA et SCL, sont tirÃ©es vers l'alimentation positive (Vdd) Ã  l'aide de deux rÃ©sistance pull-up. Elles doivent Ãªtre dimensionnÃ©es par rapport Ã  la vitesse de transmission choisie. Pour sÃ©lectionner un pÃ©riphÃ©rique en particulier, il faut connaitre son adresse I2C et la placer dans le registre d'adresse de l'interface.
 
 \section{Interface USB}
 
-L'interface série la plus récente que l'on trouve dans les microcontrôleurs est l'USB (Universial Serial Bus) développée en 1996. Cette interface à comme avantage majeur sur les autres l'utilisation d'une signalisation basse tension différentielle LVDS (Low Voltage Differential Signal). Par contre, cette interface est purement point à point c-à-d qu'elle ne relie qu'un noeud à un autre. De ce fait, elle ne remplace pas les précédentes.
+L'interface sÃ©rie la plus rÃ©cente que l'on trouve dans les microcontrÃ´leurs est l'USB (Universial Serial Bus) dÃ©veloppÃ©e en 1996. Cette interface Ã  comme avantage majeur sur les autres l'utilisation d'une signalisation basse tension diffÃ©rentielle LVDS (Low Voltage Differential Signal). Par contre, cette interface est purement point Ã  point c-Ã -d qu'elle ne relie qu'un noeud Ã  un autre. De ce fait, elle ne remplace pas les prÃ©cÃ©dentes.
 
 \begin{figure}[htb]
   \centering
@@ -98,9 +98,9 @@ L'interface série la plus récente que l'on trouve dans les microcontrôleurs est 
   \label{fig:usb}
 \end{figure}
 
-L'interface USB est synchrone mais ne possède pas de ligne de clock. L'horloge est retrouvée à la réception grâce à une séquence d'entrainement de 8 bits. Une fois l'horloge synchronisée un packet ID (PID) est envoyé pour donner le type de message envoyé. Si le PID indique des données alors elles sont transmises. Finalement le paquet est terminé par une séquence "End of Packet" de trois bits.
+L'interface USB est synchrone mais ne possÃ¨de pas de ligne de clock. L'horloge est retrouvÃ©e Ã  la rÃ©ception grÃ¢ce Ã  une sÃ©quence d'entrainement de 8 bits. Une fois l'horloge synchronisÃ©e un packet ID (PID) est envoyÃ© pour donner le type de message envoyÃ©. Si le PID indique des donnÃ©es alors elles sont transmises. Finalement le paquet est terminÃ© par une sÃ©quence "End of Packet" de trois bits.
 
-D'un point de vue logiciel, l'interface USB s'accède grâce à un HAL ou par un pilote si il y a un système d'exploitation.
+D'un point de vue logiciel, l'interface USB s'accÃ¨de grÃ¢ce Ã  un HAL ou par un pilote si il y a un systÃ¨me d'exploitation.
 
 \section{Comparaisons et choix d'une interface}
 
@@ -114,7 +114,7 @@ Interface & Noeuds & Vitesse & Async/Sync & Duplex & Utilisation\\
 \hline 
 RS-232C & 1 & 115kHz & A & Full & Terminal\\
 \hline 
-SPI & 1 à 5 & 100MHz & S & Full & Données\\
+SPI & 1 Ã  5 & 100MHz & S & Full & DonnÃ©es\\
 \hline
 I2C & 256 & 1MHz & S & Half & Configuration\\
 \hline
@@ -123,14 +123,14 @@ USB 2.0 & 1 & 480MHz & S & Half & External\\
 \end{tabular}
 }
 \end{center}
-\caption{Comparaisons entre les différentes interfaces séries \label{serial}}
+\caption{Comparaisons entre les diffÃ©rentes interfaces sÃ©ries \label{serial}}
 \end{table}
 
 \section{Cas du MSP430}
 
-Le MSP430 dispose de toutes les interfaces discutées précédemment. Il s'agit donc de déterminer les registres de configuration propres à chaque interface puis de les paramétrer correctement.
+Le MSP430 dispose de toutes les interfaces discutÃ©es prÃ©cÃ©demment. Il s'agit donc de dÃ©terminer les registres de configuration propres Ã  chaque interface puis de les paramÃ©trer correctement.
 
-Exemple de configuration d'une interface série asynchrone, style RS-232C:
+Exemple de configuration d'une interface sÃ©rie asynchrone, style RS-232C:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -160,4 +160,4 @@ __interrupt void USCI_A0_ISR(void)
 }
 \end{lstlisting}
 
-L'interaction avec les registres de réception ou d'émission est effectuée par interruption dans ce cas ci. Le vecteur USCI\_A0\_VECTOR contient plusieurs sources d'interruptions possibles c'est pourquoi il faut les sélectionner à l'aide d'un switch case. Le "case 2" correspond à une réception et le "case 4" à une émission. Lors d'une réception on test si l'émission n'est pas active puis on copie le message reçu sur la sortie. C'est un relai qui allume une LED lorsque le message a été relayé.
+L'interaction avec les registres de rÃ©ception ou d'Ã©mission est effectuÃ©e par interruption dans ce cas ci. Le vecteur USCI\_A0\_VECTOR contient plusieurs sources d'interruptions possibles c'est pourquoi il faut les sÃ©lectionner Ã  l'aide d'un switch case. Le "case 2" correspond Ã  une rÃ©ception et le "case 4" Ã  une Ã©mission. Lors d'une rÃ©ception on test si l'Ã©mission n'est pas active puis on copie le message reÃ§u sur la sortie. C'est un relai qui allume une LED lorsque le message a Ã©tÃ© relayÃ©.
