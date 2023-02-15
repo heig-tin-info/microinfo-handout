@@ -1,3 +1,6 @@
 # Ignore some files
 *.aux
 *.log
+*.lot
+*.out
+
