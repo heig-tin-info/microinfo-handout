@@ -46,7 +46,7 @@ Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur log
   \label{fig:pullres}
 \end{figure}
 
-La valeur de cette résistance est choisie de manière optimale entre deux facteurs: i) le courant consommé VCC-GND qui doit être le plus faible possible quand l'interrupteur est fermé et ii) La vitesse à laquelle la résistance décharge la capacité d'entrée du circuit intégré CMOS lorsque l'interrupteur est ouvert. Les valeurs typiques se situent entre $10k\Omega$ et $100k\Omega$. Mais attention sous 3.3V, ça consommera lorsque l'interrupteur est fermé, entre $330uA$ et $33uA$ ce qui n'est pas négligeable!
+La valeur de cette résistance est choisie de manière optimale entre deux facteurs: i) le courant consommé VCC-GND qui doit être le plus faible possible quand l'interrupteur est fermé et ii) La vitesse à laquelle la résistance décharge la capacité d'entrée du circuit intégré CMOS lorsque l'interrupteur est ouvert. Les valeurs typiques se situent entre $10k\Omega$ et $100k\Omega$. Mais attention sous 3.3V, ça consommera lorsque l'interrupteur est fermé, entre $330\mu A$ et $33\mu A$ ce qui n'est pas négligeable!
 
 Dans le cas particulier du MSP430F5529 la valeur typique des résistances de pull est de $35k\Omega$ ce qui provoque un courant de $86\mu A$ sous 3V. Il est donc avantageux de choisir un interrupteur poussoir plutôt que commutant pour minimiser le temps total de consommation. On peut aussi réduire la tension d'alimentation à 1.8V pour réduire le courant mais attention à la réduction de vitesse du microcontrôleur.
 
