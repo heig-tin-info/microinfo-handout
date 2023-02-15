@@ -36,7 +36,7 @@ Au delà du circuit de base décrit auparavant, il existe d'autres fonctions opt
 
 \subsection{Input}
 
-Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur logique présente à l'entrée ainsi qu'un bloc pour sélectionner une résistance de pull-up ou pull-down. Ce bloc est très important car il est nécessaire pour éviter qu'une entrée se retrouve flottante. Si une entrée est laissée non-connectée (flottante) elle peut alors prendre n'importe quelle valeur et même changer de valeur aléatoirement au cours du temps. Pour éviter ce phénom�ne on doit utiliser une résistance placée selon le schéma suivant fig. \ref{fig:pullres}.
+Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur logique présente à l'entrée ainsi qu'un bloc pour sélectionner une résistance de pull-up ou pull-down. Ce bloc est très important car il est nécessaire pour éviter qu'une entrée se retrouve flottante. Si une entrée est laissée non-connectée (flottante) elle peut alors prendre n'importe quelle valeur et même changer de valeur aléatoirement au cours du temps. Pour éviter ce phénomène on doit utiliser une résistance placée selon le schéma suivant fig. \ref{fig:pullres}.
 
 \begin{figure}[htb]
   \centering
@@ -46,21 +46,21 @@ Dans la partie "entrée" du GPIO on trouve un tampon qui mémorise la valeur log
   \label{fig:pullres}
 \end{figure}
 
-La valeur de cette résistance est choisie de manière optimale entre deux facteurs: i) le courant consommé VCC-GND qui doit être le plus faible possible quand l'interrupteur est fermé et ii) La vitesse à laquelle la résistance décharge la capacité d'entrée du circuit intégré CMOS lorsque l'interrupteur est ouvert. Les valeurs typiques se situent entre $10k\Omega$ et $100k\Omega$. Mais attention sous 3.3V, �a consommera lorsque l'interrupteur est fermé, entre $330�A$ et $33�A$ ce qui n'est pas n�gligeable!
+La valeur de cette résistance est choisie de manière optimale entre deux facteurs: i) le courant consommé VCC-GND qui doit être le plus faible possible quand l'interrupteur est fermé et ii) La vitesse à laquelle la résistance décharge la capacité d'entrée du circuit intégré CMOS lorsque l'interrupteur est ouvert. Les valeurs typiques se situent entre $10k\Omega$ et $100k\Omega$. Mais attention sous 3.3V, ça consommera lorsque l'interrupteur est fermé, entre $330uA$ et $33uA$ ce qui n'est pas négligeable!
 
 Dans le cas particulier du MSP430F5529 la valeur typique des résistances de pull est de $35k\Omega$ ce qui provoque un courant de $86\mu A$ sous 3V. Il est donc avantageux de choisir un interrupteur poussoir plutôt que commutant pour minimiser le temps total de consommation. On peut aussi réduire la tension d'alimentation à 1.8V pour réduire le courant mais attention à la réduction de vitesse du microcontrôleur.
 
 \subsection{Output}
 
-Dans la partie "sortie" du GPIO on trouve un tampon qui mémorise la valeur logique que l'on veut sortir sur la broche ainsi qu'un amplificateur pour permettre au circuit de commuter la charge de sortie rapidement. Cette charge est souvent de type capacitive avec une valeur comprise entre 2pF et 10pF typiquement. On peut donc calculer le courant nécessaire pour charger cette capacité � 90\% dans un temps voulu. Ensuite on peut ajuster le courant, si disponible dans le GPIO, pour atteindre la vitesse recherchée.
+Dans la partie "sortie" du GPIO on trouve un tampon qui mémorise la valeur logique que l'on veut sortir sur la broche ainsi qu'un amplificateur pour permettre au circuit de commuter la charge de sortie rapidement. Cette charge est souvent de type capacitive avec une valeur comprise entre 2pF et 10pF typiquement. On peut donc calculer le courant nécessaire pour charger cette capacité à 90\% dans un temps voulu. Ensuite on peut ajuster le courant, si disponible dans le GPIO, pour atteindre la vitesse recherchée.
 
 \section{Logiciel}
 
-Pour programmer les GPIOs on utilise des registres organisés en ports. Par exemple, dans la nomenclature Texas Instrument [réf], le port1 contient huit GPIO et on les nomme P1.0 à P1.7. On peut aussi utiliser le groupement par seize où la notation devient PA, PB, etc. PA est équivalent aux ports P0 et P1 regroupés alors que PB est �quivalent aux ports P2 et P3. 
+Pour programmer les GPIOs on utilise des registres organisés en ports. Par exemple, dans la nomenclature Texas Instrument [réf], le port1 contient huit GPIO et on les nomme P1.0 à P1.7. On peut aussi utiliser le groupement par seize où la notation devient PA, PB, etc. PA est équivalent aux ports P0 et P1 regroupés alors que PB est équivalent aux ports P2 et P3. 
 
 \subsection{Programmation par masque}
 
-Comme les GPIO sont groupés en paquets de 8 ou 16 du point de vue logiciel, il faut un moyen pour programmer chaque GPIO individuellement. Cela signifie que si on modifie un GPIO, il ne faut surtout pas affecter les autres du m�me groupe. Un moyen d'arriver � ceci est d'utiliser un masque qui représente le bit désiré. Par exemple si on désire sélectionner le bit 3 on utilisera le masque BIT3 = 00001000 sur 8 bits (La numérotation commence é zéro). Si on désire sélectionner le bit 3 sur 16 bits alors le masque sera BIT3 = 0000000000001000.
+Comme les GPIO sont groupés en paquets de 8 ou 16 du point de vue logiciel, il faut un moyen pour programmer chaque GPIO individuellement. Cela signifie que si on modifie un GPIO, il ne faut surtout pas affecter les autres du même groupe. Un moyen d'arriver à ceci est d'utiliser un masque qui représente le bit désiré. Par exemple si on désire sélectionner le bit 3 on utilisera le masque BIT3 = 00001000 sur 8 bits (La numérotation commence é zéro). Si on désire sélectionner le bit 3 sur 16 bits alors le masque sera BIT3 = 0000000000001000.
 
 Soit un registre (REG) de 8 bits servant à configurer 8 broches d'un microcontrôleur (fig \ref{fig:pxout}). 
 
@@ -72,7 +72,7 @@ Soit un registre (REG) de 8 bits servant à configurer 8 broches d'un microcontr
   \label{fig:pxout}
 \end{figure}
 
-Pour mettre � 1 le bit 0 sans changer les bits 1 à 7 on peut utiliser la fonction OU; REG = REG OU BIT0 avec BIT0 = 00000001:
+Pour mettre à 1 le bit 0 sans changer les bits 1 à 7 on peut utiliser la fonction OU; REG = REG OU BIT0 avec BIT0 = 00000001:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -80,7 +80,7 @@ REG = REG | BIT0  //en C avec BIT0 = 1
 REG |= BIT0		  //en C simplifié
 \end{lstlisting}
 
-On appelle cette technique le masquage. Pour mettre un bit à 0, il faut utiliser une autre fonction logique car le OU logique ne fait rien avec un zéro. Il est intéressant de résoudre ce problème par soi-m�me pour trouver la solution. On cherche donc � mettre un bit � 0 sans changer l'état logique des autres bits du port. Pour trouver la solution on peut partir d'un exemple et procéder par élimination:
+On appelle cette technique le masquage. Pour mettre un bit à 0, il faut utiliser une autre fonction logique car le OU logique ne fait rien avec un zéro. Il est intéressant de résoudre ce problème par soi-même pour trouver la solution. On cherche donc à mettre un bit à 0 sans changer l'état logique des autres bits du port. Pour trouver la solution on peut partir d'un exemple et procéder par élimination:
 
 \lstset{style=customc}
 \begin{lstlisting}
@@ -124,23 +124,23 @@ Soit le registre REG d'une longueur de 8 bits. Pour écrire la valeur logique 1 
 
 \lstset{style=customc}
 \begin{lstlisting}
-//Mise � 1 du bit zéro:
+//Mise à 1 du bit zéro:
 REG = REG | BIT0    //en C avec BIT0 = 1
 REG |= BIT0		    //en C simplifié
 
-//Mise � 0 du bit zéro:
+//Mise à 0 du bit zéro:
 REG = REG & ~BITO   //REG = 00000010 JUSTE 
 REG &= ~BIT0         //en C simplifié
 \end{lstlisting}
 
-Pour la mise � 1 ou 0 simultanée de plusieurs bits on utilise le OU pour sommer les masques et créer un masque contenant les deux bits. Exemple: BIT3 | BIT0 = 00001001:
+Pour la mise à 1 ou 0 simultanée de plusieurs bits on utilise le OU pour sommer les masques et créer un masque contenant les deux bits. Exemple: BIT3 | BIT0 = 00001001:
 
 \lstset{style=customc}
 \begin{lstlisting}
-//Mise � 1 du bit zéro et trois simultanément:
+//Mise à 1 du bit zéro et trois simultanément:
 REG |= BIT0 | BIT3
 
-//Mise � 0 du bit zéro et trois simultanément:
+//Mise à 0 du bit zéro et trois simultanément:
 REG &= ~BIT0 | BIT3
 \end{lstlisting}
 
@@ -154,7 +154,7 @@ Pour lire un registre on compare le registre avec le masque du bit voulu en util
 TEST_REG = REG & BIT3; // BIT3=00001000
 \end{lstlisting}
 
-Le résultat de cette affectation sera donc 0 si le BIT3 est � zéro et 8 si le BIT3 est � 1. Pour lire plusieurs bits � la fois on peut, comme pour l'écriture, créer un masque combiné. Exemple, on veut lire le bit 5 et le bit 2 simultanément:
+Le résultat de cette affectation sera donc 0 si le BIT3 est à zéro et 8 si le BIT3 est à 1. Pour lire plusieurs bits à la fois on peut, comme pour l'écriture, créer un masque combiné. Exemple, on veut lire le bit 5 et le bit 2 simultanément:
 
 \lstset{style=customc}
 \begin{lstlisting}
