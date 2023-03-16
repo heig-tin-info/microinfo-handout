@@ -448,8 +448,8 @@ Le signal ACLK est utilisé par le timer A0 pour générer des interruptions tou
 \lstset{style=customc}
 \begin{lstlisting}
 #include <msp430.h>
-int main(void) {
-
+void main(void)
+{
 	// configuration du systeme d'horloge UCS
 	UCSCTL1 &= ~(BIT6 | BIT5 | BIT4); // reset DCORSEL
 	UCSCTL1 |= DCORSEL_5;             // range du DCO
@@ -477,8 +477,8 @@ int main(void) {
 
 // Timer_A CCIFG0 handler
 #pragma vector=TIMERA0_VECTOR
-__interrupt void Timer_A (void)
+__interrupt void timer_a0_isr(void)
 {
-	todo();
+	//TODO: ...
 }
 \end{lstlisting}
