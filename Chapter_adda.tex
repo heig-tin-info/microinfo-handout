@@ -388,26 +388,26 @@ __interrupt void adc12_isr(void)
 {
   switch(__even_in_range(ADC12IV,34))
   {
-  case  0: break;                        // Vecteur  0:  Pas d'interruption
-  case  2: break;                        // Vecteur  2:  ADC overflow
-  case  4: break;                        // Vecteur  4:  ADC timing overflow
-  case  6:                               // Vecteur  6:  ADC12IFG0
-    if (ADC12MEM0 >= 0x7ff)              // ADC12MEM = A0 > 0.5*AVcc?
-      P1OUT |= BIT0;                     // P1.0 = 1
+  case  0: break;                    // Vecteur  0:  Pas d'interruption
+  case  2: break;                    // Vecteur  2:  ADC overflow
+  case  4: break;                    // Vecteur  4:  ADC timing overflow
+  case  6:                           // Vecteur  6:  ADC12IFG0
+    if (ADC12MEM0 >= 0x7ff)          // ADC12MEM = A0 > 0.5*AVcc?
+      P1OUT |= BIT0;                 // P1.0 = 1
     else
-      P1OUT &= ~BIT0;                    // P1.0 = 0
-    __bic_SR_register_on_exit(LPM0_bits);// le CPU ne retournera pas en LPM0
+      P1OUT &= ~BIT0;                // P1.0 = 0
+    __bic_SR_register_on_exit(LPM0_bits);// le CPU sort de LPM0
     break;
-  case  8: break;                        // Vecteur  8:  ADC12IFG1
-  case 10: break;                        // Vecteur  10: ADC12IFG2
-  case 12: break;                        // Vecteur  12: ADC12IFG3
-  case 14: break;                        // Vecteur  14: ADC12IFG4
-  ...
-  case 16 à 28 omis pour des raisons de mise en page
-  ...
-  case 30: break;                        // Vecteur  30: ADC12IFG12
-  case 32: break;                        // Vecteur  32: ADC12IFG13
-  case 34: break;                        // Vecteur  34: ADC12IFG14
+  case  8: break;                    // Vecteur  8:  ADC12IFG1
+  case 10: break;                    // Vecteur  10: ADC12IFG2
+  case 12: break;                    // Vecteur  12: ADC12IFG3
+  case 14: break;                    // Vecteur  14: ADC12IFG4
+  // ...
+  // case 16 à 28 omis pour des raisons de mise en page
+  // ...
+  case 30: break;                    // Vecteur  30: ADC12IFG12
+  case 32: break;                    // Vecteur  32: ADC12IFG13
+  case 34: break;                    // Vecteur  34: ADC12IFG14
   default: break; 
   }
 }
@@ -430,7 +430,7 @@ Les résultats sont dans ADC12MEM0-3. Dans la boucle principale, le CPU attend e
 #include <msp430.h>
 #include <stdint.h>
 
-volatile uint16_t results[4];          // tableau pour stocker les résultats
+volatile uint16_t results[4];      // tableau pour stocker les résultats
 
 void main(void)
 {
@@ -449,8 +449,8 @@ void main(void)
 
   while(1)
   {
-    ADC12CTL0 |= ADC12SC;                  // Lancer échant./conversion
-    __bis_SR_register(LPM4_bits + GIE);    // LPM4, autorisation interrupts
+    ADC12CTL0 |= ADC12SC;                // Lancer échant./conversion
+    __bis_SR_register(LPM4_bits + GIE);  // LPM4, autorisation interrupts
   }
 }
 
@@ -470,11 +470,11 @@ __interrupt void adc12_isr(void)
     results[1] = ADC12MEM1;              // sauver résultat, IFG remis à 0
     results[2] = ADC12MEM2;              // sauver résultat, IFG remis à 0
     results[3] = ADC12MEM3;              // sauver résultat, IFG remis à 0
-    __bic_SR_register_on_exit(LPM4_bits);// le CPU ne retournera pas en LPM4
+    __bic_SR_register_on_exit(LPM4_bits);// le CPU sort de LPM4
     break;
   case 14: break;                        // Vecteur  14:  ADC12IFG4
   // case 16 à 32 omis pour des raisons de mise en page
-  case 34: break;                           // Vector 34:  ADC12IFG14
+  case 34: break;                        // Vector 34:  ADC12IFG14
   default: break; 
   }
 }
