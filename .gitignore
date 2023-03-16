@@ -4,4 +4,6 @@
 *.lot
 *.out
 *.toc
+*.fls
+*.fdb_latexmk
 
