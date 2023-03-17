@@ -1,8 +1,8 @@
 % Chapter 1
 
 \chapter{\textsc{Introduction}}
-
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
 
 %\lhead{Chapter 1. \emph{Introduction}} 
 
@@ -294,8 +294,7 @@ NOT & inversion & $\sim$ & Inversion de tous les bits d'un registre\\
 Exemple: 
 \lstset{style=customc}
 \begin{lstlisting}
-char REG;
-REG &= 0x7F; //force à 0 le bit no 7
+uint8_t reg &= ~BIT7; //= 0x7F, force à 0 le bit no 7
 \end{lstlisting}
 
 \begin{table}[!htbp]
