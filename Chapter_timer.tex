@@ -345,10 +345,10 @@ Les instructions ci-dessous reprennent la configuration vue au chapitre 5.3.2, e
 
 \lstset{style=customc}
 \begin{lstlisting}
-#define TASSEL__SMCLK	(2*0x100u)  /* Timer A clock source select: 2 - SMCLK */
-#define ID__8         (3*0x40u)   /* Timer A input divider: 3 - /8 */
-#define MC__UP        (1*0x10u)   /* Timer A mode control: 1 - Up to CCR0 */
-#define CCIE		      (1*0x10u)   /* Capture/compare interrupt enable */
+#define TASSEL__SMCLK (2*0x100u) /* Timer clock source select: 2 - SMCLK */
+#define ID__8         (3*0x40u) /* Timer input divider: 3 - /8 */
+#define MC__UP        (1*0x10u) /* Timer mode control: 1 - Up to CCR0 */
+#define CCIE          (1*0x10u) /* Capture/compare interrupt enable */
 
 TA0CCR0 = 8191;
 TA0CTL  = TASSEL__SMCLK | MC__UP | ID__8;
@@ -412,7 +412,7 @@ Le code ci-dessous configure le timer A en mode continu (jusqu'à 0xFFFF). Le si
 \begin{lstlisting}
 #include <msp430.h>
 
-#define MC__CONTINUOUS     (2*0x10u)      /* Timer A mode control: 2 - Continuous up */
+#define MC__CONTINUOUS  (2*0x10u)  /* Timer A mode control: 2 - Continuous up */
 
 void main(void)
 {
