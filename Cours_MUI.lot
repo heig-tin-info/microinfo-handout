@@ -1,25 +1,35 @@
-\select@language {french}
+\babel@toc {french}{}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {1.1}{\ignorespaces Exemple de table de v\'erit\'e \`a deux variables }}{2}{table.1.1}
-\contentsline {table}{\numberline {1.2}{\ignorespaces R\'esultats possibles de fonctions \`a deux variables }}{3}{table.1.2}
-\contentsline {table}{\numberline {1.3}{\ignorespaces Op\'erateurs logiques bit \`a bit en C}}{5}{table.1.3}
-\contentsline {table}{\numberline {1.4}{\ignorespaces Op\'erateurs logiques bool\'eens en C}}{5}{table.1.4}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces Exemple de table de vérité à deux variables (fonction ET) }}{2}{table.1.1}
+\contentsline {table}{\numberline {1.2}{\ignorespaces Résultats possibles de fonctions à deux variables }}{3}{table.1.2}
+\contentsline {table}{\numberline {1.3}{\ignorespaces Opérateurs logiques bit à bit en C}}{5}{table.1.3}
+\contentsline {table}{\numberline {1.4}{\ignorespaces Opérateurs logiques booléens en C}}{5}{table.1.4}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Description des champs du registre TAxCTL}}{23}{table.5.1}
-\contentsline {table}{\numberline {5.2}{\ignorespaces Description des champs du registre TAxCCTL}}{26}{table.5.2}
-\contentsline {table}{\numberline {5.3}{\ignorespaces Description du registre TAIV}}{27}{table.5.3}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Codage binaire et hexadécimal des entiers positifs sur 4 bits }}{13}{table.3.1}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Trois possibilités pour coder les nombres entiers négatifs }}{14}{table.3.2}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Table de vérité de l'additionneur 1 bit }}{15}{table.3.3}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces UCSCTL1}}{39}{table.6.1}
-\contentsline {table}{\numberline {6.2}{\ignorespaces UCSCTL2}}{39}{table.6.2}
-\contentsline {table}{\numberline {6.3}{\ignorespaces UCSCTL3}}{40}{table.6.3}
-\contentsline {table}{\numberline {6.4}{\ignorespaces UCSCTL4}}{41}{table.6.4}
-\contentsline {table}{\numberline {6.5}{\ignorespaces UCSCTL5}}{42}{table.6.5}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Exemple de table de vecteurs d'interruption }}{20}{table.4.1}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Description des champs du registre TAxCTL}}{29}{table.5.1}
+\contentsline {table}{\numberline {5.2}{\ignorespaces Description des champs du registre TAxCCTL}}{31}{table.5.2}
+\contentsline {table}{\numberline {5.3}{\ignorespaces Description du registre TAIV}}{33}{table.5.3}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces UCSCTL1}}{45}{table.6.1}
+\contentsline {table}{\numberline {6.2}{\ignorespaces UCSCTL2}}{45}{table.6.2}
+\contentsline {table}{\numberline {6.3}{\ignorespaces UCSCTL3}}{46}{table.6.3}
+\contentsline {table}{\numberline {6.4}{\ignorespaces UCSCTL4}}{47}{table.6.4}
+\contentsline {table}{\numberline {6.5}{\ignorespaces UCSCTL5}}{48}{table.6.5}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {7.1}{\ignorespaces Modes d'adressage du MSP430}}{54}{table.7.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {9.1}{\ignorespaces Comparaison des styles de programmation }}{69}{table.9.1}
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {10.1}{\ignorespaces Comparaisons entre les différentes interfaces séries }}{75}{table.10.1}
 \addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {table}{\numberline {11.1}{\ignorespaces ADC12CTL0}}{85}{table.11.1}
+\contentsline {table}{\numberline {11.2}{\ignorespaces ADC12CTL1}}{86}{table.11.2}
+\contentsline {table}{\numberline {11.3}{\ignorespaces ADC12CTL2}}{87}{table.11.3}
 \addvspace {10\p@ }
