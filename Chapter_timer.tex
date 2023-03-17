@@ -235,12 +235,12 @@ Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclu
 
 \lstset{style=customc}
 \begin{lstlisting}
-#define TASSEL_2	(2*0x100u)
-#define ID_3		(3*0x40u)
-#define MC_1		(1*0x10u)
+#define TASSEL__SMCLK	(2*0x100u)  /* Timer A clock source select: 2 - SMCLK */
+#define ID__8         (3*0x40u)   /* Timer A input divider: 3 - /8 */
+#define MC__UP        (1*0x10u)   /* Timer A mode control: 1 - Up to CCR0 */
 
 TA0CCR0 = 8191;
-TA0CTL  = TASSEL_2 | MC_1 | ID_3;
+TA0CTL  = TASSEL__SMCLK | MC__UP | ID__8;
 \end{lstlisting}
 }
 \end{minipage}
@@ -345,13 +345,13 @@ Les instructions ci-dessous reprennent la configuration vue au chapitre 5.3.2, e
 
 \lstset{style=customc}
 \begin{lstlisting}
-#define TASSEL_2	(2*0x100u)
-#define ID_3		(3*0x40u)
-#define MC_1		(1*0x10u)
-#define CCIE		(1*0x10u)
+#define TASSEL__SMCLK	(2*0x100u)  /* Timer A clock source select: 2 - SMCLK */
+#define ID__8         (3*0x40u)   /* Timer A input divider: 3 - /8 */
+#define MC__UP        (1*0x10u)   /* Timer A mode control: 1 - Up to CCR0 */
+#define CCIE		      (1*0x10u)   /* Capture/compare interrupt enable */
 
 TA0CCR0 = 8191;
-TA0CTL  = TASSEL_2 | MC_1 | ID_3;
+TA0CTL  = TASSEL__SMCLK | MC__UP | ID__8;
 TA0CCTL0  = CCIE;
 \end{lstlisting}
 
@@ -411,26 +411,36 @@ Le code ci-dessous configure le timer A en mode continu (jusqu'à 0xFFFF). Le si
 \lstset{style=customc}
 \begin{lstlisting}
 #include <msp430.h>
+
+#define MC__CONTINUOUS     (2*0x10u)      /* Timer A mode control: 2 - Continuous up */
+
 void main(void)
 {
-   P5DIR |= 0x02;
-   TACTL = TASSEL_2 + MC_2 + TAIE;
-   __enable_interrupts();
+  WDTCTL = WDTPW + WDTHOLD;              // Stop watchdog timer
+  P5DIR |= 0x02;
+  TACTL = TASSEL__SMCLK + MC__CONTINUOUS + TAIE;
   
-   while(1);
+  _enable_interrupts();
+  
+  while(1);
 }
 
-// Timer_A Interrupt Vector (TAIV) handler
-#pragma vector=TIMERA1_VECTOR
-__interrupt void Timer_A (void)
+// Timer_A1 Interrupt Vector (TAIV) handler
+#pragma vector=TIMER0_A1_VECTOR
+__interrupt void timer_a0_ccr1_isr(void)
 {
-   switch(TAIV)
-   {
-      case  2: break;
-      case  4: break;
-      case 14: P5OUT ^= 0x02;
-                break;
-   }
+  switch(__event_in_range(TA0IV, TA0IV_TAIFG))
+  {
+  case TA0IV_NONE:   break;
+  case TA0IV_TACCR1: break;
+  case TA0IV_TACCR2: break;
+  case TA0IV_TACCR3: break;
+  case TA0IV_TACCR4: break;
+  case TA0IV_TAIFG:
+    P5OUT ^= 0x02;
+    break;
+  default: break;
+  }
 }
 \end{lstlisting}
 }
