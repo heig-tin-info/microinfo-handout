@@ -26,14 +26,14 @@ Le terme proportionnel est abusif dans la mesure où la fonction de transfert $N
 
 Les caractéristiques importantes de cette fonction de transfert sont:
 \begin{itemize}[label=\textbullet,font=\small]
-\item l'intervalle des tensions d'entrée $[V_{in\_min}, V_{in\_max}$]
-\item la résolution, égale à $log_{2}(N_{max})$
-\item les imperfections qui l'entachent, et qui sont:
-\begin{itemize}[label=\textbullet,font=\small]
-\item offset
-\item erreur de gain
-\item "non linéarité" de la fonction
-\end{itemize}
+  \item l'intervalle des tensions d'entrée $[V_{in\_min}, V_{in\_max}$]
+  \item la résolution, égale à $log_{2}(N_{max})$
+  \item les imperfections qui l'entachent, et qui sont:
+  \begin{itemize}[label=\textbullet,font=\small]
+    \item offset
+    \item erreur de gain
+    \item "non linéarité" de la fonction
+  \end{itemize}
 \end{itemize}
 
 Il existe plusieurs méthodes pour convertir une grandeur physique en un nombre. Elles se différencient principalement par la résolution atteignable et la rapidité du processus de conversion, et aussi par leur complexité.\\
@@ -74,31 +74,31 @@ Il est important de noter que la tension d'entrée doit être mémorisée pendan
 
 Le convertisseur DAC peut être construit au moyen de:
 \begin{itemize}[label=\textbullet,font=\small]
-\item un diviseur de tension résistif couplé à des interrupteurs
-\item un diviseur de courant de type R-2R
-\item un diviseur de tension à capacités pondérées
+  \item un diviseur de tension résistif couplé à des interrupteurs
+  \item un diviseur de courant de type R-2R
+  \item un diviseur de tension à capacités pondérées
 \end{itemize}
 Le détail de ces circuits sort du cadre de ce cours.
 
 \section{Cas du MSP430}
 Les microcontrôleurs MSP430 peuvent contenir plusieurs types de convertisseurs AD:
 \begin{itemize}[label=\textbullet,font=\small]
-\item AD 10-bits à approximations successives
-\item AD 12-bits à approximations successives
-\item AD 16-bits Sigma-Delta
+  \item AD 10-bits à approximations successives
+  \item AD 12-bits à approximations successives
+  \item AD 16-bits Sigma-Delta
 \end{itemize}
 
 \subsection{Cas du MSP430F5529}
 Ce microcontrôleur contient un convertisseur AD 12 bits à approximations successives avec les caractéristiques suivantes.
 \begin{itemize}[label=\textbullet,font=\small]
-\item Plus de 200 kSPS : 200'000 échantillons par seconde
-\item Echantillonneur-Bloqueur avec période programmable, contrôlée par logiciel ou par timers
-\item Lancement des conversions par logiciel ou par timers
-\item Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
-\item Référence interne ou externe
-\item Jusqu'à 12 canaux d'entrée configurables individuellement
-\item Canaux d'entrée pour capteur de température interne, AVCC, et références externes
-\item Registres de stockage de 16 résultats de conversion
+  \item Plus de 200 kSPS : 200'000 échantillons par seconde
+  \item Echantillonneur-Bloqueur avec période programmable, contrôlée par logiciel ou par timers
+  \item Lancement des conversions par logiciel ou par timers
+  \item Référence de tension interne sélectionnable par logiciel (1.5 V, 2.0 V, ou 2.5 V)
+  \item Référence interne ou externe
+  \item Jusqu'à 12 canaux d'entrée configurables individuellement
+  \item Canaux d'entrée pour capteur de température interne, AVCC, et références externes
+  \item Registres de stockage de 16 résultats de conversion
 \end{itemize}
 
 \subsection{Schéma de l'ADC 12-bits}
@@ -114,12 +114,12 @@ La figure \ref{fig:ADC_Schema} représente le schéma complet du périphérique 
 
 On y trouve:
 \begin{itemize}[label=\textbullet,font=\small]
-\item le coeur de l'ADC, avec l'échantillonneur-bloqueur, au centre
-\item le bloc de sélection des références de tension
-\item le bloc de sélection de l'horloge de conversion, qui définit le rythme auquel les bits du résultat sont obtenus
-\item le bloc de lancement d'une conversion. Il est possible de lancer automatiquement des conversions
-\item une mémoire pouvant contenir les résultats de 16 conversions
-\item à gauche, le circuit de sélection du signal à convertir
+  \item le coeur de l'ADC, avec l'échantillonneur-bloqueur, au centre
+  \item le bloc de sélection des références de tension
+  \item le bloc de sélection de l'horloge de conversion, qui définit le rythme auquel les bits du résultat sont obtenus
+  \item le bloc de lancement d'une conversion. Il est possible de lancer automatiquement des conversions
+  \item une mémoire pouvant contenir les résultats de 16 conversions
+  \item à gauche, le circuit de sélection du signal à convertir
 \end{itemize}
 
 Comme on l'a déjà vu avec d'autres périphériques, les réglages du convertisseur ADC12 se font par le logiciel, en positionnant les champs logiques apparaissant sur le schéma, qui sont accessibles dans des registres de contrôle.
@@ -149,8 +149,8 @@ Les sources d'horloge usuelles (ACLK, SMCLK et MCLK) peuvent être utilisées. P
 \subsection{Lancement d'une conversion}
 Plusieurs méthodes sont envisageables:
 \begin{itemize}[label=\textbullet,font=\small]
-\item lancement par logiciel, en activant le bit ADC12SC (\textit{Start Conversion})
-\item lancement automatique par un timer
+  \item lancement par logiciel, en activant le bit ADC12SC (\textit{Start Conversion})
+  \item lancement automatique par un timer
 \end{itemize}
 
 \subsection{Sélection des références de tension}
@@ -158,19 +158,19 @@ Les références de tension déterminent l'intervalle dans lequel la tension à 
 Le résultat $N_{ADC}$ de la conversion est donné par la formule suivante :
 
 \begin{tabbing}
-\begin{Large}
-\qquad $N_{ADC}=4095.\frac{V_{in}-V_{Ref-}}{V_{Ref+}-V_{Ref-}}$
-\end{Large}
+  \begin{Large}
+    \qquad $N_{ADC}=4095.\frac{V_{in}-V_{Ref-}}{V_{Ref+}-V_{Ref-}}$
+  \end{Large}
 \end{tabbing}
 
 
 \subsection{Stockage des résultats}
 Lorsqu'une conversion est terminée, l'ADC peut émettre une requête d'interruption. Toutefois, dans de nombreuses applications, il est nécessaire de convertir plusieurs tensions différentes. Les raisons peuvent être:
 \begin{itemize}[label=\textbullet,font=\small]
-\item les signaux générés par plusieurs capteurs, et connectées sur l'ADC via ses différentes entrées (A0 à A15) doivent être convertis en nombres;
-\item plusieurs valeurs successives d'une même tension doivent être converties, pour pouvoir calculer une moyenne ou y appliquer une fonction de filtrage numérique;
-\item on ne souhaite pas surcharger le CPU avec des interruptions trop fréquentes;
-etc...
+  \item les signaux générés par plusieurs capteurs, et connectées sur l'ADC via ses différentes entrées (A0 à A15) doivent être convertis en nombres;
+  \item plusieurs valeurs successives d'une même tension doivent être converties, pour pouvoir calculer une moyenne ou y appliquer une fonction de filtrage numérique;
+  \item on ne souhaite pas surcharger le CPU avec des interruptions trop fréquentes;
+  etc...
 \end{itemize}
 
 Pour résoudre ce genre de situation, l'ADC dispose d'une mémoire pouvant contenir jusqu'à 16 résultats de conversion. Il est possible de définir des séquences de conversion, et de faire en sorte qu'une interruption ne soit émise qu'à la fin de la séquence.\\
@@ -365,9 +365,10 @@ L'entrée A0 est convertie sur ordre logiciel. La référence est AVcc. ADC12SC 
 //*******************************************************************
 #include <msp430.h>
 
-int main(void)
+void main(void)
 {
-  WDTCTL = WDTPW + WDTHOLD;              // Stoppe le WDT
+  WDTCTL = WDTPW + WDTHOLD;              // Stop le watchdog timer
+
   ADC12CTL0 = ADC12SHT02 + ADC12ON;      // Temps d'échant., ADC12 on
   ADC12CTL1 = ADC12SHP;                  // Timer d'échant. (SHP = 1)
   ADC12IE = 0x01;                        // Interruption autorisée
@@ -383,29 +384,30 @@ int main(void)
 }
 
 #pragma vector = ADC12_VECTOR
-__interrupt void ADC12_ISR(void)
+__interrupt void adc12_isr(void)
 {
   switch(__even_in_range(ADC12IV,34))
   {
-  case  0: break;                        // Vecteur  0:  Pas d'interruption
-  case  2: break;                        // Vecteur  2:  ADC overflow
-  case  4: break;                        // Vecteur  4:  ADC timing overflow
-  case  6:                               // Vecteur  6:  ADC12IFG0
-    if (ADC12MEM0 >= 0x7ff)              // ADC12MEM = A0 > 0.5*AVcc?
-      P1OUT |= BIT0;                     // P1.0 = 1
+  case  0: break;                    // Vecteur  0:  Pas d'interruption
+  case  2: break;                    // Vecteur  2:  ADC overflow
+  case  4: break;                    // Vecteur  4:  ADC timing overflow
+  case  6:                           // Vecteur  6:  ADC12IFG0
+    if (ADC12MEM0 >= 0x7ff)          // ADC12MEM = A0 > 0.5*AVcc?
+      P1OUT |= BIT0;                 // P1.0 = 1
     else
-      P1OUT &= ~BIT0;                    // P1.0 = 0
-    __bic_SR_register_on_exit(LPM0_bits);// le CPU ne retournera pas en LPM0
-  case  8: break;                        // Vecteur  8:  ADC12IFG1
-  case 10: break;                        // Vecteur  10: ADC12IFG2
-  case 12: break;                        // Vecteur  12: ADC12IFG3
-  case 14: break;                        // Vecteur  14: ADC12IFG4
-  ...
-  case 16 à 28 omis pour des raisons de mise en page
-  ...
-  case 30: break;                        // Vecteur  30: ADC12IFG12
-  case 32: break;                        // Vecteur  32: ADC12IFG13
-  case 34: break;                        // Vecteur  34: ADC12IFG14
+      P1OUT &= ~BIT0;                // P1.0 = 0
+    __bic_SR_register_on_exit(LPM0_bits);// le CPU sort de LPM0
+    break;
+  case  8: break;                    // Vecteur  8:  ADC12IFG1
+  case 10: break;                    // Vecteur  10: ADC12IFG2
+  case 12: break;                    // Vecteur  12: ADC12IFG3
+  case 14: break;                    // Vecteur  14: ADC12IFG4
+  // ...
+  // case 16 à 28 omis pour des raisons de mise en page
+  // ...
+  case 30: break;                    // Vecteur  30: ADC12IFG12
+  case 32: break;                    // Vecteur  32: ADC12IFG13
+  case 34: break;                    // Vecteur  34: ADC12IFG14
   default: break; 
   }
 }
@@ -426,13 +428,16 @@ Les résultats sont dans ADC12MEM0-3. Dans la boucle principale, le CPU attend e
 //*******************************************************************
 
 #include <msp430.h>
+#include <stdint.h>
 
-volatile unsigned int results[4];          // tableau pour stocker les résultats
+volatile uint16_t results[4];      // tableau pour stocker les résultats
 
-int main(void)
+void main(void)
 {
-  WDTCTL = WDTPW+WDTHOLD;                  // Stoppe le WDT
+  WDTCTL = WDTPW+WDTHOLD;                  // Stop watchdog timer
+
   P6SEL = 0x0F;                            // P6.0-3 connectés avec A0-A3
+
   ADC12CTL0 = ADC12ON+ADC12MSC+ADC12SHT0_2;// Temps d'échant., ADC12 on
   ADC12CTL1 = ADC12SHP + ADC12CONSEQ_1;    // Timer d'échant., séq. simple
   ADC12MCTL0 = ADC12INCH_0;                // ref+ = AVcc, channel = A0
@@ -444,15 +449,15 @@ int main(void)
 
   while(1)
   {
-    ADC12CTL0 |= ADC12SC;                  // Lancer échant./conversion
-    __bis_SR_register(LPM4_bits + GIE);    // LPM4, autorisation interrupts
+    ADC12CTL0 |= ADC12SC;                // Lancer échant./conversion
+    __bis_SR_register(LPM4_bits + GIE);  // LPM4, autorisation interrupts
   }
 }
 
 #pragma vector=ADC12_VECTOR
-__interrupt void ADC12ISR (void)
+__interrupt void adc12_isr(void)
 {
-    switch(__even_in_range(ADC12IV,34))
+  switch(__even_in_range(ADC12IV,34))
   {
   case  0: break;                        // Vecteur  0:  No interrupt
   case  2: break;                        // Vecteur  2:  ADC overflow
@@ -465,10 +470,11 @@ __interrupt void ADC12ISR (void)
     results[1] = ADC12MEM1;              // sauver résultat, IFG remis à 0
     results[2] = ADC12MEM2;              // sauver résultat, IFG remis à 0
     results[3] = ADC12MEM3;              // sauver résultat, IFG remis à 0
-    __bic_SR_register_on_exit(LPM4_bits);// le CPU ne retournera pas en LPM4  
+    __bic_SR_register_on_exit(LPM4_bits);// le CPU sort de LPM4
+    break;
   case 14: break;                        // Vecteur  14:  ADC12IFG4
   // case 16 à 32 omis pour des raisons de mise en page
-  case 34: break;                           // Vector 34:  ADC12IFG14
+  case 34: break;                        // Vector 34:  ADC12IFG14
   default: break; 
   }
 }

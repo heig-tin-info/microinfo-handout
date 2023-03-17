@@ -1,7 +1,10 @@
 # Ignore some files
+*.pdf
 *.aux
 *.log
 *.lot
 *.out
 *.toc
-
+*.fls
+*.fdb_latexmk
+*.gz
