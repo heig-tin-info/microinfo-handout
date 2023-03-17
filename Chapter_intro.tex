@@ -1,4 +1,4 @@
-% Chapter 1
+%% Chapter 1
 
 \chapter{\textsc{Introduction}}
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
@@ -241,7 +241,7 @@ $F = M_0 \cdot M_4 \cdot M_5$
 A & B & C & F\\
 \cline{1-4}   
 \cline{1-4} 
-0 & 0 & 0 & 0 & & $\overline{A} + \overline{B} + \overline{C} = 0$ ET\\
+0 & 0 & 0 & 0 & & $A +B + C$ exclut cette ligne\\
 \cline{1-4} 
 0 & 0 & 1 & 1\\
 \cline{1-4} 
@@ -249,9 +249,9 @@ A & B & C & F\\
 \cline{1-4} 
 0 & 1 & 1 & 1\\
 \cline{1-4} 
-1 & 0 & 0 & 0 & & $A + \overline{B} + \overline{C} = 0$ ET\\
+1 & 0 & 0 & 0 & & $\overline{A} + B + C$ exclut cette ligne\\
 \cline{1-4} 
-1 & 0 & 1 & 0 & & $A + \overline{B} + C = 0$\\
+1 & 0 & 1 & 0 & & $\overline{A} + B + \overline{C}$ exclut cette ligne\\
 \cline{1-4} 
 1 & 1 & 0 & 1\\
 \cline{1-4} 
@@ -261,7 +261,7 @@ A & B & C & F\\
 \end{center}
 
 \begin{center}
-$F = (\overline{A} + \overline{B} + \overline{C}) \cdot (A + \overline{B} + \overline{C}) \cdot (A + \overline{B} + C)$
+$F = (A +B + C) \cdot (\overline{A} + B + C) \cdot (\overline{A} + B + \overline{C})$
 \end{center}
 
 Il est aisé de montrer que la somme des mintermes est égale au produit des maxtermes. Ceci montre encore une fois la dualité des opérations logiques. On constate aussi que le nombre de maxtermes est plus petit (3) que celui des mintermes (5). Il est donc plus simple d'utiliser le produit des maxtermes dans ce cas ci.
