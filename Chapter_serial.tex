@@ -145,17 +145,19 @@ UCA0IE |= UCRXIE | UCTXIE;	//Interrupt enable
 P2DIR |= 0x01;				//P2.0 vers sortie 	 
  
 #pragma vector=USCI_A0_VECTOR
-__interrupt void USCI_A0_ISR(void)
+__interrupt void usci_a0_isr(void)
 {
-  switch(__even_in_range(UCA0IV,4))
+  switch(__even_in_range(UCA0IV ,4))
   {
-    case  0: 	break;
-    case  2: 	while (!(UCA0IFG & UCTXIFG));
-				UCA0TXBUF = UCA0RXBUF;
-				break;
-    case  4: 	P2OUT ^= 0x01;		// toggle P2.0 avec exclusive-OR 
-				break;
-    default: 	break;
+  case 0: 	break;
+  case 2:
+   	while (!(UCA0IFG & UCTXIFG));
+	  UCA0TXBUF = UCA0RXBUF;
+		break;
+  case 4:
+   	P2OUT ^= 0x01;		// toggle P2.0 avec exclusive-OR 
+		break;
+  default: 	break;
   }
 }
 \end{lstlisting}

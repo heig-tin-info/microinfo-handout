@@ -367,7 +367,7 @@ L'entrée A0 est convertie sur ordre logiciel. La référence est AVcc. ADC12SC 
 
 void main(void)
 {
-  WDTCTL = WDTPW + WDTHOLD;              // Stop le watchdog timer
+  WDTCTL = WDTPW | WDTHOLD;              // Stop le watchdog timer
 
   ADC12CTL0 = ADC12SHT02 + ADC12ON;      // Temps d'échant., ADC12 on
   ADC12CTL1 = ADC12SHP;                  // Timer d'échant. (SHP = 1)
@@ -383,31 +383,32 @@ void main(void)
   }
 }
 
-#pragma vector = ADC12_VECTOR
+#pragma vector=ADC12_VECTOR
 __interrupt void adc12_isr(void)
 {
-  switch(__even_in_range(ADC12IV,34))
+  switch(__even_in_range(ADC12IV, 36))
   {
-  case  0: break;                    // Vecteur  0:  Pas d'interruption
-  case  2: break;                    // Vecteur  2:  ADC overflow
-  case  4: break;                    // Vecteur  4:  ADC timing overflow
-  case  6:                           // Vecteur  6:  ADC12IFG0
-    if (ADC12MEM0 >= 0x7ff)          // ADC12MEM = A0 > 0.5*AVcc?
+  case ADC12IV_NONE: break;          // 0: Pas d'interruption
+  case ADC12IV_ADC12OVIFG: break;    // 2: ADC overflow
+  case ADC12IV_ADC12TOVIFG: break;   // 4: ADC timing overflow
+  case ADC12IV_ADC12IFG0:            // 6: 
+    if (ADC12MEM0 >= 0x07FF)          // ADC12MEM = A0 > 0.5*AVcc?
       P1OUT |= BIT0;                 // P1.0 = 1
     else
       P1OUT &= ~BIT0;                // P1.0 = 0
     __bic_SR_register_on_exit(LPM0_bits);// le CPU sort de LPM0
     break;
-  case  8: break;                    // Vecteur  8:  ADC12IFG1
-  case 10: break;                    // Vecteur  10: ADC12IFG2
-  case 12: break;                    // Vecteur  12: ADC12IFG3
-  case 14: break;                    // Vecteur  14: ADC12IFG4
+  case ADC12IV_ADC12IFG1: break;     // 8: 
+  case ADC12IV_ADC12IFG2: break;     // 10:
+  case ADC12IV_ADC12IFG3: break;     // 12:
+  case ADC12IV_ADC12IFG4: break;     // 14:
   // ...
   // case 16 à 28 omis pour des raisons de mise en page
   // ...
-  case 30: break;                    // Vecteur  30: ADC12IFG12
-  case 32: break;                    // Vecteur  32: ADC12IFG13
-  case 34: break;                    // Vecteur  34: ADC12IFG14
+  case ADC12IV_ADC12IFG12: break;     // 30: 
+  case ADC12IV_ADC12IFG13: break;     // 32: 
+  case ADC12IV_ADC12IFG14: break;     // 34:
+  case ADC12IV_ADC12IFG15: break;     // 36:
   default: break; 
   }
 }
@@ -457,24 +458,24 @@ void main(void)
 #pragma vector=ADC12_VECTOR
 __interrupt void adc12_isr(void)
 {
-  switch(__even_in_range(ADC12IV,34))
+  switch(__even_in_range(ADC12IV, 34))
   {
-  case  0: break;                        // Vecteur  0:  No interrupt
-  case  2: break;                        // Vecteur  2:  ADC overflow
-  case  4: break;                        // Vecteur  4:  ADC timing overflow
-  case  6: break;                        // Vecteur  6:  ADC12IFG0
-  case  8: break;                        // Vecteur  8:  ADC12IFG1
-  case 10: break;                        // Vecteur  10:  ADC12IFG2
-  case 12:                               // Vecteur  12:  ADC12IFG3
-    results[0] = ADC12MEM0;              // sauver résultat, IFG remis à 0
-    results[1] = ADC12MEM1;              // sauver résultat, IFG remis à 0
-    results[2] = ADC12MEM2;              // sauver résultat, IFG remis à 0
-    results[3] = ADC12MEM3;              // sauver résultat, IFG remis à 0
+  case ADC12IV_NONE: break;          // 0: Pas d'interruption
+  case ADC12IV_ADC12OVIFG: break;    // 2: ADC overflow
+  case ADC12IV_ADC12TOVIFG: break;   // 4: ADC timing overflow
+  case ADC12IV_ADC12IFG0:            // 6: 
+  case ADC12IV_ADC12IFG1: break;     // 8:  
+  case ADC12IV_ADC12IFG2: break;     // 10:  
+  case ADC12IV_ADC12IFG3:            // 12:  
+    results[0] = ADC12MEM0;   // sauver résultat, IFG remis à 0
+    results[1] = ADC12MEM1;   // sauver résultat, IFG remis à 0
+    results[2] = ADC12MEM2;   // sauver résultat, IFG remis à 0
+    results[3] = ADC12MEM3;   // sauver résultat, IFG remis à 0
     __bic_SR_register_on_exit(LPM4_bits);// le CPU sort de LPM4
     break;
-  case 14: break;                        // Vecteur  14:  ADC12IFG4
-  // case 16 à 32 omis pour des raisons de mise en page
-  case 34: break;                        // Vector 34:  ADC12IFG14
+  case ADC12IV_ADC12IFG3: break;     // 14:
+  // case 16 à 36 omis pour des raisons de mise en page
+  case ADC12IV_ADC12IFG15: break;    // 36:
   default: break; 
   }
 }

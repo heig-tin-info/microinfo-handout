@@ -450,6 +450,8 @@ Le signal ACLK est utilisé par le timer A0 pour générer des interruptions tou
 #include <msp430.h>
 void main(void)
 {
+  WDTCTL = WDTPW | WDTHOLD;              // Stop watchdog timer
+
 	// configuration du systeme d'horloge UCS
 	UCSCTL1 &= ~(BIT6 | BIT5 | BIT4); // reset DCORSEL
 	UCSCTL1 |= DCORSEL_5;             // range du DCO
@@ -470,14 +472,14 @@ void main(void)
 // génère une interruption sur CCIFG0 tous les 32768 tops
 	TA0CCTL0 = CCIE;
 	TA0CCR0 = 32767;
-	TA0CTL = TASSEL_1 + MC_1 + TACLR;
+	TA0CTL = TASSEL__ACLK + MC__UP + TACLR;
 	__enable_interrupt();
 	while(1);
 }
 
 // Timer_A CCIFG0 handler
-#pragma vector=TIMERA0_VECTOR
-__interrupt void timer_a0_isr(void)
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void timer_a0_ccr0_isr(void)
 {
 	//TODO: ...
 }

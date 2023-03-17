@@ -53,14 +53,16 @@ Un exemple de masquage est donné ci-dessous où l'on doit impérativement effec
 
 \lstset{style=customc}
 \begin{lstlisting}
-void contrôle(void) {
-    int temp0, temp1;
-    for( ; ; ) {
-         __disable_interrupt;			//disable all interrupts
-         temp0=temp[0];
-         temp1=temp[1];
-         __enable_interrupt;			//enable all interrupts
-         if (temp0 !=temp1) alarm_on()
+void control(void)
+{
+    int16_t temp0, temp1;
+    for(;;)
+    {
+        __disable_interrupt();
+        temp0=temp[0];
+        temp1=temp[1];
+        __enable_interrupt();
+        if (temp0 !=temp1) alarm_on();
     }
 }
 \end{lstlisting}
@@ -73,11 +75,11 @@ L'interruption est similaire à une fonction à part qu'on ne peut pas passer de
 \lstset{style=customc}
 \begin{lstlisting}
 // Timer Interrupt Service Routine
-#pragma vector = TIMER_VECTOR
-__interrupt void Timer_ISR(void) {
-
-  P1OUT ^= BIT0;                      // P1.0 = toggle (LED)
-  
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void timer_a0_ccr0_isr(void)
+{
+  P1OUT ^= BIT0;                      // Toggle P1.0 (red LED)
+ 
 }
 \end{lstlisting}
 
@@ -92,12 +94,11 @@ Pour une interruption depuis un GPIO, il nous faut un vecteur d'interruption app
 \lstset{style=customc}
 \begin{lstlisting}
 // Port 1 interrupt service routine
-#pragma vector = PORT1_VECTOR
-__interrupt void Port_1(void) {
-
-  P1OUT ^= BIT0;                            // P1.0 = toggle
-  P1IFG &= ~BIT7;                           // P1.7 IFG cleared
-
+#pragma vector=PORT1_VECTOR
+__interrupt void port1_isr(void)
+{
+  P1OUT ^= BIT0;                            // Toggle P1.0
+  P1IFG &= ~BIT7;                           // Clear P1.7 Interrupt flag
 }
 \end{lstlisting}
 
@@ -109,11 +110,10 @@ Pour une interruption depuis un timer, il nous faut un vecteur d'interruption ap
 \lstset{style=customc}
 \begin{lstlisting}
 // Timer Interrupt Service Routine
-#pragma vector = TIMERA_VECTOR
-__interrupt void TimerA_ISR(void) {
-
-  P1OUT ^= BIT0;                      		// P1.0 = toggle (LED)
-
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void timer_a0_ccr0_isr(void)
+{
+  P1OUT ^= BIT0;                      		// Toggle P1.0 (red LED)
 }
 \end{lstlisting}
 
@@ -123,16 +123,19 @@ Pour une interruption depuis une interface série, il nous faut un vecteur d'int
 \lstset{style=customc}
 \begin{lstlisting}
 #pragma vector=USCI_A0_VECTOR
-__interrupt void USCI_A0_ISR(void) {
-
-  switch(__even_in_range(UCA0IV,4)) {
-    case  0: 	break;
-    case  2: 	while (!(UCA0IFG & UCTXIFG));
- 				UCA0TXBUF = UCA0RXBUF;
-				break;
-    case  4: 	P2OUT ^= 0x01;            // toggle P2.0 avec exclusive-OR 
-				break;
-    default: 	break;
+__interrupt void usci_a0_isr(void)
+{
+  switch(__even_in_range(UCA0IV, 4))
+  {
+  case 0: 	break;
+  case 2:
+    while (!(UCA0IFG & UCTXIFG));
+ 	  UCA0TXBUF = UCA0RXBUF;
+		break;
+  case 4:
+   	P2OUT ^= 0x01;            // toggle P2.0 avec exclusive-OR 
+		break;
+  default: 	break;
   }
 }
 \end{lstlisting}

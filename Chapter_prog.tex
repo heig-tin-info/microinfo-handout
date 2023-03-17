@@ -50,10 +50,10 @@ Exemple de fonctions intrinsèques:
 \lstset{style=customc}
 \begin{lstlisting}
 __no_init					//indique de ne pas initialiser une variable
-__disable_interrupt			//désactive toutes les interruptions
-__enable_interrupt			//active toutes les interruptions
-__low_power_mode_n			//enclenche le mode low power n
-__low_power_mode_off_on_exit //désactive le mode low power en sortie d'interruption
+__disable_interrupt();		//désactive toutes les interruptions
+__enable_interrupt();		//active toutes les interruptions
+__low_power_mode_n()			//enclenche le mode low power [0..4]
+__low_power_mode_off_on_exit() //désactive le mode low power en sortie d'interruption
 __asm()						//permet l'insertion de code assembleur
 \end{lstlisting}
 
@@ -73,8 +73,8 @@ Une librairie HAL doit permettre de masquer tout ce qui est relatif à un périp
 Exemples de structure HAL pour un accéléromètre (CMA3000):
 \lstset{style=customc}
 \begin{lstlisting}
-#define CTRL                    0x02
-#define MODE_400                0x04        // Measurement mode 400 Hz ODR
+#define CTRL              0x02
+#define MODE_400          0x04        // Measurement mode 400 Hz ODR
 
 int8_t Cma3000_xAccel;
 int8_t Cma3000_yAccel;
@@ -116,7 +116,10 @@ Le cycle actif/pause peut être géré de deux manières:
 Exemple de code pour MSP430 dans le cas (1):
 \lstset{style=customc}
 \begin{lstlisting}
-void main(void) {
+void main(void)
+{
+	WDTCTL = WDTPW | WDTHOLD;              // Stop watchdog timer
+
 	while(1) {
 		__bis_SR_register(LPM3_bits + GIE);	//Mode basse consommation LPM3 
 											//avec interruptions activées
@@ -126,11 +129,11 @@ void main(void) {
 }
 
 #pragma vector=PORT2_VECTOR
-__interrupt void Port2_ISR(void) {
+__interrupt void port2_isr(void) {
 
 	...										//Code de l'interruption, 
 											//mode actif par défaut
-	__low_power_mode_off_on_exit	
+	__low_power_mode_off_on_exit();	
 }
 \end{lstlisting}
 
@@ -139,7 +142,10 @@ Pour bien comprendre le code ci-dessus, il faut savoir qu'une interruption est t
 Exemple de code pour MSP430 dans le cas (2):
 \lstset{style=customc}
 \begin{lstlisting}
-void main(void) {
+void main(void)
+{
+	WDTCTL = WDTPW | WDTHOLD;              // Stop watchdog timer
+
 	while(1) {		
 		__bis_SR_register(LPM3_bits + GIE);	//Mode basse consommation LPM3 
 											//avec interruptions activées
@@ -149,11 +155,10 @@ void main(void) {
 }
 
 #pragma vector=TIMER_A0_VECTOR
-__interrupt void Timer_ISR(void) {
-
+__interrupt void timer_a0_isr(void)
+{
 	...										//Code de l'interruption, 
 											//mode actif par défaut
-	__low_power_mode_off_on_exit	
+	__low_power_mode_off_on_exit();	
 }
 \end{lstlisting}
- 

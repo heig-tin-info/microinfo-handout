@@ -76,7 +76,7 @@ Pour mettre à 1 le bit 0 sans changer les bits 1 à 7 on peut utiliser la fonct
 
 \lstset{style=customc}
 \begin{lstlisting}
-REG = REG | BIT0  //en C avec BIT0 = 1
+REG = REG | BIT0  //en C avec BIT0 = 0x01
 REG |= BIT0		  //en C simplifié
 \end{lstlisting}
 
@@ -84,18 +84,18 @@ On appelle cette technique le masquage. Pour mettre un bit à 0, il faut utilise
 
 \lstset{style=customc}
 \begin{lstlisting}
-REG = 00000011    //on désire mettre le premier bit à zéro sans influencer les autres
+REG = 0b00000011    //on désire mettre le premier bit à zéro sans influencer les autres
 \\test avec OU:
 REG = REG | BIT0  //ne fait rien donc ce n'est pas la solution
 \\test avec ET:
-REG = REG & BITO  //REG = 00000001 FAUX ça ne marche pas non plus
+REG = REG & BITO  //REG = 0b00000001 FAUX ça ne marche pas non plus
 \end{lstlisting}
 
 Mais si on avait inversé BIT0 alors ça aurait marché:
 
 \lstset{style=customc}
 \begin{lstlisting}
-REG = REG & ~BITO   //REG = 00000010 JUSTE 
+REG = REG & ~BITO   //REG = 0b00000010 JUSTE 
 REG &= ~BIT0         //en C simplifié
 \end{lstlisting}
 
@@ -105,15 +105,15 @@ La réponse est similaire au test d'un bit dans un mot en langage C. Prenons com
 
 \lstset{style=customc}
 \begin{lstlisting}
-//essai avec OU avec REG = 00000011 et BIT0 = 00000001:
-TEST_BIT0 = REG | BIT0  //TEST_BIT0 = 00000011 FAUX
-//et si REG = 00000010
-TEST_BIT0 = REG | BIT0  //TEST_BIT0 = 00000011 FAUX
+//essai avec OU avec REG = 0b00000011 et BIT0 = 0b00000001:
+TEST_BIT0 = REG | BIT0  //TEST_BIT0 = 0b00000011 FAUX
+//et si REG = 0b00000010
+TEST_BIT0 = REG | BIT0  //TEST_BIT0 = 0b00000011 FAUX
 
 //Il est clair que ça ne marche pas avec OU essayons avec ET:
-TEST_BIT0 = REG & BIT0  //TEST_BIT0 = 00000001 JUSTE
-//et si REG = 00000010
-TEST_BIT0 = REG & BIT0  //TEST_BIT0 = 00000000 JUSTE
+TEST_BIT0 = REG & BIT0  //TEST_BIT0 = 0b00000001 JUSTE
+//et si REG = 0b00000010
+TEST_BIT0 = REG & BIT0  //TEST_BIT0 = 0b00000000 JUSTE
 \end{lstlisting}
 
 Donc le test ou lecture d'une valeur s'effectue avec l'opérateur logique ET. Dans le cas d'un test en C, on doit se rappeler que le résultat est VRAI pour toute valeur de TEST\_BITx différente de zéro. Il est faux si et seulement si TEST\_BITx = 0. Ceci provient du fait que la variable C la plus petite est de 8 bits. Il n'y a pas de variable de 1 bit en C. 
@@ -125,11 +125,11 @@ Soit le registre REG d'une longueur de 8 bits. Pour écrire la valeur logique 1 
 \lstset{style=customc}
 \begin{lstlisting}
 //Mise à 1 du bit zéro:
-REG = REG | BIT0    //en C avec BIT0 = 1
+REG = REG | BIT0    //en C avec BIT0 = 0x01
 REG |= BIT0		    //en C simplifié
 
 //Mise à 0 du bit zéro:
-REG = REG & ~BITO   //REG = 00000010 JUSTE 
+REG = REG & ~BITO   //REG = 0b00000010 JUSTE 
 REG &= ~BIT0         //en C simplifié
 \end{lstlisting}
 
@@ -151,7 +151,7 @@ Pour lire un registre on compare le registre avec le masque du bit voulu en util
 \lstset{style=customc}
 \begin{lstlisting}
 //Lecture du BIT3 uniquement:
-TEST_REG = REG & BIT3; // BIT3=00001000
+TEST_REG = REG & BIT3; // BIT3 = 0b00001000
 \end{lstlisting}
 
 Le résultat de cette affectation sera donc 0 si le BIT3 est à zéro et 8 si le BIT3 est à 1. Pour lire plusieurs bits à la fois on peut, comme pour l'écriture, créer un masque combiné. Exemple, on veut lire le bit 5 et le bit 2 simultanément:
@@ -159,7 +159,7 @@ Le résultat de cette affectation sera donc 0 si le BIT3 est à zéro et 8 si le
 \lstset{style=customc}
 \begin{lstlisting}
 //Lecture du BIT5 et du BIT2:
-TEST_REG = REG & (BIT5 | BIT2); // BIT5 | BIT2 = 00100100
+TEST_REG = REG & (BIT5 | BIT2); // BIT5 | BIT2 = 0b00100100
 \end{lstlisting}
 
 \section{Configuration des GPIO}
@@ -178,12 +178,12 @@ Pour les configurer on doit trouver leurs adresses physiques qui les identifient
 \begin{lstlisting}
 #include <msp430.h>
 
-#define P1IN   	(PAIN_L)       /* Port 1 Input */
-#define P1OUT 	(PAOUT_L)      /* Port 1 Output */
-#define P1DIR	(PADIR_L)      /* Port 1 Direction */
-#define P1REN	(PAREN_L)      /* Port 1 Resistor Enable */
-#define P1DS 	(PADS_L)       /* Port 1 Drive Strength */
-#define P1SEL	(PASEL_L)      /* Port 1 Selection */
+#define P1IN  (PAIN_L)       /* Port 1 Input */
+#define P1OUT (PAOUT_L)      /* Port 1 Output */
+#define P1DIR (PADIR_L)      /* Port 1 Direction */
+#define P1REN (PAREN_L)      /* Port 1 Resistor Enable */
+#define P1DS  (PADS_L)       /* Port 1 Drive Strength */
+#define P1SEL (PASEL_L)      /* Port 1 Selection */
 \end{lstlisting}
 
 Exemple de configuration du port P1.2 et P1.5 en sortie:
@@ -202,8 +202,8 @@ Exemple de configuration du port P1.2 et P1.5 en entrée:
 
 \lstset{style=customc}
 \begin{lstlisting}
-P1SEL &= ~BIT5 & ~BIT2;  // Reset P1.2 et P1.5 to select GPIO
-P1DIR &= ~BIT5 & ~BIT2;  // Reset P1.2 et P1.5 to input direction
+P1SEL &= ~(BIT5 | BIT2);  // Reset P1.2 et P1.5 to select GPIO
+P1DIR &= ~(BIT5 | BIT2);  // Reset P1.2 et P1.5 to input direction
 //Option: ajouter les résistances de pull
 P1OUT |= BIT5 | BIT2;    // Sélection de la résistance
 P1REN |= BIT5 | BIT2;    // Activation de la résistance

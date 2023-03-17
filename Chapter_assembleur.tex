@@ -31,7 +31,7 @@ En langage assembleur, cette instruction est traduite par un équivalent plus fa
 pour le programmeur :
 \lstset{style=customc}
 \begin{lstlisting}
-MOV.W #85,R5
+      MOV.W #85,R5
 \end{lstlisting}
 
 qui signifie "mettre la valeur décimale 85" (0x55 en hexadécimal) dans le registre R5.
@@ -61,7 +61,7 @@ Selon que l'opérande d'une instruction est une constante, une variable, un poin
 Reprenant l'instruction prise comme exemple dans l'introduction:
 \lstset{style=customc}
 \begin{lstlisting}
-MOV.W #85,R5
+      MOV.W #85,R5
 \end{lstlisting}
 
 la valeur "85", qui était codée par "0055" pourrait représenter:
@@ -87,7 +87,7 @@ D'autres modes d'adressage sont imaginables selon le type de machine.
 En adressage \textit{immédiat}, la donnée est identifiée explicitement. Dans l'exemple déjà vu 
 \lstset{style=customc}
 \begin{lstlisting}
-MOV.W #85,R5
+      MOV.W #85,R5
 \end{lstlisting}
 
 le symbole \# spécifie que la valeur est à prendre telle quelle.
@@ -97,7 +97,7 @@ L'adressage immédiat est donc associé à une constante.
 En adressage \textit{direct}, parfois aussi appelé \textit{absolu}, l'identifiant est l'adresse de la case contenant la donnée. L'exemple devient
 \lstset{style=customc}
 \begin{lstlisting}
-MOV.W 85,R5
+      MOV.W 85,R5
 \end{lstlisting}
 C'est l'adressage "par défaut", le plus courant, spécifié par le symbole \& ou par l'absence de symbole. L'adressage direct est donc associé à une variable. De fait, la case mémoire ou le registre identifié est une variable.
 
@@ -105,7 +105,7 @@ C'est l'adressage "par défaut", le plus courant, spécifié par le symbole \& o
 En adressage \textit{indirect}, l'identifiant est l'adresse d'une case mémoire, qui contient l'adresse de la donnée visée . L'exemple devient
 \lstset{style=customc}
 \begin{lstlisting}
-MOV.W @85,R5
+      MOV.W @85,R5
 \end{lstlisting}
 Cet adressage est souvent spécifié par le symbole @. L'adressage indirect permet donc d'implémenter un pointeur.
 
@@ -115,7 +115,7 @@ En pratique, il n'y a pas à se soucier du calcul du déplacement pour faire le 
 Un exemple d'instruction avec adressage relatif est:
 \lstset{style=customc}
 \begin{lstlisting}
-JMP Label
+      JMP Label
 \end{lstlisting}
 
 {\fontfamily{pcr}\selectfont Label} est une \textit{étiquette} permettant de repérer la prochaine instruction, par exemple:
@@ -133,14 +133,14 @@ Comme nous le verrons dans le chapitre suivant, le coeur du CPU contient des reg
 Parfois appelé adressage \textit{implicite} ou \textit{inhérent}, le mode d'adressage par registre utilise donc explicitement le nom du registre impliqué. Par exemple:
 \lstset{style=customc}
 \begin{lstlisting}
-MOV R1,0x40
+      MOV R1,0x40
 \end{lstlisting}
 est une instruction du jeu d'instruction MCS-51 (microcontrôleurs de la famille 8051) et qui consiste à copier le contenu de la case d'adresse 0x40 (adressage direct pour la source de la donnée) dans le registre appelé R1. Bien que R1 pourrait être identifié par son adresse, il l'est ici par son nom explicite. L'intérêt est de pouvoir représenter le code de l'instruction sur moins d'octets que si l'adresse de R1 devait être fournie.
 
 L'exemple suivant (toujours du jeu d'instruction MCS-51) utilise de l'adressage indirect par registre et de l'adressage avec un registre particulier appelé \textit{accumulateur}:
 \lstset{style=customc}
 \begin{lstlisting}
-MOV A,@R2
+      MOV A,@R2
 \end{lstlisting}
 
 \subsection{Orthogonalité du jeu d'instruction}
@@ -228,7 +228,7 @@ les figures \ref{fig:Inst_format_1}, \ref{fig:Inst_format_2} et \ref{fig:Inst_fo
 Le CPU MSP430 contient 16 registres notés R0 à R15. Chacun d'entre eux peut être utilisé avec ce mode d'adressage. L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-MOV.W R10,R8
+      MOV.W R10,R8
 \end{lstlisting}
 permet de copier le contenu du registre R10 dans le registre R8. Le suffixe \textit{.W} spécifie que les opérandes sont des mots (de 16 bits).
 L'instruction est codée sur un mot de 16 bits et utilise le format I, comme indiqué dans la figure \ref{fig:Inst_format_1}. Du fait que l'adressage est \textit{par registre}, cette instruction n'a pas besoin d'autres informations que l'identification des registres R10 et R8.
@@ -244,7 +244,7 @@ Op-code = 4, Rsrc = 10, Ad=0, B/W=0, As=0, Rdst=8
 L'adressage indexé du MSP430 est en fait un adressage indirect indexé. En effet, le contenu du registre considéré est additionné à l'index pour obtenir l'adresse de l'opérande. L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-MOV.B R10,5(R8)
+      MOV.B R10,5(R8)
 \end{lstlisting}
 permet de copier le contenu du registre R10 dans la case mémoire dont l'adresse est égale à 5 plus le contenu du registre R8. Le suffixe \textit{.B} spécifie que les opérandes sont des octets.
 L'instruction utilise le format I, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, l'autre est égal à 5.
@@ -261,7 +261,7 @@ Op-code = 4, Rsrc = 10, Ad=1, B/W=1, As=0, Rdst=8
 L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-ADD.W   R10,&3310
+      ADD.W   R10,&3310
 \end{lstlisting}
 permet d'additionner le contenu du registre R10 à celui de la case mémoire d'adresse 3310 et de placer le résultat dans cette case mémoire.
 L'instruction utilise le format I, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, l'autre est égal à 0x0CEE (3310 en décimal).
@@ -279,7 +279,7 @@ Comme indiqué dans la table \ref{table:MSP430_Addr_Reg}, cet adressage est cons
 L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-ADD.W   @R10,R8
+      ADD.W   @R10,R8
 \end{lstlisting}
 permet d'additionner le contenu de la case mémoire dont l'adresse est dans le registre R10 au contenu de R8 et de placer le résultat dans R8.
 L'instruction utilise le format I, et est codée sur un mot de 16 bits.
@@ -295,7 +295,7 @@ Op-code = 5, Rsrc = 10, Ad=0, B/W=0, As=2, Rdst=8
 L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-ADD.W   @R10+,R8
+      ADD.W   @R10+,R8
 \end{lstlisting}
 permet d'additionner le contenu de la case mémoire dont l'adresse est dans le registre R10 au contenu de R8 et de placer le résultat dans R8. A la fin de cette instruction, le contenu de R10 est incrémenté de 2 unités pour pointer sur le prochain mot. Il serait incrémenté de 1 si le suffixe \textit{.B} avait été utilisé.
 L'instruction utilise le format I, et est codée sur un mot de 16 bits.
@@ -311,7 +311,7 @@ Op-code = 5, Rsrc = 10, Ad=1, B/W=0, As=3, Rdst=8
 L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-ADD.W   #3253,&3310
+      ADD.W   #3253,&3310
 \end{lstlisting}
 permet d'additionner la valeur 3253 (décimal) au contenu de la case mémoire d'adresse 3310 et de placer le résultat dans cette case mémoire.
 L'instruction utilise le format I, et est codée sur trois mots de 16 bits; un pour l'instruction elle-même, le second pour la valeur 3253, le troisième est égal à 0x0CEE (3310 en décimal).
@@ -329,7 +329,7 @@ Op-code = 5, Rsrc = 00, Ad=1, B/W=0, As=0, Rdst=2
 L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-CALL   #routine
+      CALL   #routine
 \end{lstlisting}
 permet "d'envoyer" le CPU exécuter l'instruction située à l'adresse {\fontfamily{pcr}\selectfont routine}. Cette instruction sera de fait considérée comme la première du groupe qui suit, qui constitue donc un \textit{sous-programme}. La fin de ce sous-programme est délimitée par une instruction appelée {\fontfamily{pcr}\selectfont RET}.
 L'instruction donnée en exemple utilise le format II, et est codée sur deux mots de 16 bits; un pour l'instruction elle-même, le second pour l'adresse {\fontfamily{pcr}\selectfont routine}.
@@ -346,7 +346,7 @@ Op-code = 0x25, B/W=0, Ad=3, Rdst=0
 L'instruction
 \lstset{style=customc}
 \begin{lstlisting}
-JMP   label
+      JMP   label
 \end{lstlisting}
 permet de faire un saut dans le programme, dans un sens ou dans l'autre, d'au maximum 1024 adresses, sans retour prévu.
 L'instruction donnée en exemple utilise le format III, et est codée sur un mot de 16 bits.

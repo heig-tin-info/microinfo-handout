@@ -84,7 +84,7 @@ Lors du développement, on désactive généralement le chien de garde. Dans le 
 
 \lstset{style=customc}
 \begin{lstlisting}
-WDTCTL = WDTPW +WDTHOLD;
+WDTCTL = WDTPW | WDTHOLD;
 \end{lstlisting}
 En opération, cette instruction est mise en commentaire. Le chien de garde est alors actif, et il est nécessaire d'ajouter des instructions dans les boucles d'attente et à des endroits bien choisis du programme pour le remettre à 0 avant qu'il ne force le programme à redémarrer.
 
@@ -235,9 +235,9 @@ Les instructions ci-dessous configurent le timer A0 en mode comptage de 0 (inclu
 
 \lstset{style=customc}
 \begin{lstlisting}
-#define TASSEL__SMCLK	(2*0x100u)  /* Timer A clock source select: 2 - SMCLK */
-#define ID__8         (3*0x40u)   /* Timer A input divider: 3 - /8 */
-#define MC__UP        (1*0x10u)   /* Timer A mode control: 1 - Up to CCR0 */
+#define TASSEL__SMCLK (2*0x100u)  // Timer clock source select: 2 - SMCLK
+#define ID__8         (3*0x40u)   // Timer input divider: 3 - /8
+#define MC__UP        (1*0x10u)   // Timer mode control: 1 - Up to CCR0
 
 TA0CCR0 = 8191;
 TA0CTL  = TASSEL__SMCLK | MC__UP | ID__8;
@@ -345,14 +345,14 @@ Les instructions ci-dessous reprennent la configuration vue au chapitre 5.3.2, e
 
 \lstset{style=customc}
 \begin{lstlisting}
-#define TASSEL__SMCLK (2*0x100u) /* Timer clock source select: 2 - SMCLK */
-#define ID__8         (3*0x40u) /* Timer input divider: 3 - /8 */
-#define MC__UP        (1*0x10u) /* Timer mode control: 1 - Up to CCR0 */
-#define CCIE          (1*0x10u) /* Capture/compare interrupt enable */
+#define TASSEL__SMCLK (2*0x100u) // Timer clock source select: 2 - SMCLK
+#define ID__8         (3*0x40u) // Timer input divider: 3 - /8
+#define MC__UP        (1*0x10u) // Timer mode control: 1 - Up to CCR0
+#define CCIE          (1*0x10u) // Capture/compare interrupt enable
 
 TA0CCR0 = 8191;
-TA0CTL  = TASSEL__SMCLK | MC__UP | ID__8;
 TA0CCTL0  = CCIE;
+TA0CTL  = TASSEL__SMCLK | MC__UP | ID__8;
 \end{lstlisting}
 
 \subsection{Contrôle des blocs de capture/comparaison n°1,2,3...}
@@ -412,11 +412,11 @@ Le code ci-dessous configure le timer A en mode continu (jusqu'à 0xFFFF). Le si
 \begin{lstlisting}
 #include <msp430.h>
 
-#define MC__CONTINUOUS  (2*0x10u)  /* Timer A mode control: 2 - Continuous up */
+#define MC__CONTINUOUS  (2*0x10u)  // Timer mode control: 2 - Continuous up
 
 void main(void)
 {
-  WDTCTL = WDTPW + WDTHOLD;              // Stop watchdog timer
+  WDTCTL = WDTPW | WDTHOLD;              // Stop watchdog timer
   P5DIR |= 0x02;
   TACTL = TASSEL__SMCLK + MC__CONTINUOUS + TAIE;
   
@@ -425,9 +425,9 @@ void main(void)
   while(1);
 }
 
-// Timer_A1 Interrupt Vector (TAIV) handler
+// Timer A0 Interrupt Vector (TA0IV) handler
 #pragma vector=TIMER0_A1_VECTOR
-__interrupt void timer_a0_ccr1_isr(void)
+__interrupt void timer_a0_ccr_isr(void)
 {
   switch(__event_in_range(TA0IV, TA0IV_TAIFG))
   {

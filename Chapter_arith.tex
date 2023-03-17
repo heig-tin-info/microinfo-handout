@@ -285,12 +285,17 @@ La multiplication de nombres en virgule fixe est légèrement différente car il
 #define FIXEDPT_IBITS	8
 #define FIXEDPT_FBITS	8
 
-typedef int16_t fixedpt;
+typedef int16_t fixed16_t;
 
-/* Multiplies two fixedpt numbers, returns the result. */
-fixedpt fixedpt_mul(fixedpt A, fixedpt B)
+/**
+ * Multiplies two fixed16_t numbers
+ * @param a
+ * @param b
+ * @return a * b
+ */
+inline fixed16_t fixed16_mul(fixed16_t a, fixed16_t b)
 {
-	return (((fixedptd)A * (fixedptd)B) >> FIXEDPT_FBITS);
+	return (((fixed16_t)a * (fixed16_td)b) >> FIXEDPT_FBITS);
 }
 \end{lstlisting}
 
@@ -312,7 +317,7 @@ La division entière ou Euclidienne est très simple à implémenter à l'aide d
 \begin{lstlisting}
 int divide(N, D) {
 	Q = 0;
-	while  N >= D {
+	while (N >= D) {
   		N = N - D;
   		Q++;
 	}
@@ -329,13 +334,17 @@ Pour le cas de la virgule fixe, il faut décaler le multiplicande vers la gauche
 #define FIXEDPT_IBITS	8
 #define FIXEDPT_FBITS	8
 
-typedef int16_t fixedpt;
+typedef int16_t fixed16_t;
 
-/* Divides two fixedpt numbers, returns the result. */
-static inline fixedpt
-fixedpt_div(fixedpt A, fixedpt B)
+/**
+ * Divides two fixed16_t numbers
+ * @param a
+ * @param b
+ * @return a / b
+ */
+inline fixed16_t fixed16_div(fixed16_t a, fixed16_t b)
 {
-	return (((fixedptd)A << FIXEDPT_FBITS) / (fixedptd)B);
+	return (((fixed16_t)a << FIXEDPT_FBITS) / (fixed16_t)b);
 }
 \end{lstlisting}
 
